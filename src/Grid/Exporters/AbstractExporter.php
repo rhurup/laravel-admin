@@ -25,7 +25,6 @@ abstract class AbstractExporter implements ExporterInterface
             $this->setGrid($grid);
         }
     }
-
     /**
      * Set grid for exporter.
      *
