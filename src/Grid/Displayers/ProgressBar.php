@@ -1,16 +1,16 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace Rhurup\Admin\Grid\Displayers;
 
 class ProgressBar extends AbstractDisplayer
 {
     public function display($style = 'primary', $size = 'sm', $max = 100)
     {
-        $style = collect((array) $style)->map(function ($style) {
-            return 'progress-bar-'.$style;
+        $style = collect((array)$style)->map(function ($style) {
+            return 'progress-bar-' . $style;
         })->implode(' ');
 
-        $this->value = (int) $this->value;
+        $this->value = (int)$this->value;
 
         return <<<EOT
 <div class="row" style="min-width: 100px;">

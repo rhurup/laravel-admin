@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Layout;
+namespace Rhurup\Admin\Layout;
 
-use Encore\Admin\Facades\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
+use Rhurup\Admin\Facades\Admin;
 
 class Content implements Renderable
 {

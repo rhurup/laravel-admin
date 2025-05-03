@@ -37,7 +37,8 @@
     <div class="tab-content has-many-{{$column}}-forms">
 
         @foreach($forms as $pk => $form)
-            <div class="tab-pane fields-group has-many-{{$column}}-form @if ($form == reset($forms)) active @endif" id="{{ $relationName . '_' . $pk }}">
+            <div class="tab-pane fields-group has-many-{{$column}}-form @if ($form == reset($forms)) active @endif"
+                 id="{{ $relationName . '_' . $pk }}">
                 @foreach($form->fields() as $field)
                     {!! $field->render() !!}
                 @endforeach
@@ -47,14 +48,17 @@
 
     <template class="nav-tab-tpl">
         <li class="new">
-            <a href="#{{ $relationName . '_new_' . \Encore\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}" data-toggle="tab">
-                &nbsp;New {{ \Encore\Admin\Form\NestedForm::DEFAULT_KEY_NAME }} <i class="fa fa-exclamation-circle text-red hide"></i>
+            <a href="#{{ $relationName . '_new_' . \Rhurup\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}"
+               data-toggle="tab">
+                &nbsp;New {{ \Rhurup\Admin\Form\NestedForm::DEFAULT_KEY_NAME }} <i
+                        class="fa fa-exclamation-circle text-red hide"></i>
             </a>
-            <i class="close-tab fa fa-times" ></i>
+            <i class="close-tab fa fa-times"></i>
         </li>
     </template>
     <template class="pane-tpl">
-        <div class="tab-pane fields-group new" id="{{ $relationName . '_new_' . \Encore\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}">
+        <div class="tab-pane fields-group new"
+             id="{{ $relationName . '_new_' . \Rhurup\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}">
             {!! $template !!}
         </div>
     </template>

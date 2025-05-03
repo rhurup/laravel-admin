@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Form\Concerns;
+namespace Rhurup\Admin\Form\Concerns;
 
-use Encore\Admin\Form\Field;
+use Rhurup\Admin\Form\Field;
 
 trait HandleCascadeFields
 {

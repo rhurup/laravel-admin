@@ -1,17 +1,17 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace Rhurup\Admin\Widgets;
 
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form as BaseForm;
-use Encore\Admin\Form\Field;
-use Encore\Admin\Layout\Content;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\Validator;
+use Rhurup\Admin\Facades\Admin;
+use Rhurup\Admin\Form as BaseForm;
+use Rhurup\Admin\Form\Field;
+use Rhurup\Admin\Layout\Content;
 
 /**
  * Class Form.

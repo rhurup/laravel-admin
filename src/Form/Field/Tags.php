@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace Rhurup\Admin\Form\Field;
 
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form\Field;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Rhurup\Admin\Facades\Admin;
+use Rhurup\Admin\Form\Field;
 
 class Tags extends Field
 {

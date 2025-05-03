@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace Rhurup\Admin\Grid\Concerns;
 
-use Encore\Admin\Admin;
+use Rhurup\Admin\Admin;
 
 trait CanDoubleClick
 {

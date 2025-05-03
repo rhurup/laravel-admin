@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace Rhurup\Admin\Controllers;
 
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Show;
+use Rhurup\Admin\Form;
+use Rhurup\Admin\Grid;
+use Rhurup\Admin\Show;
 
 class RoleController extends AdminController
 {

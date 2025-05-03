@@ -1,14 +1,14 @@
 <?php
 
-namespace Encore\Admin\Actions\Interactor;
+namespace Rhurup\Admin\Actions\Interactor;
 
-use Encore\Admin\Actions\RowAction;
-use Encore\Admin\Admin;
-use Encore\Admin\Form\Field;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
+use Rhurup\Admin\Actions\RowAction;
+use Rhurup\Admin\Admin;
+use Rhurup\Admin\Form\Field;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Form extends Interactor

@@ -1,9 +1,7 @@
 <?php
 
-namespace Encore\Admin\Show;
+namespace Rhurup\Admin\Show;
 
-use Encore\Admin\Show;
-use Encore\Admin\Widgets\Carousel;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +11,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
+use Rhurup\Admin\Show;
+use Rhurup\Admin\Widgets\Carousel;
 
 class Field implements Renderable
 {

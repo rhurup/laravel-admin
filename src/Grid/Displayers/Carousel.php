@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace Rhurup\Admin\Grid\Displayers;
 
-use Encore\Admin\Widgets\Carousel as CarouselWidget;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\Storage;
+use Rhurup\Admin\Widgets\Carousel as CarouselWidget;
 
 class Carousel extends AbstractDisplayer
 {

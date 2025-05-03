@@ -1,12 +1,7 @@
 <?php
 
-namespace Encore\Admin;
+namespace Rhurup\Admin;
 
-use Encore\Admin\Show\Divider;
-use Encore\Admin\Show\Field;
-use Encore\Admin\Show\Panel;
-use Encore\Admin\Show\Relation;
-use Encore\Admin\Traits\ShouldSnakeAttributes;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,6 +15,11 @@ use Illuminate\Database\Eloquent\Relations\Relation as EloquentRelation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Rhurup\Admin\Show\Divider;
+use Rhurup\Admin\Show\Field;
+use Rhurup\Admin\Show\Panel;
+use Rhurup\Admin\Show\Relation;
+use Rhurup\Admin\Traits\ShouldSnakeAttributes;
 
 class Show implements Renderable
 {

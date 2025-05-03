@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace Rhurup\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid\Tools\FixColumns;
 use Illuminate\Support\Collection;
+use Rhurup\Admin\Grid\Tools\FixColumns;
 
 trait CanFixColumns
 {

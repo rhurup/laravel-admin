@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Middleware;
+namespace Rhurup\Admin\Middleware;
 
-use Encore\Admin\Auth\Permission as Checker;
-use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Rhurup\Admin\Auth\Permission as Checker;
+use Rhurup\Admin\Facades\Admin;
 
 class Permission
 {

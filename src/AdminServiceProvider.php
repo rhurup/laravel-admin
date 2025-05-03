@@ -1,13 +1,13 @@
 <?php
 
-namespace Encore\Admin;
+namespace Rhurup\Admin;
 
-use Encore\Admin\Layout\Content;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Rhurup\Admin\Layout\Content;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -85,7 +85,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->compatibleBlade();
 
         Blade::directive('box', function ($title) {
-            return "<?php \$box = new \Encore\Admin\Widgets\Box({$title}, '";
+            return "<?php \$box = new \Rhurup\Admin\Widgets\Box({$title}, '";
         });
 
         Blade::directive('endbox', function ($expression) {

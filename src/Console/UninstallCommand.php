@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace Rhurup\Admin\Console;
 
 use Illuminate\Console\Command;
 

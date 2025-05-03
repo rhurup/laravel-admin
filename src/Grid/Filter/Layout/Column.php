@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter\Layout;
+namespace Rhurup\Admin\Grid\Filter\Layout;
 
-use Encore\Admin\Grid\Filter\AbstractFilter;
 use Illuminate\Support\Collection;
+use Rhurup\Admin\Grid\Filter\AbstractFilter;
 
 class Column
 {

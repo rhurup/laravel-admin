@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter\Presenter;
+namespace Rhurup\Admin\Grid\Filter\Presenter;
 
-use Encore\Admin\Admin;
+use Rhurup\Admin\Admin;
 
 class Text extends Presenter
 {

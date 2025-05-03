@@ -1,13 +1,13 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace Rhurup\Admin\Form;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Rhurup\Admin\Admin;
+use Rhurup\Admin\Form;
+use Rhurup\Admin\Widgets\Form as WidgetForm;
 
 /**
  * Class NestedForm.

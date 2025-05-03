@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace Rhurup\Admin\Grid;
 
-use Encore\Admin\Grid;
 use Illuminate\Contracts\Support\Renderable;
+use Rhurup\Admin\Grid;
 
 /**
  * @mixin Grid

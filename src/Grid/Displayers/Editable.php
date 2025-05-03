@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace Rhurup\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
+use Rhurup\Admin\Admin;
 
 class Editable extends AbstractDisplayer
 {

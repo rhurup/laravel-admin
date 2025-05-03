@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace Rhurup\Admin\Grid;
 
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Selectable\Checkbox;
-use Encore\Admin\Grid\Selectable\Radio;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Rhurup\Admin\Grid;
+use Rhurup\Admin\Grid\Selectable\Checkbox;
+use Rhurup\Admin\Grid\Selectable\Radio;
 
 /**
  * @mixin Grid

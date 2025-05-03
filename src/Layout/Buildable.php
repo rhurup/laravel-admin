@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Layout;
+namespace Rhurup\Admin\Layout;
 
 interface Buildable
 {

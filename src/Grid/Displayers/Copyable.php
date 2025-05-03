@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace Rhurup\Admin\Grid\Displayers;
 
-use Encore\Admin\Facades\Admin;
+use Rhurup\Admin\Facades\Admin;
 
 /**
  * Class Copyable.

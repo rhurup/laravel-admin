@@ -1,8 +1,7 @@
 <?php
 
-namespace Encore\Admin\Form\Concerns;
+namespace Rhurup\Admin\Form\Concerns;
 
-use Closure;
 use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\Response;
 

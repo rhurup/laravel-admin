@@ -1,16 +1,15 @@
 <?php
 
-namespace Encore\Admin;
+namespace Rhurup\Admin;
 
-use Closure;
-use Encore\Admin\Auth\Database\Menu;
-use Encore\Admin\Controllers\AuthController;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Traits\HasAssets;
-use Encore\Admin\Widgets\Navbar;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Rhurup\Admin\Auth\Database\Menu;
+use Rhurup\Admin\Controllers\AuthController;
+use Rhurup\Admin\Layout\Content;
+use Rhurup\Admin\Traits\HasAssets;
+use Rhurup\Admin\Widgets\Navbar;
 
 /**
  * Class Admin.
@@ -291,7 +290,7 @@ class Admin
 
         app('router')->group($attributes, function ($router) {
             /* @var \Illuminate\Support\Facades\Route $router */
-            $router->namespace('\Encore\Admin\Controllers')->group(function ($router) {
+            $router->namespace('\Rhurup\Admin\Controllers')->group(function ($router) {
                 /* @var \Illuminate\Routing\Router $router */
                 $router->resource('auth/users', 'UserController')->names('admin.auth.users');
                 $router->resource('auth/roles', 'RoleController')->names('admin.auth.roles');

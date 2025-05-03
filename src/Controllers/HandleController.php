@@ -1,17 +1,17 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace Rhurup\Admin\Controllers;
 
-use Encore\Admin\Actions\Action;
-use Encore\Admin\Actions\GridAction;
-use Encore\Admin\Actions\Response;
-use Encore\Admin\Actions\RowAction;
-use Encore\Admin\Widgets\Form;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Collection;
+use Rhurup\Admin\Actions\Action;
+use Rhurup\Admin\Actions\GridAction;
+use Rhurup\Admin\Actions\Response;
+use Rhurup\Admin\Actions\RowAction;
+use Rhurup\Admin\Widgets\Form;
 
 class HandleController extends Controller
 {
@@ -146,7 +146,7 @@ class HandleController extends Controller
         $class = str_replace('_', '\\', $class);
 
         if (class_exists($class)) {
-            /** @var \Encore\Admin\Grid\Selectable $selectable */
+            /** @var \Rhurup\Admin\Grid\Selectable $selectable */
             $selectable = new $class(...array_values($args));
 
             return $selectable->render();

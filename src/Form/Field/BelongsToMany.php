@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace Rhurup\Admin\Form\Field;
 
-use Encore\Admin\Admin;
+use Rhurup\Admin\Admin;
 
 class BelongsToMany extends MultipleSelect
 {

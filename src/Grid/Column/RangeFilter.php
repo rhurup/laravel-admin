@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Column;
+namespace Rhurup\Admin\Grid\Column;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Grid\Model;
+use Rhurup\Admin\Admin;
+use Rhurup\Admin\Grid\Model;
 
 class RangeFilter extends Filter
 {

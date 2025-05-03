@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace Rhurup\Admin\Console;
 
-use Encore\Admin\Facades\Admin;
 use Illuminate\Console\Command;
+use Rhurup\Admin\Facades\Admin;
 
 class MenuCommand extends Command
 {

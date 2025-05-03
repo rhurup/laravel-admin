@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Middleware;
+namespace Rhurup\Admin\Middleware;
 
-use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
+use Rhurup\Admin\Facades\Admin;
 
 class Bootstrap
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace Rhurup\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Grid\Simple;
 use Illuminate\Contracts\Support\Renderable;
+use Rhurup\Admin\Admin;
+use Rhurup\Admin\Grid\Simple;
 
 class Modal extends AbstractDisplayer
 {

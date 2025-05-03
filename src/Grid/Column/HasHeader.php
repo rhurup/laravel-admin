@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Grid\Column;
+namespace Rhurup\Admin\Grid\Column;
 
-use Encore\Admin\Grid\Column;
-use Encore\Admin\Grid\Model;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
+use Rhurup\Admin\Grid\Column;
+use Rhurup\Admin\Grid\Model;
 
 trait HasHeader
 {

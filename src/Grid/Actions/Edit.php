@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Actions;
+namespace Rhurup\Admin\Grid\Actions;
 
-use Encore\Admin\Actions\RowAction;
+use Rhurup\Admin\Actions\RowAction;
 
 class Edit extends RowAction
 {

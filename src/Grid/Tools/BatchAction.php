@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace Rhurup\Admin\Grid\Tools;
 
-use Encore\Admin\Grid;
 use Illuminate\Contracts\Support\Renderable;
+use Rhurup\Admin\Grid;
 
 abstract class BatchAction implements Renderable
 {

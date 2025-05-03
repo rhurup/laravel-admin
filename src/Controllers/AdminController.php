@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace Rhurup\Admin\Controllers;
 
-use Encore\Admin\Layout\Content;
 use Illuminate\Routing\Controller;
+use Rhurup\Admin\Layout\Content;
 
 class AdminController extends Controller
 {

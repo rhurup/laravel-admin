@@ -21,12 +21,12 @@ class TestCase extends BaseTestCase
 
         $app->booting(function () {
             $loader = Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Admin', Encore\Admin\Facades\Admin::class);
+            $loader->alias('Admin', Rhurup\Admin\Facades\Admin::class);
         });
 
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
-        $app->register('Encore\Admin\AdminServiceProvider');
+        $app->register('Rhurup\Admin\AdminServiceProvider');
 
         return $app;
     }
@@ -50,7 +50,7 @@ class TestCase extends BaseTestCase
             $this->app['config']->set($key, $value);
         }
 
-        $this->artisan('vendor:publish', ['--provider' => 'Encore\Admin\AdminServiceProvider']);
+        $this->artisan('vendor:publish', ['--provider' => 'Rhurup\Admin\AdminServiceProvider']);
 
         Schema::defaultStringLength(191);
 
@@ -62,13 +62,13 @@ class TestCase extends BaseTestCase
             require $routes;
         }
 
-        require __DIR__.'/routes.php';
+        require __DIR__ . '/routes.php';
 
-        require __DIR__.'/seeds/factory.php';
+        require __DIR__ . '/seeds/factory.php';
 
-        //        \Encore\Admin\Admin::$css = [];
-        //        \Encore\Admin\Admin::$js = [];
-        //        \Encore\Admin\Admin::$script = [];
+        //        \Rhurup\Admin\Admin::$css = [];
+        //        \Rhurup\Admin\Admin::$js = [];
+        //        \Rhurup\Admin\Admin::$script = [];
     }
 
     protected function tearDown(): void

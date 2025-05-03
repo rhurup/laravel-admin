@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace Rhurup\Admin\Form;
 
-use Encore\Admin\Form;
 use Illuminate\Support\Collection;
+use Rhurup\Admin\Form;
 
 class Tab
 {

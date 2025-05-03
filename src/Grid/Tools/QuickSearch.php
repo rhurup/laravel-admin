@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace Rhurup\Admin\Grid\Tools;
 
-use Encore\Admin\Grid\Concerns\HasQuickSearch;
 use Illuminate\Support\Arr;
+use Rhurup\Admin\Grid\Concerns\HasQuickSearch;
 
 class QuickSearch extends AbstractTool
 {

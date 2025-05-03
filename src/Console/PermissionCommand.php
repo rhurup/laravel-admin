@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace Rhurup\Admin\Console;
 
-use Encore\Admin\Auth\Database\Permission;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Rhurup\Admin\Auth\Database\Permission;
 
 class PermissionCommand extends Command
 {

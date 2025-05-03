@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Actions;
+namespace Rhurup\Admin\Actions;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form\Field;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Rhurup\Admin\Admin;
+use Rhurup\Admin\Form\Field;
 
 /**
  * @method $this                success($title, $text = '', $options = [])

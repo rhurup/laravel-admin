@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Layout;
+namespace Rhurup\Admin\Layout;
 
-use Encore\Admin\Grid;
 use Illuminate\Contracts\Support\Renderable;
+use Rhurup\Admin\Grid;
 
 class Column implements Buildable
 {

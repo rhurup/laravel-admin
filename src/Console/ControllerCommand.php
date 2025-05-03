@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace Rhurup\Admin\Console;
 
 class ControllerCommand extends MakeCommand
 {

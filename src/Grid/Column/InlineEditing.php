@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Column;
+namespace Rhurup\Admin\Grid\Column;
 
-use Encore\Admin\Grid\Displayers;
+use Rhurup\Admin\Grid\Displayers;
 
 trait InlineEditing
 {

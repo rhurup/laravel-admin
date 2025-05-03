@@ -1,16 +1,15 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace Rhurup\Admin\Form\Field;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Form\Field;
-use Encore\Admin\Form\NestedForm;
-use Encore\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Database\Eloquent\Relations\HasMany as Relation;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Rhurup\Admin\Admin;
+use Rhurup\Admin\Form\Field;
+use Rhurup\Admin\Form\NestedForm;
+use Rhurup\Admin\Widgets\Form as WidgetForm;
 
 /**
  * Class HasMany.

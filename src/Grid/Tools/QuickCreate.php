@@ -1,15 +1,15 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace Rhurup\Admin\Grid\Tools;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form\Field;
-use Encore\Admin\Form\Field\MultipleSelect;
-use Encore\Admin\Form\Field\Select;
-use Encore\Admin\Form\Field\Text;
-use Encore\Admin\Grid;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use Rhurup\Admin\Admin;
+use Rhurup\Admin\Form\Field;
+use Rhurup\Admin\Form\Field\MultipleSelect;
+use Rhurup\Admin\Form\Field\Select;
+use Rhurup\Admin\Form\Field\Text;
+use Rhurup\Admin\Grid;
 
 class QuickCreate implements Renderable
 {

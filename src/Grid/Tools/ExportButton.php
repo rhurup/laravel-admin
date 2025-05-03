@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace Rhurup\Admin\Grid\Tools;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Grid;
+use Rhurup\Admin\Admin;
+use Rhurup\Admin\Grid;
 
 class ExportButton extends AbstractTool
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace Rhurup\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid\Filter;
 use Illuminate\Support\Collection;
+use Rhurup\Admin\Grid\Filter;
 
 trait HasFilter
 {

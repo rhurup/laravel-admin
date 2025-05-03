@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\Admin\Traits;
+namespace Rhurup\Admin\Traits;
 
-use Encore\Admin\Tree;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
+use Rhurup\Admin\Tree;
 
 trait ModelTree
 {

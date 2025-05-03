@@ -1,14 +1,14 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace Rhurup\Admin\Form;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Form\Field\Hidden;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Rhurup\Admin\Admin;
+use Rhurup\Admin\Form;
+use Rhurup\Admin\Form\Field\Hidden;
 
 /**
  * Class Builder.

@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace Rhurup\Admin\Grid\Tools;
 
-use Encore\Admin\Grid;
 use Illuminate\Support\Collection;
+use Rhurup\Admin\Grid;
 
 class FixColumns
 {

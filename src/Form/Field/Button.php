@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace Rhurup\Admin\Form\Field;
 
-use Encore\Admin\Form\Field;
+use Rhurup\Admin\Form\Field;
 
 class Button extends Field
 {

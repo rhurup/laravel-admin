@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace Rhurup\Admin\Widgets;
 
-use Encore\Admin\Facades\Admin;
 use Illuminate\Contracts\Support\Renderable;
+use Rhurup\Admin\Facades\Admin;
 
 class Tab extends Widget implements Renderable
 {

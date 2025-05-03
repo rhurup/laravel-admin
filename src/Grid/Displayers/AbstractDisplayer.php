@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace Rhurup\Admin\Grid\Displayers;
 
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Column;
 use Illuminate\Database\Eloquent\Model;
+use Rhurup\Admin\Grid;
+use Rhurup\Admin\Grid\Column;
 
 abstract class AbstractDisplayer
 {

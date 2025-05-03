@@ -1,15 +1,15 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace Rhurup\Admin\Grid;
 
-use Encore\Admin\Grid\Filter\AbstractFilter;
-use Encore\Admin\Grid\Filter\Layout\Layout;
-use Encore\Admin\Grid\Filter\Scope;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Rhurup\Admin\Grid\Filter\AbstractFilter;
+use Rhurup\Admin\Grid\Filter\Layout\Layout;
+use Rhurup\Admin\Grid\Filter\Scope;
 
 /**
  * Class Filter.
