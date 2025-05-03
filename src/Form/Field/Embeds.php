@@ -13,7 +13,7 @@ class Embeds extends Field
     /**
      * @var \Closure
      */
-    protected $builder = null;
+    protected $builder;
 
     /**
      * Create a new HasMany field instance.
@@ -25,12 +25,12 @@ class Embeds extends Field
     {
         $this->column = $column;
 
-        if (count($arguments) == 1) {
+        if (1 === count($arguments)) {
             $this->label = $this->formatLabel();
             $this->builder = $arguments[0];
         }
 
-        if (count($arguments) == 2) {
+        if (2 === count($arguments)) {
             list($this->label, $this->builder) = $arguments;
         }
     }
@@ -49,9 +49,6 @@ class Embeds extends Field
         return $form->setOriginal($this->original)->prepare($input);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getValidator(array $input)
     {
         if (!array_key_exists($this->column, $input)) {
@@ -171,10 +168,9 @@ class Embeds extends Field
     /**
      * Reset input key for validation.
      *
-     * @param array $input
      * @param array $column $column is the column name array set
      *
-     * @return void.
+     * @return void
      */
     public function resetInputKey(array &$input, array $column)
     {

@@ -46,17 +46,12 @@ class MultipleFile extends Field
 
     /**
      * Default directory for file to upload.
-     *
-     * @return mixed
      */
     public function defaultDirectory()
     {
         return config('admin.upload.directory.file');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getValidator(array $input)
     {
         if (request()->has(static::FILE_DELETE_FLAG)) {
@@ -82,8 +77,6 @@ class MultipleFile extends Field
 
     /**
      * Hydrate the files array.
-     *
-     * @param array $value
      *
      * @return array
      */
@@ -172,11 +165,9 @@ class MultipleFile extends Field
     /**
      * Prepare for each file.
      *
-     * @param UploadedFile $file
-     *
      * @return mixed|string
      */
-    protected function prepareForeach(UploadedFile $file = null)
+    protected function prepareForeach(?UploadedFile $file = null)
     {
         $this->name = $this->getStoreName($file);
 
@@ -232,7 +223,7 @@ class MultipleFile extends Field
 
             $preview = array_merge([
                 'caption' => basename($file),
-                'key'     => $index,
+                'key' => $index,
             ], $this->guessPreviewType($file));
 
             $config[] = $preview;
@@ -278,9 +269,9 @@ EOT;
 
         if ($this->fileActionSettings['showRemove']) {
             $text = [
-                'title'   => trans('admin.delete_confirm'),
+                'title' => trans('admin.delete_confirm'),
                 'confirm' => trans('admin.confirm'),
-                'cancel'  => trans('admin.cancel'),
+                'cancel' => trans('admin.cancel'),
             ];
 
             $this->script .= <<<EOT
@@ -311,7 +302,7 @@ EOT;
 
         if ($this->fileActionSettings['showDrag']) {
             $this->addVariables([
-                'sortable'  => true,
+                'sortable' => true,
                 'sort_flag' => static::FILE_SORT_FLAG,
             ]);
 

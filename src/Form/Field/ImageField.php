@@ -26,8 +26,6 @@ trait ImageField
 
     /**
      * Default directory for file to upload.
-     *
-     * @return mixed
      */
     public function defaultDirectory()
     {
@@ -38,8 +36,6 @@ trait ImageField
      * Execute Intervention calls.
      *
      * @param string $target
-     *
-     * @return mixed
      */
     public function callInterventionMethods($target)
     {
@@ -63,9 +59,9 @@ trait ImageField
      * @param string $method
      * @param array  $arguments
      *
-     * @throws \Exception
-     *
      * @return $this
+     *
+     * @throws \Exception
      */
     public function __call($method, $arguments)
     {
@@ -78,7 +74,7 @@ trait ImageField
         }
 
         $this->interventionCalls[] = [
-            'method'    => $method,
+            'method' => $method,
             'arguments' => $arguments,
         ];
 
@@ -99,20 +95,18 @@ trait ImageField
 
     /**
      * @param string|array $name
-     * @param int          $width
-     * @param int          $height
      *
      * @return $this
      */
-    public function thumbnail($name, int $width = null, int $height = null)
+    public function thumbnail($name, ?int $width = null, ?int $height = null)
     {
-        if (func_num_args() == 1 && is_array($name)) {
+        if (1 === func_num_args() && is_array($name)) {
             foreach ($name as $key => $size) {
                 if (count($size) >= 2) {
                     $this->thumbnails[$key] = $size;
                 }
             }
-        } elseif (func_num_args() == 3) {
+        } elseif (3 === func_num_args()) {
             $this->thumbnails[$name] = [$width, $height];
         }
 
@@ -122,7 +116,7 @@ trait ImageField
     /**
      * Destroy original thumbnail files.
      *
-     * @return void.
+     * @return void
      */
     public function destroyThumbnail()
     {
@@ -152,7 +146,7 @@ trait ImageField
     /**
      * Remove thumbnail file from disk.
      *
-     * @return void.
+     * @return void
      */
     public function destroyThumbnailFile($original, $name)
     {
@@ -171,8 +165,6 @@ trait ImageField
 
     /**
      * Upload file and delete original thumbnail files.
-     *
-     * @param UploadedFile $file
      *
      * @return $this
      */

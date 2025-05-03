@@ -54,7 +54,7 @@ class Text extends Field
             ->mountPicker()
             ->addVariables([
                 'prepend' => $this->prepend,
-                'append'  => $this->append,
+                'append' => $this->append,
             ]);
 
         return parent::render();

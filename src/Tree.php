@@ -2,7 +2,6 @@
 
 namespace Encore\Admin;
 
-use Closure;
 use Encore\Admin\Tree\Tools;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
@@ -35,7 +34,7 @@ class Tree implements Renderable
      * @var string
      */
     protected $view = [
-        'tree'   => 'admin::tree',
+        'tree' => 'admin::tree',
         'branch' => 'admin::tree.branch',
     ];
 
@@ -47,7 +46,7 @@ class Tree implements Renderable
     /**
      * @var null
      */
-    protected $branchCallback = null;
+    protected $branchCallback;
 
     /**
      * @var bool
@@ -78,10 +77,8 @@ class Tree implements Renderable
 
     /**
      * Menu constructor.
-     *
-     * @param Model|null $model
      */
-    public function __construct(Model $model = null, \Closure $callback = null)
+    public function __construct(?Model $model = null, ?\Closure $callback = null)
     {
         $this->model = $model;
 
@@ -124,8 +121,6 @@ class Tree implements Renderable
 
     /**
      * Set branch callback.
-     *
-     * @param \Closure $branchCallback
      *
      * @return $this
      */
@@ -203,7 +198,7 @@ class Tree implements Renderable
     {
         $tree = json_decode($serialize, true);
 
-        if (json_last_error() != JSON_ERROR_NONE) {
+        if (JSON_ERROR_NONE !== json_last_error()) {
             throw new \InvalidArgumentException(json_last_error_msg());
         }
 
@@ -220,12 +215,12 @@ class Tree implements Renderable
     protected function script()
     {
         $trans = [
-            'delete_confirm'    => str_replace("'", "\'", trans('admin.delete_confirm')),
-            'save_succeeded'    => str_replace("'", "\'", trans('admin.save_succeeded')),
+            'delete_confirm' => str_replace("'", "\'", trans('admin.delete_confirm')),
+            'save_succeeded' => str_replace("'", "\'", trans('admin.save_succeeded')),
             'refresh_succeeded' => str_replace("'", "\'", trans('admin.refresh_succeeded')),
-            'delete_succeeded'  => str_replace("'", "\'", trans('admin.delete_succeeded')),
-            'confirm'           => str_replace("'", "\'", trans('admin.confirm')),
-            'cancel'            => str_replace("'", "\'", trans('admin.cancel')),
+            'delete_succeeded' => str_replace("'", "\'", trans('admin.delete_succeeded')),
+            'confirm' => str_replace("'", "\'", trans('admin.confirm')),
+            'cancel' => str_replace("'", "\'", trans('admin.cancel')),
         ];
 
         $nestableOptions = json_encode($this->nestableOptions);
@@ -335,11 +330,11 @@ SCRIPT;
     public function variables()
     {
         return [
-            'id'         => $this->elementId,
-            'tools'      => $this->tools->render(),
-            'items'      => $this->getItems(),
-            'useCreate'  => $this->useCreate,
-            'useSave'    => $this->useSave,
+            'id' => $this->elementId,
+            'tools' => $this->tools->render(),
+            'items' => $this->getItems(),
+            'useCreate' => $this->useCreate,
+            'useSave' => $this->useSave,
             'useRefresh' => $this->useRefresh,
         ];
     }
@@ -347,11 +342,9 @@ SCRIPT;
     /**
      * Setup grid tools.
      *
-     * @param Closure $callback
-     *
      * @return void
      */
-    public function tools(Closure $callback)
+    public function tools(\Closure $callback)
     {
         call_user_func($callback, $this->tools);
     }
@@ -366,9 +359,9 @@ SCRIPT;
         Admin::script($this->script());
 
         view()->share([
-            'path'           => $this->path,
-            'keyName'        => $this->model->getKeyName(),
-            'branchView'     => $this->view['branch'],
+            'path' => $this->path,
+            'keyName' => $this->model->getKeyName(),
+            'branchView' => $this->view['branch'],
             'branchCallback' => $this->branchCallback,
         ]);
 

@@ -26,7 +26,7 @@ JS;
 
         $original = $this->getColumn()->getOriginal();
 
-        if ($value == $original) {
+        if ($value === $original) {
             return $value;
         }
 

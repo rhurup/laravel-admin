@@ -2,7 +2,6 @@
 
 namespace Encore\Admin\Grid\Concerns;
 
-use Closure;
 use Encore\Admin\Grid\Filter;
 use Illuminate\Support\Collection;
 
@@ -11,7 +10,7 @@ trait HasFilter
     /**
      * The grid Filter.
      *
-     * @var \Encore\Admin\Grid\Filter
+     * @var Filter
      */
     protected $filter;
 
@@ -67,10 +66,8 @@ trait HasFilter
 
     /**
      * Set the grid filter.
-     *
-     * @param Closure $callback
      */
-    public function filter(Closure $callback)
+    public function filter(\Closure $callback)
     {
         call_user_func($callback, $this->filter);
     }

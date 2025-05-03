@@ -59,7 +59,6 @@ class Form extends Interactor
     }
 
     /**
-     * @param $column
      * @param string   $label
      * @param \Closure $builder
      *
@@ -341,8 +340,6 @@ class Form extends Interactor
     }
 
     /**
-     * @param $message
-     *
      * @return $this
      */
     public function confirm($message)
@@ -389,8 +386,6 @@ class Form extends Interactor
     }
 
     /**
-     * @param Field $field
-     *
      * @return Field
      */
     protected function addField(Field $field)
@@ -407,12 +402,10 @@ class Form extends Interactor
     }
 
     /**
-     * @param Request $request
+     * @return void
      *
      * @throws ValidationException
      * @throws \Exception
-     *
-     * @return void
      */
     public function validate(Request $request)
     {
@@ -445,7 +438,7 @@ class Form extends Interactor
     /**
      * Merge validation messages from input validators.
      *
-     * @param \Illuminate\Validation\Validator[] $validators
+     * @param Validator[] $validators
      *
      * @return MessageBag
      */
@@ -480,9 +473,9 @@ class Form extends Interactor
     public function addModalHtml()
     {
         $data = [
-            'fields'     => $this->fields,
-            'title'      => $this->action->name(),
-            'modal_id'   => $this->getModalId(),
+            'fields' => $this->fields,
+            'title' => $this->action->name(),
+            'modal_id' => $this->getModalId(),
             'modal_size' => $this->modalSize,
         ];
 
@@ -553,13 +546,13 @@ SCRIPT;
         ];
 
         $settings = [
-            'type'                => 'question',
-            'showCancelButton'    => true,
+            'type' => 'question',
+            'showCancelButton' => true,
             'showLoaderOnConfirm' => true,
-            'confirmButtonText'   => $trans['submit'],
-            'cancelButtonText'    => $trans['cancel'],
-            'title'               => $this->confirm,
-            'text'                => '',
+            'confirmButtonText' => $trans['submit'],
+            'cancelButtonText' => $trans['cancel'],
+            'title' => $this->confirm,
+            'text' => '',
         ];
 
         $settings = trim(substr(json_encode($settings, JSON_PRETTY_PRINT), 1, -1));
@@ -628,9 +621,9 @@ SCRIPT;
     }
 
     /**
-     * @throws \Exception
-     *
      * @return string
+     *
+     * @throws \Exception
      */
     protected function buildActionPromise()
     {

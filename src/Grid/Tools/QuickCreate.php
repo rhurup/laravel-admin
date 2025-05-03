@@ -25,8 +25,6 @@ class QuickCreate implements Renderable
 
     /**
      * QuickCreate constructor.
-     *
-     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -198,8 +196,6 @@ class QuickCreate implements Renderable
     }
 
     /**
-     * @param Field $field
-     *
      * @return Field
      */
     protected function addField(Field $field)
@@ -302,7 +298,7 @@ SCRIPT;
 
         $vars = [
             'columnCount' => $columnCount,
-            'fields'      => $this->fields,
+            'fields' => $this->fields,
         ];
 
         return view('admin::grid.quick-create.form', $vars)->render();

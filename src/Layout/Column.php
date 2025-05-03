@@ -22,7 +22,6 @@ class Column implements Buildable
     /**
      * Column constructor.
      *
-     * @param $content
      * @param int $width
      */
     public function __construct($content, $width = 12)
@@ -33,9 +32,9 @@ class Column implements Buildable
             $this->append($content);
         }
 
-        ///// set width.
+        // /// set width.
         // if null, or $this->width is empty array, set as "md" => "12"
-        if (is_null($width) || (is_array($width) && count($width) === 0)) {
+        if (is_null($width) || (is_array($width) && 0 === count($width))) {
             $this->width['md'] = 12;
         }
         // $this->width is number(old version), set as "md" => $width
@@ -49,8 +48,6 @@ class Column implements Buildable
     /**
      * Append content to column.
      *
-     * @param $content
-     *
      * @return $this
      */
     public function append($content)
@@ -62,8 +59,6 @@ class Column implements Buildable
 
     /**
      * Add a row for column.
-     *
-     * @param $content
      *
      * @return Column
      */

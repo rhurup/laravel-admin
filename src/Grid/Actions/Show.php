@@ -7,7 +7,7 @@ use Encore\Admin\Actions\RowAction;
 class Show extends RowAction
 {
     /**
-     * @return array|null|string
+     * @return array|string|null
      */
     public function name()
     {

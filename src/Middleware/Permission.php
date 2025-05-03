@@ -17,15 +17,11 @@ class Permission
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     * @param array                    $args
-     *
-     * @return mixed
+     * @param array $args
      */
     public function handle(Request $request, \Closure $next, ...$args)
     {
-        if (config('admin.check_route_permission') === false) {
+        if (false === config('admin.check_route_permission')) {
             return $next($request);
         }
 
@@ -49,8 +45,6 @@ class Permission
     /**
      * If the route of current request contains a middleware prefixed with 'admin.permission:',
      * then it has a manually set permission middleware, we need to handle it first.
-     *
-     * @param Request $request
      *
      * @return bool
      */
@@ -78,7 +72,7 @@ class Permission
     /**
      * Determine if the request has a URI that should pass through verification.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
      * @return bool
      */
@@ -97,7 +91,7 @@ class Permission
         return collect($excepts)
             ->map('admin_base_path')
             ->contains(function ($except) use ($request) {
-                if ($except !== '/') {
+                if ('/' !== $except) {
                     $except = trim($except, '/');
                 }
 

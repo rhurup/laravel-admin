@@ -34,7 +34,6 @@ class Alert extends Widget implements Renderable
     /**
      * Alert constructor.
      *
-     * @param mixed  $content
      * @param string $title
      * @param string $style
      */
@@ -83,9 +82,9 @@ class Alert extends Widget implements Renderable
         $this->class("alert alert-{$this->style} alert-dismissable");
 
         return [
-            'title'      => $this->title,
-            'content'    => $this->content,
-            'icon'       => $this->icon,
+            'title' => $this->title,
+            'content' => $this->content,
+            'icon' => $this->icon,
             'attributes' => $this->formatAttributes(),
         ];
     }

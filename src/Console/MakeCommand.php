@@ -72,7 +72,7 @@ class MakeCommand extends GeneratorCommand
             return $this->output($this->modelName);
         }
 
-        if (parent::handle() !== false) {
+        if (false !== parent::handle()) {
             $path = Str::plural(Str::kebab(class_basename($this->modelName)));
 
             $this->line('');
@@ -100,9 +100,9 @@ class MakeCommand extends GeneratorCommand
     }
 
     /**
-     * @throws \ReflectionException
-     *
      * @return array|bool|string|null
+     *
+     * @throws \ReflectionException
      */
     protected function getTitle()
     {

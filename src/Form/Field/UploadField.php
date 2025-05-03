@@ -22,7 +22,7 @@ trait UploadField
      *
      * @var null
      */
-    protected $name = null;
+    protected $name;
 
     /**
      * Storage instance.
@@ -64,7 +64,7 @@ trait UploadField
      */
     protected $fileActionSettings = [
         'showRemove' => false,
-        'showDrag'   => false,
+        'showDrag' => false,
     ];
 
     /**
@@ -78,15 +78,15 @@ trait UploadField
      * @var array
      */
     protected $fileTypes = [
-        'image'  => '/^(gif|png|jpe?g|svg|webp)$/i',
-        'html'   => '/^(htm|html)$/i',
+        'image' => '/^(gif|png|jpe?g|svg|webp)$/i',
+        'html' => '/^(htm|html)$/i',
         'office' => '/^(docx?|xlsx?|pptx?|pps|potx?)$/i',
-        'gdocs'  => '/^(docx?|xlsx?|pptx?|pps|potx?|rtf|ods|odt|pages|ai|dxf|ttf|tiff?|wmf|e?ps)$/i',
-        'text'   => '/^(txt|md|csv|nfo|ini|json|php|js|css|ts|sql)$/i',
-        'video'  => '/^(og?|mp4|webm|mp?g|mov|3gp)$/i',
-        'audio'  => '/^(og?|mp3|mp?g|wav)$/i',
-        'pdf'    => '/^(pdf)$/i',
-        'flash'  => '/^(swf)$/i',
+        'gdocs' => '/^(docx?|xlsx?|pptx?|pps|potx?|rtf|ods|odt|pages|ai|dxf|ttf|tiff?|wmf|e?ps)$/i',
+        'text' => '/^(txt|md|csv|nfo|ini|json|php|js|css|ts|sql)$/i',
+        'video' => '/^(og?|mp4|webm|mp?g|mov|3gp)$/i',
+        'audio' => '/^(og?|mp3|mp?g|wav)$/i',
+        'pdf' => '/^(pdf)$/i',
+        'flash' => '/^(swf)$/i',
     ];
 
     /**
@@ -97,7 +97,7 @@ trait UploadField
     /**
      * Initialize the storage instance.
      *
-     * @return void.
+     * @return void
      */
     protected function initStorage()
     {
@@ -112,20 +112,20 @@ trait UploadField
     protected function setupDefaultOptions()
     {
         $defaults = [
-            'overwriteInitial'     => false,
+            'overwriteInitial' => false,
             'initialPreviewAsData' => true,
-            'msgPlaceholder'       => trans('admin.choose_file'),
-            'browseLabel'          => trans('admin.browse'),
-            'cancelLabel'          => trans('admin.cancel'),
-            'showRemove'           => false,
-            'showUpload'           => false,
-            'showCancel'           => false,
-            'dropZoneEnabled'      => false,
-            'deleteExtraData'      => [
+            'msgPlaceholder' => trans('admin.choose_file'),
+            'browseLabel' => trans('admin.browse'),
+            'cancelLabel' => trans('admin.cancel'),
+            'showRemove' => false,
+            'showUpload' => false,
+            'showCancel' => false,
+            'dropZoneEnabled' => false,
+            'deleteExtraData' => [
                 $this->formatName($this->column) => static::FILE_DELETE_FLAG,
-                static::FILE_DELETE_FLAG         => '',
-                '_token'                         => csrf_token(),
-                '_method'                        => 'PUT',
+                static::FILE_DELETE_FLAG => '',
+                '_token' => csrf_token(),
+                '_method' => 'PUT',
             ],
         ];
 
@@ -159,7 +159,7 @@ trait UploadField
         $ext = strtok(strtolower(pathinfo($file, PATHINFO_EXTENSION)), '?');
 
         foreach ($this->fileTypes as $type => $pattern) {
-            if (preg_match($pattern, $ext) === 1) {
+            if (1 === preg_match($pattern, $ext)) {
                 $filetype = $type;
                 break;
             }
@@ -167,11 +167,11 @@ trait UploadField
 
         $extra = ['type' => $filetype];
 
-        if ($filetype == 'video') {
+        if ('video' === $filetype) {
             $extra['filetype'] = "video/{$ext}";
         }
 
-        if ($filetype == 'audio') {
+        if ('audio' === $filetype) {
             $extra['filetype'] = "audio/{$ext}";
         }
 
@@ -239,9 +239,9 @@ trait UploadField
      *
      * @param string $disk Disks defined in `config/filesystems.php`.
      *
-     * @throws \Exception
-     *
      * @return $this
+     *
+     * @throws \Exception
      */
     public function disk($disk)
     {
@@ -267,7 +267,7 @@ trait UploadField
      * Specify the directory and name for upload file.
      *
      * @param string      $directory
-     * @param null|string $name
+     * @param string|null $name
      *
      * @return $this
      */
@@ -339,8 +339,6 @@ trait UploadField
     /**
      * Get store name of upload file.
      *
-     * @param UploadedFile $file
-     *
      * @return string
      */
     protected function getStoreName(UploadedFile $file)
@@ -394,10 +392,6 @@ trait UploadField
 
     /**
      * Upload file and delete original file.
-     *
-     * @param UploadedFile $file
-     *
-     * @return mixed
      */
     protected function upload(UploadedFile $file)
     {
@@ -413,8 +407,6 @@ trait UploadField
     /**
      * If name already exists, rename it.
      *
-     * @param $file
-     *
      * @return void
      */
     public function renameIfExists(UploadedFile $file)
@@ -426,8 +418,6 @@ trait UploadField
 
     /**
      * Get file visit url.
-     *
-     * @param $path
      *
      * @return string
      */
@@ -451,8 +441,6 @@ trait UploadField
     /**
      * Generate a unique name for uploaded file.
      *
-     * @param UploadedFile $file
-     *
      * @return string
      */
     protected function generateUniqueName(UploadedFile $file)
@@ -462,8 +450,6 @@ trait UploadField
 
     /**
      * Generate a sequence name for uploaded file.
-     *
-     * @param UploadedFile $file
      *
      * @return string
      */
@@ -475,7 +461,7 @@ trait UploadField
         $new = sprintf('%s_%s.%s', $original, $index, $extension);
 
         while ($this->storage->exists("{$this->getDirectory()}/$new")) {
-            $index++;
+            ++$index;
             $new = sprintf('%s_%s.%s', $original, $index, $extension);
         }
 
@@ -485,7 +471,7 @@ trait UploadField
     /**
      * Destroy original files.
      *
-     * @return void.
+     * @return void
      */
     public function destroy()
     {

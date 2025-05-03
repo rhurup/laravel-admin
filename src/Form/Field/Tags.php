@@ -23,17 +23,17 @@ class Tags extends Field
     /**
      * @var string
      */
-    protected $visibleColumn = null;
+    protected $visibleColumn;
 
     /**
      * @var string
      */
-    protected $key = null;
+    protected $key;
 
     /**
      * @var \Closure
      */
-    protected $saveAction = null;
+    protected $saveAction;
 
     /**
      * @var array
@@ -54,9 +54,6 @@ class Tags extends Field
         '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min.js',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function fill($data)
     {
         $this->value = Arr::get($data, $this->column);
@@ -74,9 +71,6 @@ class Tags extends Field
 
     /**
      * Set visible column and key of data.
-     *
-     * @param $visibleColumn
-     * @param $key
      *
      * @return $this
      */
@@ -140,8 +134,6 @@ class Tags extends Field
     /**
      * Set save Action.
      *
-     * @param \Closure $saveAction
-     *
      * @return $this
      */
     public function saving(\Closure $saveAction)
@@ -151,9 +143,6 @@ class Tags extends Field
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepare($value)
     {
         $value = array_filter($value, 'strlen');
@@ -172,8 +161,6 @@ class Tags extends Field
     /**
      * Get or set value for this field.
      *
-     * @param mixed $value
-     *
      * @return $this|array|mixed
      */
     public function value($value = null)
@@ -187,9 +174,6 @@ class Tags extends Field
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         if (!$this->shouldRender()) {
@@ -205,7 +189,7 @@ class Tags extends Field
         }
 
         return parent::fieldRender([
-            'options'    => $options,
+            'options' => $options,
             'keyAsValue' => $this->keyAsValue,
         ]);
     }

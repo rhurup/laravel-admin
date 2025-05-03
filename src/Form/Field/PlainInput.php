@@ -15,8 +15,6 @@ trait PlainInput
     protected $append;
 
     /**
-     * @param mixed $string
-     *
      * @return $this
      */
     public function prepend($string)
@@ -29,8 +27,6 @@ trait PlainInput
     }
 
     /**
-     * @param mixed $string
-     *
      * @return $this
      */
     public function append($string)

@@ -96,7 +96,6 @@ abstract class AbstractFilter
     /**
      * AbstractFilter constructor.
      *
-     * @param $column
      * @param string $label
      */
     public function __construct($column, $label = '')
@@ -143,7 +142,7 @@ abstract class AbstractFilter
     {
         $columns = explode('.', $column);
 
-        if (count($columns) == 1) {
+        if (1 === count($columns)) {
             $name = $columns[0];
         } else {
             $name = array_shift($columns);
@@ -160,8 +159,6 @@ abstract class AbstractFilter
     /**
      * Format id.
      *
-     * @param $columns
-     *
      * @return array|string
      */
     protected function formatId($columns)
@@ -169,9 +166,6 @@ abstract class AbstractFilter
         return str_replace('.', '_', $columns);
     }
 
-    /**
-     * @param Filter $filter
-     */
     public function setParent(Filter $filter)
     {
         $this->parent = $filter;
@@ -260,7 +254,7 @@ abstract class AbstractFilter
     /**
      * Select filter.
      *
-     * @param array|\Illuminate\Support\Collection $options
+     * @param array|Collection $options
      *
      * @return Select
      */
@@ -270,7 +264,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array|\Illuminate\Support\Collection $options
+     * @param array|Collection $options
      *
      * @return MultipleSelect
      */
@@ -280,7 +274,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array|\Illuminate\Support\Collection $options
+     * @param array|Collection $options
      *
      * @return Radio
      */
@@ -290,7 +284,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array|\Illuminate\Support\Collection $options
+     * @param array|Collection $options
      *
      * @return Checkbox
      */
@@ -302,7 +296,7 @@ abstract class AbstractFilter
     /**
      * Datetime filter.
      *
-     * @param array|\Illuminate\Support\Collection $options
+     * @param array|Collection $options
      *
      * @return DateTime
      */
@@ -363,10 +357,6 @@ abstract class AbstractFilter
 
     /**
      * Set presenter object of filter.
-     *
-     * @param Presenter $presenter
-     *
-     * @return mixed
      */
     protected function setPresenter(Presenter $presenter)
     {
@@ -454,14 +444,12 @@ abstract class AbstractFilter
 
     /**
      * Build conditions of filter.
-     *
-     * @return mixed
      */
     protected function buildCondition()
     {
         $column = explode('.', $this->column);
 
-        if (count($column) == 1) {
+        if (1 === count($column)) {
             return [$this->query => func_get_args()];
         }
 
@@ -493,11 +481,11 @@ abstract class AbstractFilter
     protected function variables()
     {
         return array_merge([
-            'id'        => $this->id,
-            'column'    => $this->column,
-            'name'      => $this->formatName($this->column),
-            'label'     => $this->label,
-            'value'     => $this->value ?: $this->defaultValue,
+            'id' => $this->id,
+            'column' => $this->column,
+            'name' => $this->formatName($this->column),
+            'label' => $this->label,
+            'value' => $this->value ?: $this->defaultValue,
             'presenter' => $this->presenter(),
         ], $this->presenter()->variables());
     }
@@ -523,12 +511,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param $method
-     * @param $params
-     *
      * @throws \Exception
-     *
-     * @return mixed
      */
     public function __call($method, $params)
     {

@@ -45,9 +45,6 @@ abstract class Selectable
 
     /**
      * Selectable constructor.
-     *
-     * @param $key
-     * @param $multiple
      */
     public function __construct($multiple = false, $key = '')
     {
@@ -68,8 +65,6 @@ abstract class Selectable
     }
 
     /**
-     * @param bool $multiple
-     *
      * @return string
      */
     public function render()
@@ -119,7 +114,7 @@ abstract class Selectable
         }
 
         $this->tools(function (Tools $tools) {
-            $tools->append(new Grid\Selectable\BrowserBtn());
+            $tools->append(new Selectable\BrowserBtn());
         });
 
         return $this->grid;
@@ -155,12 +150,6 @@ BTN;
         }
     }
 
-    /**
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return mixed
-     */
     public function __call(string $method, array $arguments = [])
     {
         return $this->grid->{$method}(...$arguments);

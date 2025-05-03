@@ -24,8 +24,6 @@ class Tab
 
     /**
      * Tab constructor.
-     *
-     * @param Form $form
      */
     public function __construct(Form $form)
     {
@@ -37,9 +35,8 @@ class Tab
     /**
      * Append a tab section.
      *
-     * @param string   $title
-     * @param \Closure $content
-     * @param bool     $active
+     * @param string $title
+     * @param bool   $active
      *
      * @return $this
      */
@@ -56,8 +53,6 @@ class Tab
 
     /**
      * Collect fields under current tab.
-     *
-     * @param \Closure $content
      *
      * @return Collection
      */

@@ -97,9 +97,6 @@ class Radio extends Field
         return $this->options($values);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->script = "$('{$this->getElementClassSelector()}').iCheck({radioClass:'iradio_minimal-blue'});";

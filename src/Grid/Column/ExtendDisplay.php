@@ -39,26 +39,26 @@ trait ExtendDisplay
      * @var array
      */
     public static $displayers = [
-        'editable'      => Displayers\Editable::class,
-        'image'         => Displayers\Image::class,
-        'label'         => Displayers\Label::class,
-        'button'        => Displayers\Button::class,
-        'link'          => Displayers\Link::class,
-        'badge'         => Displayers\Badge::class,
-        'progressBar'   => Displayers\ProgressBar::class,
-        'progress'      => Displayers\ProgressBar::class,
-        'orderable'     => Displayers\Orderable::class,
-        'table'         => Displayers\Table::class,
-        'expand'        => Displayers\Expand::class,
-        'modal'         => Displayers\Modal::class,
-        'carousel'      => Displayers\Carousel::class,
-        'downloadable'  => Displayers\Downloadable::class,
-        'copyable'      => Displayers\Copyable::class,
-        'qrcode'        => Displayers\QRCode::class,
-        'prefix'        => Displayers\Prefix::class,
-        'suffix'        => Displayers\Suffix::class,
-        'secret'        => Displayers\Secret::class,
-        'limit'         => Displayers\Limit::class,
+        'editable' => Displayers\Editable::class,
+        'image' => Displayers\Image::class,
+        'label' => Displayers\Label::class,
+        'button' => Displayers\Button::class,
+        'link' => Displayers\Link::class,
+        'badge' => Displayers\Badge::class,
+        'progressBar' => Displayers\ProgressBar::class,
+        'progress' => Displayers\ProgressBar::class,
+        'orderable' => Displayers\Orderable::class,
+        'table' => Displayers\Table::class,
+        'expand' => Displayers\Expand::class,
+        'modal' => Displayers\Modal::class,
+        'carousel' => Displayers\Carousel::class,
+        'downloadable' => Displayers\Downloadable::class,
+        'copyable' => Displayers\Copyable::class,
+        'qrcode' => Displayers\QRCode::class,
+        'prefix' => Displayers\Prefix::class,
+        'suffix' => Displayers\Suffix::class,
+        'secret' => Displayers\Secret::class,
+        'limit' => Displayers\Limit::class,
     ];
 
     /**
@@ -68,9 +68,6 @@ trait ExtendDisplay
 
     /**
      * Extend column displayer.
-     *
-     * @param $name
-     * @param $displayer
      */
     public static function extend($name, $displayer)
     {
@@ -102,12 +99,10 @@ trait ExtendDisplay
 
     /**
      * Bind search query to grid model.
-     *
-     * @param Model $model
      */
     public function bindSearchQuery(Model $model)
     {
-        if ($this->searchable && ($value = request($this->getName())) != '') {
+        if ($this->searchable && ($value = request($this->getName())) !== '') {
             $model->where($this->getName(), $value);
         }
     }
@@ -115,8 +110,7 @@ trait ExtendDisplay
     /**
      * Display column using array value map.
      *
-     * @param array $values
-     * @param null  $default
+     * @param null $default
      *
      * @return $this
      */
@@ -133,8 +127,6 @@ trait ExtendDisplay
 
     /**
      * Replace output value with giving map.
-     *
-     * @param array $replacements
      *
      * @return $this
      */
@@ -244,7 +236,6 @@ trait ExtendDisplay
     /**
      * Display column as an font-awesome icon based on it's value.
      *
-     * @param array  $setting
      * @param string $default
      *
      * @return $this
@@ -285,8 +276,7 @@ trait ExtendDisplay
     /**
      * Display column as boolean , `✓` for true, and `✗` for false.
      *
-     * @param array $map
-     * @param bool  $default
+     * @param bool $default
      *
      * @return $this
      */

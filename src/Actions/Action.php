@@ -214,9 +214,6 @@ abstract class Action implements Renderable
         return $this->method;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCalledClass()
     {
         return str_replace('\\', '_', get_called_class());
@@ -247,8 +244,6 @@ abstract class Action implements Renderable
     }
 
     /**
-     * @param Request $request
-     *
      * @return $this
      */
     public function validate(Request $request)
@@ -260,9 +255,6 @@ abstract class Action implements Renderable
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     protected function addScript()
     {
         if (!is_null($this->interactor)) {
@@ -399,8 +391,6 @@ SCRIPT;
      * @param array  $arguments
      *
      * @throws \Exception
-     *
-     * @return mixed
      */
     public function __call($method, $arguments = [])
     {
@@ -418,9 +408,6 @@ SCRIPT;
     {
     }
 
-    /**
-     * @return mixed
-     */
     public function render()
     {
         $this->addScript();

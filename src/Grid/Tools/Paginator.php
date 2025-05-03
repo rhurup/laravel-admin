@@ -8,9 +8,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class Paginator extends AbstractTool
 {
     /**
-     * @var \Illuminate\Pagination\LengthAwarePaginator
+     * @var LengthAwarePaginator
      */
-    protected $paginator = null;
+    protected $paginator;
 
     /**
      * @var bool
@@ -19,8 +19,6 @@ class Paginator extends AbstractTool
 
     /**
      * Create a new Paginator instance.
-     *
-     * @param Grid $grid
      */
     public function __construct(Grid $grid, $perPageSelector = true)
     {
@@ -77,7 +75,7 @@ class Paginator extends AbstractTool
     {
         $parameters = [
             'first' => $this->paginator->firstItem(),
-            'last'  => $this->paginator->lastItem(),
+            'last' => $this->paginator->lastItem(),
             'total' => $this->paginator->total(),
         ];
 

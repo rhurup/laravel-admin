@@ -26,9 +26,6 @@ abstract class ExcelExporter extends AbstractExporter implements FromQuery, With
      */
     protected $columns = [];
 
-    /**
-     * @return array
-     */
     public function headings(): array
     {
         if (!empty($this->columns)) {
@@ -58,9 +55,6 @@ abstract class ExcelExporter extends AbstractExporter implements FromQuery, With
         return $this->getQuery();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function export()
     {
         $this->download($this->fileName)->prepare(request())->send();

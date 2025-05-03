@@ -2,7 +2,6 @@
 
 namespace Encore\Admin\Layout;
 
-use Closure;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -42,12 +41,10 @@ class Content implements Renderable
 
     /**
      * Content constructor.
-     *
-     * @param Closure|null $callback
      */
-    public function __construct(\Closure $callback = null)
+    public function __construct(?\Closure $callback = null)
     {
-        if ($callback instanceof Closure) {
+        if ($callback instanceof \Closure) {
             $callback($this);
         }
     }
@@ -109,17 +106,15 @@ class Content implements Renderable
     /**
      * Validate content breadcrumb.
      *
-     * @param array $breadcrumb
+     * @return bool
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     protected function validateBreadcrumb(array $breadcrumb)
     {
         foreach ($breadcrumb as $item) {
             if (!is_array($item) || !Arr::has($item, 'text')) {
-                throw new  \Exception('Breadcrumb format error!');
+                throw new \Exception('Breadcrumb format error!');
             }
         }
 
@@ -128,8 +123,6 @@ class Content implements Renderable
 
     /**
      * Alias of method row.
-     *
-     * @param mixed $content
      *
      * @return $this
      */
@@ -141,13 +134,11 @@ class Content implements Renderable
     /**
      * Add one row for content body.
      *
-     * @param $content
-     *
      * @return $this
      */
     public function row($content)
     {
-        if ($content instanceof Closure) {
+        if ($content instanceof \Closure) {
             $row = new Row();
             call_user_func($content, $row);
             $this->addRow($row);
@@ -183,8 +174,6 @@ class Content implements Renderable
     }
 
     /**
-     * @param $var
-     *
      * @return $this
      */
     public function dump($var)
@@ -194,8 +183,6 @@ class Content implements Renderable
 
     /**
      * Add Row.
-     *
-     * @param Row $row
      */
     protected function addRow(Row $row)
     {
@@ -302,12 +289,12 @@ class Content implements Renderable
     public function render()
     {
         $items = [
-            'header'      => $this->title,
+            'header' => $this->title,
             'description' => $this->description,
-            'breadcrumb'  => $this->breadcrumb,
-            '_content_'   => $this->build(),
-            '_view_'      => $this->view,
-            '_user_'      => $this->getUserData(),
+            'breadcrumb' => $this->breadcrumb,
+            '_content_' => $this->build(),
+            '_view_' => $this->view,
+            '_user_' => $this->getUserData(),
         ];
 
         return view('admin::content', $items)->render();

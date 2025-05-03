@@ -36,9 +36,6 @@ class Toastr
     }
 
     /**
-     * @param $option
-     * @param $value
-     *
      * @return $this
      */
     protected function options($option, $value)
@@ -49,8 +46,6 @@ class Toastr
     }
 
     /**
-     * @param $position
-     *
      * @return Toastr
      */
     protected function position($position)
@@ -141,7 +136,7 @@ class Toastr
 
         return [
             'toastr' => [
-                'type'    => $this->type,
+                'type' => $this->type,
                 'content' => $this->content,
                 'options' => $this->options,
             ],

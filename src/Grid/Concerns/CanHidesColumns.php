@@ -18,8 +18,6 @@ trait CanHidesColumns
     /**
      * Remove column selector on grid.
      *
-     * @param bool $disable
-     *
      * @return Grid|mixed
      */
     public function disableColumnSelector(bool $disable = true)

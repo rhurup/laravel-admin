@@ -32,7 +32,7 @@ class Model
     /**
      * Array of queries of the eloquent model.
      *
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $queries;
 
@@ -95,11 +95,8 @@ class Model
 
     /**
      * Create a new grid model instance.
-     *
-     * @param EloquentModel $model
-     * @param Grid          $grid
      */
-    public function __construct(EloquentModel $model, Grid $grid = null)
+    public function __construct(EloquentModel $model, ?Grid $grid = null)
     {
         $this->model = $model;
 
@@ -215,8 +212,6 @@ class Model
     /**
      * Set parent grid instance.
      *
-     * @param Grid $grid
-     *
      * @return $this
      */
     public function setGrid(Grid $grid)
@@ -237,8 +232,6 @@ class Model
     }
 
     /**
-     * @param Relation $relation
-     *
      * @return $this
      */
     public function setRelation(Relation $relation)
@@ -275,11 +268,9 @@ class Model
     /**
      * Set collection callback.
      *
-     * @param \Closure $callback
-     *
      * @return $this
      */
-    public function collection(\Closure $callback = null)
+    public function collection(?\Closure $callback = null)
     {
         $this->collectionCallback = $callback;
 
@@ -327,7 +318,7 @@ class Model
         $this->setSort();
 
         $this->queries->reject(function ($query) {
-            return $query['method'] == 'paginate';
+            return 'paginate' === $query['method'];
         })->each(function ($query) {
             $this->model = $this->model->{$query['method']}(...$query['arguments']);
         });
@@ -337,8 +328,6 @@ class Model
 
     /**
      * Add conditions to grid model.
-     *
-     * @param array $conditions
      *
      * @return $this
      */
@@ -362,9 +351,9 @@ class Model
     }
 
     /**
-     * @throws \Exception
-     *
      * @return Collection
+     *
+     * @throws \Exception
      */
     protected function get()
     {
@@ -421,8 +410,6 @@ class Model
     /**
      * If current page is greater than last page, then redirect to last page.
      *
-     * @param LengthAwarePaginator $paginator
-     *
      * @return void
      */
     protected function handleInvalidPage(LengthAwarePaginator $paginator)
@@ -446,17 +433,17 @@ class Model
         $paginate = $this->findQueryByMethod('paginate');
 
         $this->queries = $this->queries->reject(function ($query) {
-            return $query['method'] == 'paginate';
+            return 'paginate' === $query['method'];
         });
 
         if (!$this->usePaginate) {
             $query = [
-                'method'    => 'get',
+                'method' => 'get',
                 'arguments' => [],
             ];
         } else {
             $query = [
-                'method'    => 'paginate',
+                'method' => 'paginate',
                 'arguments' => $this->resolvePerPage($paginate),
             ];
         }
@@ -497,14 +484,12 @@ class Model
     /**
      * Find query by method name.
      *
-     * @param $method
-     *
      * @return static
      */
     protected function findQueryByMethod($method)
     {
         return $this->queries->first(function ($query) use ($method) {
-            return $query['method'] == $method;
+            return $query['method'] === $method;
         });
     }
 
@@ -521,7 +506,7 @@ class Model
         }
 
         $columnName = $this->sort['column'] ?? null;
-        if ($columnName === null || empty($this->sort['type'])) {
+        if (null === $columnName || empty($this->sort['type'])) {
             return;
         }
 
@@ -530,15 +515,15 @@ class Model
             // relationship should be camel case
             $columnName = Str::camel(Str::before($columnName, '.'));
 
-            return $query['method'] === 'with' && in_array($columnName, $query['arguments'], true);
+            return 'with' === $query['method'] && in_array($columnName, $query['arguments'], true);
         });
-        if ($columnNameContainsDots === true && $isRelation) {
+        if (true === $columnNameContainsDots && $isRelation) {
             $this->setRelationSort($columnName);
         } else {
             $this->resetOrderBy();
 
-            if ($columnNameContainsDots === true) {
-                //json
+            if (true === $columnNameContainsDots) {
+                // json
                 $this->resetOrderBy();
                 $explodedCols = explode('.', $this->sort['column']);
                 $col = array_shift($explodedCols);
@@ -558,7 +543,7 @@ class Model
             }
 
             $this->queries->push([
-                'method'    => $method,
+                'method' => $method,
                 'arguments' => $arguments,
             ]);
         }
@@ -578,24 +563,24 @@ class Model
         $relationName = Str::camel($relationName);
 
         if ($this->queries->contains(function ($query) use ($relationName) {
-            return $query['method'] == 'with' && in_array($relationName, $query['arguments']);
+            return 'with' === $query['method'] && in_array($relationName, $query['arguments']);
         })) {
             $relation = $this->model->$relationName();
 
             $this->queries->push([
-                'method'    => 'select',
+                'method' => 'select',
                 'arguments' => [$this->model->getTable().'.*'],
             ]);
 
             $this->queries->push([
-                'method'    => 'join',
+                'method' => 'join',
                 'arguments' => $this->joinParameters($relation),
             ]);
 
             $this->resetOrderBy();
 
             $this->queries->push([
-                'method'    => 'orderBy',
+                'method' => 'orderBy',
                 'arguments' => [
                     $relation->getRelated()->getTable().'.'.$relationColumn,
                     $this->sort['type'],
@@ -612,7 +597,7 @@ class Model
     public function resetOrderBy()
     {
         $this->queries = $this->queries->reject(function ($query) {
-            return $query['method'] == 'orderBy' || $query['method'] == 'orderByDesc';
+            return 'orderBy' === $query['method'] || 'orderByDesc' === $query['method'];
         });
     }
 
@@ -621,11 +606,9 @@ class Model
      *
      * `HasOne` and `BelongsTo` relation has different join parameters.
      *
-     * @param Relation $relation
+     * @return array
      *
      * @throws \Exception
-     *
-     * @return array
      */
     protected function joinParameters(Relation $relation)
     {
@@ -663,18 +646,13 @@ class Model
     public function __call($method, $arguments)
     {
         $this->queries->push([
-            'method'    => $method,
+            'method' => $method,
             'arguments' => $arguments,
         ]);
 
         return $this;
     }
 
-    /**
-     * @param $key
-     *
-     * @return mixed
-     */
     public function __get($key)
     {
         $data = $this->buildData();

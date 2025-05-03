@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class Delete extends RowAction
 {
     /**
-     * @return array|null|string
+     * @return array|string|null
      */
     public function name()
     {
@@ -18,14 +18,12 @@ class Delete extends RowAction
     }
 
     /**
-     * @param Model $model
-     *
      * @return Response
      */
     public function handle(Model $model)
     {
         $trans = [
-            'failed'    => trans('admin.delete_failed'),
+            'failed' => trans('admin.delete_failed'),
             'succeeded' => trans('admin.delete_succeeded'),
         ];
 

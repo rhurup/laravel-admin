@@ -81,7 +81,6 @@ class Show implements Renderable
      * Show constructor.
      *
      * @param Model $model
-     * @param mixed $builder
      */
     public function __construct($model, $builder = null)
     {
@@ -98,10 +97,8 @@ class Show implements Renderable
 
     /**
      * Initialize with user pre-defined default disables, etc.
-     *
-     * @param \Closure $callback
      */
-    public static function init(\Closure $callback = null)
+    public static function init(?\Closure $callback = null)
     {
         static::$initCallback = $callback;
     }
@@ -162,8 +159,6 @@ class Show implements Renderable
     /**
      * Add multiple fields.
      *
-     * @param array $fields
-     *
      * @return $this
      */
     public function fields(array $fields = [])
@@ -196,7 +191,7 @@ class Show implements Renderable
      *
      * @param string          $name
      * @param string|\Closure $label
-     * @param null|\Closure   $builder
+     * @param \Closure|null   $builder
      *
      * @return Relation
      */
@@ -266,7 +261,7 @@ class Show implements Renderable
 
         $this->fields = $this->fields->filter(
             function (Field $field) use ($name) {
-                return $field->getName() != $name;
+                return $field->getName() !== $name;
             }
         );
     }
@@ -284,7 +279,7 @@ class Show implements Renderable
 
         $this->relations = $this->relations->filter(
             function (Relation $relation) use ($name) {
-                return $relation->getName() != $name;
+                return $relation->getName() !== $name;
             }
         );
     }
@@ -439,11 +434,11 @@ class Show implements Renderable
         ) {
             $this->model->with($method);
 
-            if (count($arguments) == 1 && $arguments[0] instanceof \Closure) {
+            if (1 === count($arguments) && $arguments[0] instanceof \Closure) {
                 return $this->addRelation($method, $arguments[0]);
             }
 
-            if (count($arguments) == 2 && $arguments[1] instanceof \Closure) {
+            if (2 === count($arguments) && $arguments[1] instanceof \Closure) {
                 return $this->addRelation($method, $arguments[1], $arguments[0]);
             }
 
@@ -457,15 +452,15 @@ class Show implements Renderable
             || $relation instanceof BelongsToMany
             || $relation instanceof HasManyThrough
         ) {
-            if (empty($arguments) || (count($arguments) == 1 && is_string($arguments[0]))) {
+            if (empty($arguments) || (1 === count($arguments) && is_string($arguments[0]))) {
                 return $this->showRelationAsField($method, $arguments[0] ?? '');
             }
 
             $this->model->with($method);
 
-            if (count($arguments) == 1 && is_callable($arguments[0])) {
+            if (1 === count($arguments) && is_callable($arguments[0])) {
                 return $this->addRelation($method, $arguments[0]);
-            } elseif (count($arguments) == 2 && is_callable($arguments[1])) {
+            } elseif (2 === count($arguments) && is_callable($arguments[1])) {
                 return $this->addRelation($method, $arguments[1], $arguments[0]);
             }
 
@@ -526,7 +521,7 @@ class Show implements Renderable
         $this->relations->each->setModel($this->model);
 
         $data = [
-            'panel'     => $this->panel->fill($this->fields),
+            'panel' => $this->panel->fill($this->fields),
             'relations' => $this->relations,
         ];
 

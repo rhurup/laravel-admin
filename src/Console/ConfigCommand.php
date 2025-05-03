@@ -21,9 +21,6 @@ class ConfigCommand extends Command
      */
     protected $description = 'Compare the difference between the admin config file and the original';
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle()
     {
         $path = $this->argument('path') ?: 'config/admin.php';

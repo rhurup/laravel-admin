@@ -18,8 +18,6 @@ class CascadeGroup extends Field
 
     /**
      * CascadeGroup constructor.
-     *
-     * @param array $dependency
      */
     public function __construct(array $dependency)
     {
@@ -27,13 +25,11 @@ class CascadeGroup extends Field
     }
 
     /**
-     * @param Field $field
-     *
      * @return bool
      */
     public function dependsOn(Field $field)
     {
-        return $this->dependency['column'] == $field->column();
+        return $this->dependency['column'] === $field->column();
     }
 
     /**

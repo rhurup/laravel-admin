@@ -12,8 +12,6 @@ use Encore\Admin\Tree;
 trait AdminBuilder
 {
     /**
-     * @param \Closure $callback
-     *
      * @return Grid
      */
     public static function grid(\Closure $callback)
@@ -22,8 +20,6 @@ trait AdminBuilder
     }
 
     /**
-     * @param \Closure $callback
-     *
      * @return Form
      */
     public static function form(\Closure $callback)
@@ -32,11 +28,9 @@ trait AdminBuilder
     }
 
     /**
-     * @param \Closure $callback
-     *
      * @return Tree
      */
-    public static function tree(\Closure $callback = null)
+    public static function tree(?\Closure $callback = null)
     {
         return new Tree(new static(), $callback);
     }

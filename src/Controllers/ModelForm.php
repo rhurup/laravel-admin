@@ -5,7 +5,7 @@ namespace Encore\Admin\Controllers;
 /**
  * Trait ModelForm.
  *
- * @deprecated Use `HasResourceActions` instead.
+ * @deprecated use `HasResourceActions` instead
  */
 trait ModelForm
 {

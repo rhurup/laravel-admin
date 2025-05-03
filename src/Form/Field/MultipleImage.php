@@ -8,9 +8,6 @@ class MultipleImage extends MultipleFile
 {
     use ImageField;
 
-    /**
-     * {@inheritdoc}
-     */
     protected $view = 'admin::form.multiplefile';
 
     /**
@@ -23,11 +20,9 @@ class MultipleImage extends MultipleFile
     /**
      * Prepare for each file.
      *
-     * @param UploadedFile $image
-     *
      * @return mixed|string
      */
-    protected function prepareForeach(UploadedFile $image = null)
+    protected function prepareForeach(?UploadedFile $image = null)
     {
         $this->name = $this->getStoreName($image);
 

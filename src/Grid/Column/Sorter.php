@@ -57,7 +57,7 @@ class Sorter implements Renderable
             return false;
         }
 
-        return isset($this->sort['column']) && $this->sort['column'] == $this->columnName;
+        return isset($this->sort['column']) && $this->sort['column'] === $this->columnName;
     }
 
     /**
@@ -69,7 +69,7 @@ class Sorter implements Renderable
         $type = 'desc';
 
         if ($this->isSorted()) {
-            $type = $this->sort['type'] == 'desc' ? 'asc' : 'desc';
+            $type = 'desc' === $this->sort['type'] ? 'asc' : 'desc';
             $icon .= "-amount-{$this->sort['type']}";
         }
 

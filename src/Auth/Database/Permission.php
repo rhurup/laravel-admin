@@ -26,8 +26,6 @@ class Permission extends Model
 
     /**
      * Create a new Eloquent model instance.
-     *
-     * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -42,8 +40,6 @@ class Permission extends Model
 
     /**
      * Permission belongs to many roles.
-     *
-     * @return BelongsToMany
      */
     public function roles(): BelongsToMany
     {
@@ -56,10 +52,6 @@ class Permission extends Model
 
     /**
      * If request should pass through the current permission.
-     *
-     * @param Request $request
-     *
-     * @return bool
      */
     public function shouldPassThrough(Request $request): bool
     {
@@ -93,8 +85,6 @@ class Permission extends Model
      * filter \r.
      *
      * @param string $path
-     *
-     * @return mixed
      */
     public function getHttpPathAttribute($path)
     {
@@ -103,15 +93,10 @@ class Permission extends Model
 
     /**
      * If a request match the specific HTTP method and path.
-     *
-     * @param array   $match
-     * @param Request $request
-     *
-     * @return bool
      */
     protected function matchRequest(array $match, Request $request): bool
     {
-        if ($match['path'] == '/') {
+        if ('/' === $match['path']) {
             $path = '/';
         } else {
             $path = trim($match['path'], '/');
@@ -128,9 +113,6 @@ class Permission extends Model
         return $method->isEmpty() || $method->contains($request->method());
     }
 
-    /**
-     * @param $method
-     */
     public function setHttpMethodAttribute($method)
     {
         if (is_array($method)) {
@@ -139,8 +121,6 @@ class Permission extends Model
     }
 
     /**
-     * @param $method
-     *
      * @return array
      */
     public function getHttpMethodAttribute($method)

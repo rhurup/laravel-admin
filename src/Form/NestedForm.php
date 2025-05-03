@@ -54,15 +54,12 @@ use Illuminate\Support\Collection;
  */
 class NestedForm
 {
-    const DEFAULT_KEY_NAME = '__LA_KEY__';
+    public const DEFAULT_KEY_NAME = '__LA_KEY__';
 
-    const REMOVE_FLAG_NAME = '_remove_';
+    public const REMOVE_FLAG_NAME = '_remove_';
 
-    const REMOVE_FLAG_CLASS = 'fom-removed';
+    public const REMOVE_FLAG_CLASS = 'fom-removed';
 
-    /**
-     * @var mixed
-     */
     protected $key;
 
     /**
@@ -92,7 +89,7 @@ class NestedForm
     protected $original = [];
 
     /**
-     * @var \Encore\Admin\Form|\Encore\Admin\Widgets\Form
+     * @var Form|WidgetForm
      */
     protected $form;
 
@@ -148,8 +145,6 @@ class NestedForm
     /**
      * Set key for current form.
      *
-     * @param mixed $key
-     *
      * @return $this
      */
     public function setKey($key)
@@ -162,11 +157,9 @@ class NestedForm
     /**
      * Set Form.
      *
-     * @param Form $form
-     *
      * @return $this
      */
-    public function setForm(Form $form = null)
+    public function setForm(?Form $form = null)
     {
         $this->form = $form;
 
@@ -176,11 +169,9 @@ class NestedForm
     /**
      * Set Widget/Form.
      *
-     * @param WidgetForm $form
-     *
      * @return $this
      */
-    public function setWidgetForm(WidgetForm $form = null)
+    public function setWidgetForm(?WidgetForm $form = null)
     {
         $this->form = $form;
 
@@ -229,8 +220,6 @@ class NestedForm
      * Prepare for insert or update.
      *
      * @param array $input
-     *
-     * @return mixed
      */
     public function prepare($input)
     {
@@ -270,7 +259,7 @@ class NestedForm
      */
     protected function prepareRecord($record)
     {
-        if ($record[static::REMOVE_FLAG_NAME] == 1) {
+        if (1 === $record[static::REMOVE_FLAG_NAME]) {
             return $record;
         }
 
@@ -290,7 +279,7 @@ class NestedForm
                 $value = $field->prepare($value);
             }
 
-            if (($field instanceof \Encore\Admin\Form\Field\Hidden) || $value != $field->original()) {
+            if (($field instanceof Field\Hidden) || $value !== $field->original()) {
                 if (is_array($columns)) {
                     foreach ($columns as $name => $column) {
                         Arr::set($prepared, $column, $value[$name]);
@@ -334,8 +323,6 @@ class NestedForm
     }
 
     /**
-     * @param Field $field
-     *
      * @return $this
      */
     public function pushField(Field $field)
@@ -357,8 +344,6 @@ class NestedForm
 
     /**
      * Fill data to all fields in form.
-     *
-     * @param array $data
      *
      * @return $this
      */
@@ -384,8 +369,7 @@ class NestedForm
 
         /* @var Field $field */
         foreach ($this->fields() as $field) {
-
-            //when field render, will push $script to Admin
+            // when field render, will push $script to Admin
             $html .= $field->render();
 
             /*
@@ -401,8 +385,6 @@ class NestedForm
 
     /**
      * Set `errorKey` `elementName` `elementClass` for fields inside hasmany fields.
-     *
-     * @param Field $field
      *
      * @return Field
      */
@@ -436,8 +418,6 @@ class NestedForm
      *
      * @param string $method
      * @param array  $arguments
-     *
-     * @return mixed
      */
     public function __call($method, $arguments)
     {

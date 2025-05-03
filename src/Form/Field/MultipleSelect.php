@@ -19,9 +19,9 @@ class MultipleSelect extends Select
     /**
      * Get other key for this many-to-many relation.
      *
-     * @throws \Exception
-     *
      * @return string
+     *
+     * @throws \Exception
      */
     protected function getOtherKey()
     {
@@ -47,9 +47,6 @@ class MultipleSelect extends Select
         throw new \Exception('Column of this field must be a `BelongsToMany` or `HasMany` relation.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fill($data)
     {
         if ($this->form && $this->form->shouldSnakeAttributes()) {
@@ -81,7 +78,7 @@ class MultipleSelect extends Select
                 $this->value[] = Arr::get($relation, $this->getOtherKey());
             }
 
-            // MultipleSelect value store as a column.
+        // MultipleSelect value store as a column.
         } else {
             $this->value = $relations;
         }
@@ -89,9 +86,6 @@ class MultipleSelect extends Select
         $this->applyCascadeConditions();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setOriginal($data)
     {
         $relations = Arr::get($data, $this->column);
@@ -115,7 +109,7 @@ class MultipleSelect extends Select
                 $this->original[] = Arr::get($relation, $this->getOtherKey());
             }
 
-            // MultipleSelect value store as a column.
+        // MultipleSelect value store as a column.
         } else {
             $this->original = $relations;
         }

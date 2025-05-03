@@ -51,8 +51,6 @@ trait CanExportGrid
     /**
      * Set exporter driver for Grid to export.
      *
-     * @param $exporter
-     *
      * @return $this
      */
     public function exporter($exporter)
@@ -111,9 +109,6 @@ trait CanExportGrid
         return (new Grid\Tools\ExportButton($this))->render();
     }
 
-    /**
-     * @param \Closure $callback
-     */
     public function export(\Closure $callback)
     {
         if (!$scope = request(Exporter::$queryName)) {

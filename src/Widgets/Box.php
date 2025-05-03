@@ -195,12 +195,12 @@ SCRIPT;
     protected function variables()
     {
         return [
-            'title'      => $this->title,
-            'content'    => $this->content,
-            'footer'     => $this->footer,
-            'tools'      => $this->tools,
+            'title' => $this->title,
+            'content' => $this->content,
+            'footer' => $this->footer,
+            'tools' => $this->tools,
             'attributes' => $this->formatAttributes(),
-            'script'     => $this->script,
+            'script' => $this->script,
         ];
     }
 

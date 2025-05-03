@@ -35,8 +35,6 @@ class PermissionCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
@@ -66,10 +64,10 @@ class PermissionCommand extends Command
                 $exists = Permission::where('slug', $slug)->exists();
                 if (!$exists) {
                     Permission::create([
-                        'name'        => $name,
-                        'slug'        => $slug,
+                        'name' => $name,
+                        'slug' => $slug,
                         'http_method' => $http_method,
-                        'http_path'   => $http_path,
+                        'http_path' => $http_path,
                     ]);
                     $this->info("$slug is generated");
                 } else {
@@ -102,10 +100,10 @@ class PermissionCommand extends Command
     private function getPermissions()
     {
         return [
-            'list'   => __('admin.list'),
-            'view'   => __('admin.view'),
+            'list' => __('admin.list'),
+            'view' => __('admin.view'),
             'create' => __('admin.create'),
-            'edit'   => __('admin.edit'),
+            'edit' => __('admin.edit'),
             'delete' => __('admin.delete'),
             'export' => __('admin.export'),
             'filter' => __('admin.filter'),

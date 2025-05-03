@@ -45,8 +45,6 @@ class Actions extends AbstractDisplayer
     /**
      * Append a action.
      *
-     * @param $action
-     *
      * @return $this
      */
     public function append($action)
@@ -59,8 +57,6 @@ class Actions extends AbstractDisplayer
     /**
      * Prepend a action.
      *
-     * @param $action
-     *
      * @return $this
      */
     public function prepend($action)
@@ -72,8 +68,6 @@ class Actions extends AbstractDisplayer
 
     /**
      * Get route key name of current row.
-     *
-     * @return mixed
      */
     public function getRouteKey()
     {
@@ -99,7 +93,7 @@ class Actions extends AbstractDisplayer
     /**
      * Disable delete.
      *
-     * @return $this.
+     * @return $this
      */
     public function disableDelete(bool $disable = true)
     {
@@ -115,7 +109,7 @@ class Actions extends AbstractDisplayer
     /**
      * Disable edit.
      *
-     * @return $this.
+     * @return $this
      */
     public function disableEdit(bool $disable = true)
     {
@@ -143,8 +137,6 @@ class Actions extends AbstractDisplayer
     /**
      * Set resource of current resource.
      *
-     * @param $resource
-     *
      * @return $this
      */
     public function setResource($resource)
@@ -164,9 +156,6 @@ class Actions extends AbstractDisplayer
         return $this->resource ?: parent::getResource();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function display($callback = null)
     {
         if ($callback instanceof \Closure) {
@@ -237,8 +226,8 @@ EOT;
     {
         $trans = [
             'delete_confirm' => trans('admin.delete_confirm'),
-            'confirm'        => trans('admin.confirm'),
-            'cancel'         => trans('admin.cancel'),
+            'confirm' => trans('admin.confirm'),
+            'cancel' => trans('admin.cancel'),
         ];
 
         $trans = array_merge($trans, $this->trans);
@@ -293,8 +282,6 @@ SCRIPT;
 
     /**
      * diy delete translate.
-     *
-     * @param $tans
      */
     public function setTrans($tans)
     {

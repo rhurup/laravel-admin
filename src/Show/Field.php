@@ -58,8 +58,6 @@ class Field implements Renderable
 
     /**
      * Field value.
-     *
-     * @var mixed
      */
     protected $value;
 
@@ -93,16 +91,16 @@ class Field implements Renderable
      * @var array
      */
     protected $fileTypes = [
-        'image'      => 'png|jpg|jpeg|tmp|gif',
-        'word'       => 'doc|docx',
-        'excel'      => 'xls|xlsx|csv',
+        'image' => 'png|jpg|jpeg|tmp|gif',
+        'word' => 'doc|docx',
+        'excel' => 'xls|xlsx|csv',
         'powerpoint' => 'ppt|pptx',
-        'pdf'        => 'pdf',
-        'code'       => 'php|js|java|python|ruby|go|c|cpp|sql|m|h|json|html|aspx',
-        'archive'    => 'zip|tar\.gz|rar|rpm',
-        'txt'        => 'txt|pac|log|md',
-        'audio'      => 'mp3|wav|flac|3pg|aa|aac|ape|au|m4a|mpc|ogg',
-        'video'      => 'mkv|rmvb|flv|mp4|avi|wmv|rm|asf|mpeg',
+        'pdf' => 'pdf',
+        'code' => 'php|js|java|python|ruby|go|c|cpp|sql|m|h|json|html|aspx',
+        'archive' => 'zip|tar\.gz|rar|rpm',
+        'txt' => 'txt|pac|log|md',
+        'audio' => 'mp3|wav|flac|3pg|aa|aac|ape|au|m4a|mpc|ogg',
+        'video' => 'mkv|rmvb|flv|mp4|avi|wmv|rm|asf|mpeg',
     ];
 
     /**
@@ -123,8 +121,6 @@ class Field implements Renderable
     /**
      * Set parent show instance.
      *
-     * @param Show $show
-     *
      * @return $this
      */
     public function setParent(Show $show)
@@ -136,8 +132,6 @@ class Field implements Renderable
 
     /**
      * Get name of this column.
-     *
-     * @return mixed
      */
     public function getName()
     {
@@ -146,10 +140,6 @@ class Field implements Renderable
 
     /**
      * Format label.
-     *
-     * @param $label
-     *
-     * @return mixed
      */
     protected function formatLabel($label)
     {
@@ -160,8 +150,6 @@ class Field implements Renderable
 
     /**
      * Get label of the column.
-     *
-     * @return mixed
      */
     public function getLabel()
     {
@@ -170,8 +158,6 @@ class Field implements Renderable
 
     /**
      * Field display callback.
-     *
-     * @param callable $callable
      *
      * @return $this
      */
@@ -185,8 +171,7 @@ class Field implements Renderable
     /**
      * Display field using array value map.
      *
-     * @param array $values
-     * @param null  $default
+     * @param null $default
      *
      * @return $this
      */
@@ -422,7 +407,7 @@ HTML;
                 $content = $value;
             }
 
-            if (json_last_error() == 0) {
+            if (0 === json_last_error()) {
                 $field->border = false;
 
                 return '<pre><code>'.json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE).'</code></pre>';
@@ -456,7 +441,7 @@ HTML;
         $extension = File::extension($file);
 
         foreach ($this->fileTypes as $type => $regex) {
-            if (preg_match("/^($regex)$/i", $extension) !== 0) {
+            if (0 !== preg_match("/^($regex)$/i", $extension)) {
                 return "fa-file-{$type}-o";
             }
         }
@@ -490,8 +475,6 @@ HTML;
 
     /**
      * Set value for this field.
-     *
-     * @param Model $model
      *
      * @return $this
      */
@@ -531,8 +514,6 @@ HTML;
     /**
      * @param Model  $model
      * @param string $name
-     *
-     * @return mixed
      */
     protected function getRelationValue($model, $name)
     {
@@ -640,11 +621,11 @@ HTML;
     protected function variables()
     {
         return [
-            'content'   => $this->value,
-            'escape'    => $this->escape,
-            'label'     => $this->getLabel(),
-            'wrapped'   => $this->border,
-            'width'     => $this->width,
+            'content' => $this->value,
+            'escape' => $this->escape,
+            'label' => $this->getLabel(),
+            'wrapped' => $this->border,
+            'width' => $this->width,
         ];
     }
 

@@ -9,9 +9,6 @@ use Illuminate\Support\Str;
 
 class PermissionController extends AdminController
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function title()
     {
         return trans('admin.permissions');
@@ -69,8 +66,6 @@ class PermissionController extends AdminController
 
     /**
      * Make a show builder.
-     *
-     * @param mixed $id
      *
      * @return Show
      */

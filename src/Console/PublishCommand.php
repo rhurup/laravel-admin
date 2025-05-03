@@ -29,7 +29,7 @@ class PublishCommand extends Command
     {
         $force = $this->option('force');
         $options = ['--provider' => 'Encore\Admin\AdminServiceProvider'];
-        if ($force == true) {
+        if (true === $force) {
             $options['--force'] = true;
         }
         $this->call('vendor:publish', $options);

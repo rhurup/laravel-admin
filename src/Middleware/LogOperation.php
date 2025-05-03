@@ -11,21 +11,16 @@ class LogOperation
 {
     /**
      * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     *
-     * @return mixed
      */
     public function handle(Request $request, \Closure $next)
     {
         if ($this->shouldLogOperation($request)) {
             $log = [
                 'user_id' => Admin::user()->id,
-                'path'    => substr($request->path(), 0, 255),
-                'method'  => $request->method(),
-                'ip'      => $request->getClientIp(),
-                'input'   => json_encode($request->input()),
+                'path' => substr($request->path(), 0, 255),
+                'method' => $request->method(),
+                'ip' => $request->getClientIp(),
+                'input' => json_encode($request->input()),
             ];
 
             try {
@@ -39,8 +34,6 @@ class LogOperation
     }
 
     /**
-     * @param Request $request
-     *
      * @return bool
      */
     protected function shouldLogOperation(Request $request)
@@ -74,14 +67,14 @@ class LogOperation
     /**
      * Determine if the request has a URI that should pass through CSRF verification.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
      * @return bool
      */
     protected function inExceptArray($request)
     {
         foreach (config('admin.operation_log.except') as $except) {
-            if ($except !== '/') {
+            if ('/' !== $except) {
                 $except = trim($except, '/');
             }
 
@@ -94,8 +87,8 @@ class LogOperation
 
             $methods = array_map('strtoupper', $methods);
 
-            if ($request->is($except) &&
-                (empty($methods) || in_array($request->method(), $methods))) {
+            if ($request->is($except)
+                && (empty($methods) || in_array($request->method(), $methods))) {
                 return true;
             }
         }

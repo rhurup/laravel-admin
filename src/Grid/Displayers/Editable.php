@@ -25,7 +25,7 @@ class Editable extends AbstractDisplayer
      * @var array
      */
     protected $options = [
-        'emptytext'  => '<i class="fa fa-pencil"></i>',
+        'emptytext' => '<i class="fa fa-pencil"></i>',
     ];
 
     /**
@@ -152,18 +152,15 @@ class Editable extends AbstractDisplayer
         $this->type = 'combodate';
 
         $this->addOptions([
-            'format'     => $format,
+            'format' => $format,
             'viewformat' => $format,
-            'template'   => $format,
-            'combodate'  => [
+            'template' => $format,
+            'combodate' => [
                 'maxYear' => 2035,
             ],
         ]);
     }
 
-    /**
-     * @param array $arguments
-     */
     protected function buildEditableOptions(array $arguments = [])
     {
         $this->type = Arr::get($arguments, 0, 'text');
@@ -201,11 +198,11 @@ STR;
         $this->value = htmlentities($this->value ?? '');
 
         $attributes = [
-            'href'       => '#',
-            'class'      => "$class",
-            'data-type'  => $this->type,
-            'data-pk'    => "{$this->getKey()}",
-            'data-url'   => "{$this->getResource()}/{$this->getKey()}",
+            'href' => '#',
+            'class' => "$class",
+            'data-type' => $this->type,
+            'data-pk' => "{$this->getKey()}",
+            'data-url' => "{$this->getResource()}/{$this->getKey()}",
             'data-value' => "{$this->value}",
         ];
 
@@ -217,7 +214,7 @@ STR;
             return "$name='$attribute'";
         })->implode(' ');
 
-        $html = $this->type === 'select' ? '' : $this->value;
+        $html = 'select' === $this->type ? '' : $this->value;
 
         return "<a $attributes>{$html}</a>";
     }

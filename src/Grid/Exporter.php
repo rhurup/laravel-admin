@@ -10,9 +10,9 @@ class Exporter
     /**
      * Export scope constants.
      */
-    const SCOPE_ALL = 'all';
-    const SCOPE_CURRENT_PAGE = 'page';
-    const SCOPE_SELECTED_ROWS = 'selected';
+    public const SCOPE_ALL = 'all';
+    public const SCOPE_CURRENT_PAGE = 'page';
+    public const SCOPE_SELECTED_ROWS = 'selected';
 
     /**
      * @var Grid
@@ -34,14 +34,12 @@ class Exporter
     public static $queryName = '_export_';
 
     /**
-     * @var Grid\Exporters\AbstractExporter
+     * @var Exporters\AbstractExporter
      */
     protected static $exporter;
 
     /**
      * Create a new Exporter instance.
-     *
-     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -52,8 +50,6 @@ class Exporter
 
     /**
      * Set export query name.
-     *
-     * @param $name
      */
     public static function setQueryName($name)
     {
@@ -62,9 +58,6 @@ class Exporter
 
     /**
      * Extends new exporter driver.
-     *
-     * @param $driver
-     * @param $extend
      */
     public static function extend($driver, $extend)
     {
@@ -80,7 +73,7 @@ class Exporter
      */
     public function resolve($driver)
     {
-        if ($driver instanceof Grid\Exporters\AbstractExporter) {
+        if ($driver instanceof Exporters\AbstractExporter) {
             return $driver->setGrid($this->grid);
         }
 
@@ -129,15 +122,15 @@ class Exporter
     {
         $query = '';
 
-        if ($scope == static::SCOPE_ALL) {
+        if ($scope === static::SCOPE_ALL) {
             $query = 'all';
         }
 
-        if ($scope == static::SCOPE_CURRENT_PAGE) {
+        if ($scope === static::SCOPE_CURRENT_PAGE) {
             $query = "page:$args";
         }
 
-        if ($scope == static::SCOPE_SELECTED_ROWS) {
+        if ($scope === static::SCOPE_SELECTED_ROWS) {
             $query = "selected:$args";
         }
 

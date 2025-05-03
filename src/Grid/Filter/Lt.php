@@ -6,9 +6,6 @@ use Illuminate\Support\Arr;
 
 class Lt extends AbstractFilter
 {
-    /**
-     * {@inheritdoc}
-     */
     protected $view = 'admin::filter.lt';
 
     /**

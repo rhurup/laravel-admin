@@ -16,8 +16,6 @@ class Header extends AbstractTool
 
     /**
      * Header constructor.
-     *
-     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -38,9 +36,6 @@ class Header extends AbstractTool
         return $this->queryBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $content = call_user_func($this->grid->header(), $this->queryBuilder());

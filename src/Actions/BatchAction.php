@@ -21,8 +21,6 @@ abstract class BatchAction extends GridAction
     /**
      * add a single CSS class string to the CSS-Classes array.
      *
-     * @param string $cssClass
-     *
      * @return $this
      */
     public function addCssClass(string $cssClass)
@@ -40,8 +38,6 @@ abstract class BatchAction extends GridAction
 
     /**
      * add multiple CSS class strings to the CSS-Classes array.
-     *
-     * @param array $cssClasses
      *
      * @return $this
      */
@@ -63,9 +59,6 @@ abstract class BatchAction extends GridAction
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actionScript()
     {
         $warning = __('No data selected!');
@@ -82,11 +75,6 @@ abstract class BatchAction extends GridAction
 SCRIPT;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return mixed
-     */
     public function retrieveModel(Request $request)
     {
         if (!$key = $request->get('_key')) {

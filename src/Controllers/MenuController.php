@@ -17,8 +17,6 @@ class MenuController extends Controller
     /**
      * Index interface.
      *
-     * @param Content $content
-     *
      * @return Content
      */
     public function index(Content $content)
@@ -65,7 +63,7 @@ class MenuController extends Controller
     }
 
     /**
-     * @return \Encore\Admin\Tree
+     * @return Tree
      */
     protected function treeView()
     {
@@ -97,8 +95,7 @@ class MenuController extends Controller
     /**
      * Edit interface.
      *
-     * @param string  $id
-     * @param Content $content
+     * @param string $id
      *
      * @return Content
      */

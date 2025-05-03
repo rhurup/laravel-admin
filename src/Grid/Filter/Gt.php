@@ -6,9 +6,6 @@ use Illuminate\Support\Arr;
 
 class Gt extends AbstractFilter
 {
-    /**
-     * {@inheritdoc}
-     */
     protected $view = 'admin::filter.gt';
 
     /**

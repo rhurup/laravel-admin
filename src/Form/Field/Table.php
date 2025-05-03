@@ -22,12 +22,12 @@ class Table extends HasMany
     {
         $this->column = $column;
 
-        if (count($arguments) == 1) {
+        if (1 === count($arguments)) {
             $this->label = $this->formatLabel();
             $this->builder = $arguments[0];
         }
 
-        if (count($arguments) == 2) {
+        if (2 === count($arguments)) {
             list($this->label, $this->builder) = $arguments;
         }
     }
@@ -37,15 +37,15 @@ class Table extends HasMany
      */
     protected function buildRelatedForms()
     {
-//        if (is_null($this->form)) {
-//            return [];
-//        }
+        //        if (is_null($this->form)) {
+        //            return [];
+        //        }
 
         $forms = [];
 
         if ($values = old($this->column)) {
             foreach ($values as $key => $data) {
-                if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
+                if (1 === $data[NestedForm::REMOVE_FLAG_NAME]) {
                     continue;
                 }
 
@@ -72,7 +72,7 @@ class Table extends HasMany
         $prepare = $form->prepare($input);
 
         return collect($prepare)->reject(function ($item) {
-            return $item[NestedForm::REMOVE_FLAG_NAME] == 1;
+            return 1 === $item[NestedForm::REMOVE_FLAG_NAME];
         })->map(function ($item) {
             unset($item[NestedForm::REMOVE_FLAG_NAME]);
 

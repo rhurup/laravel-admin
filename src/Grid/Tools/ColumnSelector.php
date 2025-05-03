@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 class ColumnSelector extends AbstractTool
 {
-    const SELECT_COLUMN_NAME = '_columns_';
+    public const SELECT_COLUMN_NAME = '_columns_';
 
     /**
      * @var array
@@ -20,8 +20,6 @@ class ColumnSelector extends AbstractTool
 
     /**
      * Create a new Export button instance.
-     *
-     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -51,8 +49,6 @@ class ColumnSelector extends AbstractTool
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function render()
@@ -62,8 +58,8 @@ class ColumnSelector extends AbstractTool
         }
 
         return Admin::component('admin::components.grid-column-selector', [
-            'columns'  => $this->getGridColumns(),
-            'visible'  => $this->grid->visibleColumnNames(),
+            'columns' => $this->getGridColumns(),
+            'visible' => $this->grid->visibleColumnNames(),
             'defaults' => $this->grid->getDefaultVisibleColumnNames(),
         ]);
     }

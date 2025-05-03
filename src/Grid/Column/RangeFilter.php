@@ -22,15 +22,12 @@ class RangeFilter extends Filter
         $this->type = $type;
         $this->class = [
             'start' => uniqid('column-filter-start-'),
-            'end'   => uniqid('column-filter-end-'),
+            'end' => uniqid('column-filter-end-'),
         ];
     }
 
     /**
      * Add a binding to the query.
-     *
-     * @param mixed $value
-     * @param Model $model
      */
     public function addBinding($value, Model $model)
     {
@@ -52,15 +49,15 @@ class RangeFilter extends Filter
     protected function addScript()
     {
         $options = [
-            'locale'           => config('app.locale'),
+            'locale' => config('app.locale'),
             'allowInputToggle' => true,
         ];
 
-        if ($this->type == 'date') {
+        if ('date' === $this->type) {
             $options['format'] = 'YYYY-MM-DD';
-        } elseif ($this->type == 'time') {
+        } elseif ('time' === $this->type) {
             $options['format'] = 'HH:mm:ss';
-        } elseif ($this->type == 'datetime') {
+        } elseif ('datetime' === $this->type) {
             $options['format'] = 'YYYY-MM-DD HH:mm:ss';
         } else {
             return;

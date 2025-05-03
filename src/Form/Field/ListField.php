@@ -30,8 +30,6 @@ class ListField extends Field
     /**
      * Set Max list size.
      *
-     * @param int $size
-     *
      * @return $this
      */
     public function max(int $size)
@@ -43,8 +41,6 @@ class ListField extends Field
 
     /**
      * Set Minimum list size.
-     *
-     * @param int $size
      *
      * @return $this
      */
@@ -71,9 +67,6 @@ class ListField extends Field
         $this->formatValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getValidator(array $input)
     {
         if ($this->validator) {
@@ -112,9 +105,6 @@ class ListField extends Field
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setupScript()
     {
         $this->script = <<<SCRIPT
@@ -131,17 +121,11 @@ $('tbody').on('click', '.{$this->column}-remove', function () {
 SCRIPT;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepare($value)
     {
         return array_values($value['values']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->setupScript();

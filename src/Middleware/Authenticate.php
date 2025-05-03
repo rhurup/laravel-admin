@@ -2,7 +2,6 @@
 
 namespace Encore\Admin\Middleware;
 
-use Closure;
 use Encore\Admin\Facades\Admin;
 
 class Authenticate
@@ -11,11 +10,8 @@ class Authenticate
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     *
-     * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, \Closure $next)
     {
         \config(['auth.defaults.guard' => 'admin']);
 
@@ -50,7 +46,7 @@ class Authenticate
         return collect($excepts)
             ->map('admin_base_path')
             ->contains(function ($except) use ($request) {
-                if ($except !== '/') {
+                if ('/' !== $except) {
                     $except = trim($except, '/');
                 }
 

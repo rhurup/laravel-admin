@@ -31,7 +31,7 @@ class Selector implements Renderable
      * @param string         $column
      * @param string|array   $label
      * @param array|\Closure $options
-     * @param null|\Closure  $query
+     * @param \Closure|null  $query
      *
      * @return $this
      */
@@ -44,7 +44,7 @@ class Selector implements Renderable
      * @param string        $column
      * @param string        $label
      * @param array         $options
-     * @param null|\Closure $query
+     * @param \Closure|null $query
      *
      * @return $this
      */
@@ -116,7 +116,6 @@ class Selector implements Renderable
 
     /**
      * @param string $column
-     * @param mixed  $value
      * @param bool   $add
      *
      * @return string
@@ -160,7 +159,7 @@ class Selector implements Renderable
     {
         return view('admin::grid.selector', [
             'selectors' => $this->selectors,
-            'selected'  => static::parseSelected(),
+            'selected' => static::parseSelected(),
         ]);
     }
 }

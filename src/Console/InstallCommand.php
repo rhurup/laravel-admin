@@ -50,7 +50,7 @@ class InstallCommand extends Command
 
         $userModel = config('admin.database.users_model');
 
-        if ($userModel::count() == 0) {
+        if (0 === $userModel::count()) {
             $this->call('db:seed', ['--class' => \Encore\Admin\Auth\Database\AdminTablesSeeder::class]);
         }
     }
@@ -164,8 +164,6 @@ class InstallCommand extends Command
 
     /**
      * Get stub contents.
-     *
-     * @param $name
      *
      * @return string
      */

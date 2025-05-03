@@ -36,12 +36,9 @@ class DateRange extends Field
         $this->options(['format' => $this->format]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepare($value)
     {
-        if ($value === '') {
+        if ('' === $value) {
             $value = null;
         }
 

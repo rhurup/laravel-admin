@@ -23,9 +23,6 @@ SCRIPT;
         Admin::script($script);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->addScript();

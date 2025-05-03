@@ -33,16 +33,14 @@ class Text extends Presenter
 
     /**
      * Get variables for field template.
-     *
-     * @return array
      */
     public function variables(): array
     {
         return [
             'placeholder' => $this->placeholder,
-            'icon'        => $this->icon,
-            'type'        => $this->type,
-            'group'       => $this->filter->group,
+            'icon' => $this->icon,
+            'type' => $this->type,
+            'group' => $this->filter->group,
         ];
     }
 
@@ -60,25 +58,16 @@ class Text extends Presenter
         return $this;
     }
 
-    /**
-     * @return Text
-     */
     public function url(): self
     {
         return $this->inputmask(['alias' => 'url'], 'internet-explorer');
     }
 
-    /**
-     * @return Text
-     */
     public function email(): self
     {
         return $this->inputmask(['alias' => 'email'], 'envelope');
     }
 
-    /**
-     * @return Text
-     */
     public function integer(): self
     {
         return $this->inputmask(['alias' => 'integer']);
@@ -88,8 +77,6 @@ class Text extends Presenter
      * @param array $options
      *
      * @see https://github.com/RobinHerbots/Inputmask/blob/4.x/README_numeric.md
-     *
-     * @return Text
      */
     public function decimal($options = []): self
     {
@@ -100,14 +87,12 @@ class Text extends Presenter
      * @param array $options
      *
      * @see https://github.com/RobinHerbots/Inputmask/blob/4.x/README_numeric.md
-     *
-     * @return Text
      */
     public function currency($options = []): self
     {
         return $this->inputmask(array_merge($options, [
-            'alias'              => 'currency',
-            'prefix'             => '',
+            'alias' => 'currency',
+            'prefix' => '',
             'removeMaskOnSubmit' => true,
         ]));
     }
@@ -126,17 +111,11 @@ class Text extends Presenter
         return $this->inputmask($options);
     }
 
-    /**
-     * @return Text
-     */
     public function ip(): self
     {
         return $this->inputmask(['alias' => 'ip'], 'laptop');
     }
 
-    /**
-     * @return Text
-     */
     public function mac(): self
     {
         return $this->inputmask(['alias' => 'mac'], 'laptop');
@@ -144,8 +123,6 @@ class Text extends Presenter
 
     /**
      * @param string $mask
-     *
-     * @return Text
      */
     public function mobile($mask = '19999999999'): self
     {

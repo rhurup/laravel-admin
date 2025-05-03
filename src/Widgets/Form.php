@@ -2,7 +2,6 @@
 
 namespace Encore\Admin\Widgets;
 
-use Closure;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form as BaseForm;
 use Encore\Admin\Form\Field;
@@ -143,8 +142,6 @@ class Form implements Renderable
 
     /**
      * Get form title.
-     *
-     * @return mixed
      */
     public function title()
     {
@@ -153,8 +150,6 @@ class Form implements Renderable
 
     /**
      * Get form description.
-     *
-     * @return mixed
      */
     public function description()
     {
@@ -217,10 +212,10 @@ class Form implements Renderable
     protected function initFormAttributes()
     {
         $this->attributes = [
-            'id'             => 'widget-form-'.uniqid(),
-            'method'         => 'POST',
-            'action'         => '',
-            'class'          => 'form-horizontal',
+            'id' => 'widget-form-'.uniqid(),
+            'method' => 'POST',
+            'action' => '',
+            'class' => 'form-horizontal',
             'accept-charset' => 'UTF-8',
             'pjax-container' => true,
         ];
@@ -291,7 +286,7 @@ class Form implements Renderable
      */
     public function method($method = 'POST')
     {
-        if (strtolower($method) == 'put') {
+        if ('put' === strtolower($method)) {
             $this->hidden('_method')->default($method);
 
             return $this;
@@ -347,7 +342,7 @@ class Form implements Renderable
     public function setWidth($fieldWidth = 8, $labelWidth = 2)
     {
         collect($this->fields)->each(function ($field) use ($fieldWidth, $labelWidth) {
-            /* @var Field $field  */
+            /* @var Field $field */
             $field->setWidth($fieldWidth, $labelWidth);
         });
 
@@ -374,8 +369,6 @@ class Form implements Renderable
 
     /**
      * Add a form field to form.
-     *
-     * @param Field $field
      *
      * @return $this
      */
@@ -408,11 +401,11 @@ class Form implements Renderable
         $this->fields()->each->fill($this->data());
 
         return [
-            'fields'     => $this->fields,
+            'fields' => $this->fields,
             'attributes' => $this->formatAttribute(),
-            'method'     => $this->attributes['method'],
-            'buttons'    => $this->buttons,
-            'width'      => $this->width,
+            'method' => $this->attributes['method'],
+            'buttons' => $this->buttons,
+            'width' => $this->width,
         ];
     }
 
@@ -434,8 +427,6 @@ class Form implements Renderable
 
     /**
      * Validate this form fields.
-     *
-     * @param Request $request
      *
      * @return bool|MessageBag
      */
@@ -466,7 +457,7 @@ class Form implements Renderable
     /**
      * Merge validation messages from input validators.
      *
-     * @param \Illuminate\Validation\Validator[] $validators
+     * @param Validator[] $validators
      *
      * @return MessageBag
      */
@@ -484,12 +475,9 @@ class Form implements Renderable
     /**
      * Add a fieldset to form.
      *
-     * @param string  $title
-     * @param Closure $setCallback
-     *
      * @return Field\Fieldset
      */
-    public function fieldset(string $title, Closure $setCallback)
+    public function fieldset(string $title, \Closure $setCallback)
     {
         $fieldset = new Field\Fieldset();
 
@@ -522,12 +510,12 @@ class Form implements Renderable
         ];
 
         $settings = [
-            'type'                => 'question',
-            'showCancelButton'    => true,
-            'confirmButtonText'   => $trans['submit'],
-            'cancelButtonText'    => $trans['cancel'],
-            'title'               => $this->confirm,
-            'text'                => '',
+            'type' => 'question',
+            'showCancelButton' => true,
+            'confirmButtonText' => $trans['submit'],
+            'cancelButtonText' => $trans['cancel'],
+            'title' => $this->confirm,
+            'text' => '',
         ];
 
         $settings = trim(json_encode($settings, JSON_PRETTY_PRINT));
@@ -631,8 +619,6 @@ SCRIPT;
     }
 
     /**
-     * @param Content $content
-     *
      * @return Content
      */
     public function __invoke(Content $content)

@@ -6,17 +6,12 @@ use Illuminate\Support\Arr;
 
 class In extends AbstractFilter
 {
-    /**
-     * {@inheritdoc}
-     */
     protected $query = 'whereIn';
 
     /**
      * Get condition of this filter.
      *
      * @param array $inputs
-     *
-     * @return mixed
      */
     public function condition($inputs)
     {

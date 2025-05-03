@@ -27,7 +27,6 @@ class Html extends Field
     /**
      * Create a new Html instance.
      *
-     * @param mixed $html
      * @param array $arguments
      */
     public function __construct($html, $arguments)

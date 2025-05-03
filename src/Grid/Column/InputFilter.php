@@ -35,7 +35,7 @@ class InputFilter extends Filter
             return;
         }
 
-        if ($this->type == 'like') {
+        if ('like' === $this->type) {
             $model->where($this->getColumnName(), 'like', "%{$value}%");
 
             return;
@@ -59,15 +59,15 @@ class InputFilter extends Filter
     protected function addScript()
     {
         $options = [
-            'locale'           => config('app.locale'),
+            'locale' => config('app.locale'),
             'allowInputToggle' => true,
         ];
 
-        if ($this->type == 'date') {
+        if ('date' === $this->type) {
             $options['format'] = 'YYYY-MM-DD';
-        } elseif ($this->type == 'time') {
+        } elseif ('time' === $this->type) {
             $options['format'] = 'HH:mm:ss';
-        } elseif ($this->type == 'datetime') {
+        } elseif ('datetime' === $this->type) {
             $options['format'] = 'YYYY-MM-DD HH:mm:ss';
         } else {
             return;

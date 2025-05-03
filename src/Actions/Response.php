@@ -38,9 +38,6 @@ class Response
         'topFullWidth', 'bottomFullWidth', 'timeout',
     ];
 
-    /**
-     * @var
-     */
     protected $plugin;
 
     /**
@@ -86,8 +83,6 @@ class Response
     }
 
     /**
-     * @param string $message
-     *
      * @return $this
      */
     public function success(string $message = '')
@@ -96,8 +91,6 @@ class Response
     }
 
     /**
-     * @param string $message
-     *
      * @return $this
      */
     public function info(string $message = '')
@@ -106,8 +99,6 @@ class Response
     }
 
     /**
-     * @param string $message
-     *
      * @return $this
      */
     public function warning(string $message = '')
@@ -116,8 +107,6 @@ class Response
     }
 
     /**
-     * @param string $message
-     *
      * @return $this
      */
     public function error(string $message = '')
@@ -141,8 +130,6 @@ class Response
     /**
      * Send a redirect response.
      *
-     * @param string $url
-     *
      * @return $this
      */
     public function redirect(string $url)
@@ -154,8 +141,6 @@ class Response
 
     /**
      * Send a open new window response.
-     *
-     * @param string $url
      */
     public function open(string $url)
     {
@@ -166,8 +151,6 @@ class Response
 
     /**
      * Send a location redirect response.
-     *
-     * @param string $location
      *
      * @return $this
      */
@@ -218,11 +201,6 @@ class Response
         return $this;
     }
 
-    /**
-     * @param \Exception $exception
-     *
-     * @return mixed
-     */
     public static function withException(\Exception $exception)
     {
         $response = new static();

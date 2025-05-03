@@ -53,7 +53,7 @@ trait HasAssets
      * @var array
      */
     public static $min = [
-        'js'  => 'vendor/laravel-admin/laravel-admin.min.js',
+        'js' => 'vendor/laravel-admin/laravel-admin.min.js',
         'css' => 'vendor/laravel-admin/laravel-admin.min.css',
     ];
 
@@ -235,7 +235,7 @@ trait HasAssets
             ->unique()
             ->map(function ($line) {
                 return $line;
-                //@see https://stackoverflow.com/questions/19509863/how-to-remove-js-comments-using-php
+                // @see https://stackoverflow.com/questions/19509863/how-to-remove-js-comments-using-php
                 $pattern = '/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/';
                 $line = preg_replace($pattern, '', $line);
 
@@ -281,8 +281,6 @@ trait HasAssets
 
     /**
      * @param string $key
-     *
-     * @return mixed
      */
     protected static function getManifestData($key)
     {
@@ -330,9 +328,6 @@ trait HasAssets
         return admin_asset(static::$jQuery);
     }
 
-    /**
-     * @param $component
-     */
     public static function component($component, $data = [])
     {
         $string = view($component, $data)->render();
@@ -346,16 +341,16 @@ trait HasAssets
         if ($head = $dom->getElementsByTagName('head')->item(0)) {
             foreach ($head->childNodes as $child) {
                 if ($child instanceof \DOMElement) {
-                    if ($child->tagName == 'style' && !empty($child->nodeValue)) {
+                    if ('style' === $child->tagName && !empty($child->nodeValue)) {
                         static::style($child->nodeValue);
                         continue;
                     }
 
-                    if ($child->tagName == 'link' && $child->hasAttribute('href')) {
+                    if ('link' === $child->tagName && $child->hasAttribute('href')) {
                         static::css($child->getAttribute('href'));
                     }
 
-                    if ($child->tagName == 'script') {
+                    if ('script' === $child->tagName) {
                         if ($child->hasAttribute('src')) {
                             static::js($child->getAttribute('src'));
                         } else {
@@ -373,17 +368,17 @@ trait HasAssets
         if ($body = $dom->getElementsByTagName('body')->item(0)) {
             foreach ($body->childNodes as $child) {
                 if ($child instanceof \DOMElement) {
-                    if ($child->tagName == 'style' && !empty($child->nodeValue)) {
+                    if ('style' === $child->tagName && !empty($child->nodeValue)) {
                         static::style($child->nodeValue);
                         continue;
                     }
 
-                    if ($child->tagName == 'script' && !empty($child->nodeValue)) {
+                    if ('script' === $child->tagName && !empty($child->nodeValue)) {
                         static::script(';(function () {'.$child->nodeValue.'})();');
                         continue;
                     }
 
-                    if ($child->tagName == 'template') {
+                    if ('template' === $child->tagName) {
                         $html = '';
                         foreach ($child->childNodes as $childNode) {
                             $html .= $child->ownerDocument->saveHTML($childNode);

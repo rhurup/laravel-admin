@@ -6,9 +6,6 @@ use Encore\Admin\Admin;
 
 class FilterButton extends AbstractTool
 {
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $label = '';
@@ -19,11 +16,11 @@ class FilterButton extends AbstractTool
         }
 
         return Admin::component('admin::filter.button', [
-            'scopes'    => $filter->getScopes(),
-            'label'     => $label,
-            'cancel'    => $filter->urlWithoutScopes(),
+            'scopes' => $filter->getScopes(),
+            'label' => $label,
+            'cancel' => $filter->urlWithoutScopes(),
             'btn_class' => uniqid().'-filter-btn',
-            'expand'    => $filter->expand,
+            'expand' => $filter->expand,
             'filter_id' => $filter->getFilterID(),
         ]);
     }

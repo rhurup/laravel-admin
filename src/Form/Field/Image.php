@@ -8,9 +8,6 @@ class Image extends File
 {
     use ImageField;
 
-    /**
-     * {@inheritdoc}
-     */
     protected $view = 'admin::form.file';
 
     /**
@@ -48,8 +45,6 @@ class Image extends File
 
     /**
      * force file type to image.
-     *
-     * @param $file
      *
      * @return array|bool|int[]|string[]
      */

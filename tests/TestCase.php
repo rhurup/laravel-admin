@@ -13,15 +13,15 @@ class TestCase extends BaseTestCase
     /**
      * Boots the application.
      *
-     * @return \Illuminate\Foundation\Application
+     * @return Illuminate\Foundation\Application
      */
     public function createApplication()
     {
         $app = require __DIR__.'/../vendor/laravel/laravel/bootstrap/app.php';
 
         $app->booting(function () {
-            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Admin', \Encore\Admin\Facades\Admin::class);
+            $loader = Illuminate\Foundation\AliasLoader::getInstance();
+            $loader->alias('Admin', Encore\Admin\Facades\Admin::class);
         });
 
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
@@ -66,9 +66,9 @@ class TestCase extends BaseTestCase
 
         require __DIR__.'/seeds/factory.php';
 
-//        \Encore\Admin\Admin::$css = [];
-//        \Encore\Admin\Admin::$js = [];
-//        \Encore\Admin\Admin::$script = [];
+        //        \Encore\Admin\Admin::$css = [];
+        //        \Encore\Admin\Admin::$js = [];
+        //        \Encore\Admin\Admin::$script = [];
     }
 
     protected function tearDown(): void

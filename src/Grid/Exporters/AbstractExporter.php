@@ -7,7 +7,7 @@ use Encore\Admin\Grid;
 abstract class AbstractExporter implements ExporterInterface
 {
     /**
-     * @var \Encore\Admin\Grid
+     * @var Grid
      */
     protected $grid;
 
@@ -18,10 +18,8 @@ abstract class AbstractExporter implements ExporterInterface
 
     /**
      * Create a new exporter instance.
-     *
-     * @param $grid
      */
-    public function __construct(Grid $grid = null)
+    public function __construct(?Grid $grid = null)
     {
         if ($grid) {
             $this->setGrid($grid);
@@ -30,8 +28,6 @@ abstract class AbstractExporter implements ExporterInterface
 
     /**
      * Set grid for exporter.
-     *
-     * @param Grid $grid
      *
      * @return $this
      */
@@ -65,8 +61,7 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     * @param callable $callback
-     * @param int      $count
+     * @param int $count
      *
      * @return bool
      */
@@ -119,18 +114,18 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function withScope($scope)
     {
-        if ($scope == Grid\Exporter::SCOPE_ALL) {
+        if (Grid\Exporter::SCOPE_ALL === $scope) {
             return $this;
         }
 
         list($scope, $args) = explode(':', $scope);
 
-        if ($scope == Grid\Exporter::SCOPE_CURRENT_PAGE) {
+        if (Grid\Exporter::SCOPE_CURRENT_PAGE === $scope) {
             $this->grid->model()->usePaginate(true);
             $this->page = $args ?: 1;
         }
 
-        if ($scope == Grid\Exporter::SCOPE_SELECTED_ROWS) {
+        if (Grid\Exporter::SCOPE_SELECTED_ROWS === $scope) {
             $selected = explode(',', $args);
             $this->grid->model()->whereIn($this->grid->getKeyName(), $selected);
         }
@@ -138,8 +133,5 @@ abstract class AbstractExporter implements ExporterInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     abstract public function export();
 }

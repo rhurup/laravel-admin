@@ -17,12 +17,12 @@ trait HasElementNames
      * @var array
      */
     protected $elementNames = [
-        'grid_row'        => 'grid-row',
+        'grid_row' => 'grid-row',
         'grid_select_all' => 'grid-select-all',
-        'grid_per_page'   => 'grid-per-pager',
-        'grid_batch'      => 'grid-batch',
+        'grid_per_page' => 'grid-per-pager',
+        'grid_batch' => 'grid-batch',
         'export_selected' => 'export-selected',
-        'selected_rows'   => 'selectedRows',
+        'selected_rows' => 'selectedRows',
     ];
 
     /**

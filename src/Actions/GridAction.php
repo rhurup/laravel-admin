@@ -24,8 +24,6 @@ abstract class GridAction extends Action
     public $selectorPrefix = '.grid-action-';
 
     /**
-     * @param Grid $grid
-     *
      * @return $this
      */
     public function setGrid(Grid $grid)
@@ -45,9 +43,6 @@ abstract class GridAction extends Action
         return $this->parent->resource();
     }
 
-    /**
-     * @return mixed
-     */
     protected function getModelClass()
     {
         $model = $this->parent->model()->getOriginalModel();
@@ -65,8 +60,6 @@ abstract class GridAction extends Action
 
     /**
      * Indicates if model uses soft-deletes.
-     *
-     * @param $modelClass
      *
      * @return bool
      */

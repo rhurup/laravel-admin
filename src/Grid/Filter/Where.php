@@ -15,17 +15,14 @@ class Where extends AbstractFilter
 
     /**
      * Input value from presenter.
-     *
-     * @var mixed
      */
     public $input;
 
     /**
      * Where constructor.
      *
-     * @param \Closure $query
-     * @param string   $label
-     * @param string   $column
+     * @param string $label
+     * @param string $column
      */
     public function __construct(\Closure $query, $label, $column = null)
     {
@@ -41,8 +38,7 @@ class Where extends AbstractFilter
     /**
      * Get the hash string of query closure.
      *
-     * @param \Closure $closure
-     * @param string   $label
+     * @param string $label
      *
      * @return string
      */

@@ -35,10 +35,6 @@ class AuthController extends Controller
 
     /**
      * Handle a login request.
-     *
-     * @param Request $request
-     *
-     * @return mixed
      */
     public function postLogin(Request $request)
     {
@@ -59,15 +55,13 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming login request.
      *
-     * @param array $data
-     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function loginValidator(array $data)
     {
         return Validator::make($data, [
-            $this->username()   => 'required',
-            'password'          => 'required',
+            $this->username() => 'required',
+            'password' => 'required',
         ]);
     }
 
@@ -87,8 +81,6 @@ class AuthController extends Controller
 
     /**
      * User setting page.
-     *
-     * @param Content $content
      *
      * @return Content
      */
@@ -143,7 +135,7 @@ class AuthController extends Controller
         $form->ignore(['password_confirmation']);
 
         $form->saving(function (Form $form) {
-            if ($form->password && $form->model()->password != $form->password) {
+            if ($form->password && $form->model()->password !== $form->password) {
                 $form->password = Hash::make($form->password);
             }
         });
@@ -183,8 +175,6 @@ class AuthController extends Controller
 
     /**
      * Send the response after the user was authenticated.
-     *
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

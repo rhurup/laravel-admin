@@ -10,8 +10,6 @@ class Permission
     /**
      * Check permission.
      *
-     * @param $permission
-     *
      * @return true
      */
     public static function check($permission)
@@ -35,8 +33,6 @@ class Permission
 
     /**
      * Roles allowed to access.
-     *
-     * @param $roles
      *
      * @return true
      */
@@ -63,8 +59,6 @@ class Permission
 
     /**
      * Roles denied to access.
-     *
-     * @param $roles
      *
      * @return true
      */
@@ -95,8 +89,6 @@ class Permission
 
     /**
      * If current user is administrator.
-     *
-     * @return mixed
      */
     public static function isAdministrator()
     {

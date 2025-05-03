@@ -20,19 +20,16 @@ class Group extends AbstractFilter
 
     /**
      * Input value from presenter.
-     *
-     * @var mixed
      */
     public $input;
 
     /**
      * Group constructor.
      *
-     * @param string        $column
-     * @param string        $label
-     * @param \Closure|null $builder
+     * @param string $column
+     * @param string $label
      */
-    public function __construct($column, $label = '', \Closure $builder = null)
+    public function __construct($column, $label = '', ?\Closure $builder = null)
     {
         $this->column = $column;
 
@@ -63,7 +60,6 @@ class Group extends AbstractFilter
      * Join a query to group.
      *
      * @param string $label
-     * @param array  $condition
      *
      * @return $this
      */
@@ -170,8 +166,7 @@ class Group extends AbstractFilter
     /**
      * Specify a where query.
      *
-     * @param string   $label
-     * @param \Closure $builder
+     * @param string $label
      *
      * @return Group
      */
@@ -257,9 +252,6 @@ class Group extends AbstractFilter
         return $this->joinGroup($label, $condition);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function condition($inputs)
     {
         $value = Arr::get($inputs, $this->column);
@@ -294,9 +286,6 @@ SCRIPT;
         Admin::script($script);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function variables()
     {
         $select = request("{$this->id}_group");
@@ -305,13 +294,10 @@ SCRIPT;
 
         return array_merge(parent::variables(), [
             'group_name' => $this->name,
-            'default'    => $default,
+            'default' => $default,
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->injectScript();

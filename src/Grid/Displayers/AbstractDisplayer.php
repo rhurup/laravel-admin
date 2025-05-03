@@ -23,17 +23,11 @@ abstract class AbstractDisplayer
      */
     public $row;
 
-    /**
-     * @var mixed
-     */
     protected $value;
 
     /**
      * Create a new displayer instance.
      *
-     * @param mixed     $value
-     * @param Grid      $grid
-     * @param Column    $column
      * @param \stdClass $row
      */
     public function __construct($value, Grid $grid, Column $column, $row)
@@ -44,9 +38,6 @@ abstract class AbstractDisplayer
         $this->row = $row;
     }
 
-    /**
-     * @return mixed
-     */
     public function getValue()
     {
         return $this->value;
@@ -70,19 +61,12 @@ abstract class AbstractDisplayer
 
     /**
      * Get key of current row.
-     *
-     * @return mixed
      */
     public function getKey()
     {
         return $this->row->{$this->grid->getKeyName()};
     }
 
-    /**
-     * @param mixed $key
-     *
-     * @return mixed
-     */
     public function getAttribute($key)
     {
         return $this->row->getAttribute($key);
@@ -142,8 +126,6 @@ abstract class AbstractDisplayer
 
     /**
      * Display method.
-     *
-     * @return mixed
      */
     abstract public function display();
 }

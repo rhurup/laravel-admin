@@ -29,9 +29,6 @@ class KeyValue extends Field
         $this->formatValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getValidator(array $input)
     {
         if ($this->validator) {

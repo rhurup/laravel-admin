@@ -140,10 +140,10 @@ TREE;
 
         // copy files
         $this->copy([
-            __DIR__.'/stubs/extension/view.stub'       => 'resources/views/index.blade.php',
+            __DIR__.'/stubs/extension/view.stub' => 'resources/views/index.blade.php',
             __DIR__.'/stubs/extension/.gitignore.stub' => '.gitignore',
-            __DIR__.'/stubs/extension/README.md.stub'  => 'README.md',
-            __DIR__.'/stubs/extension/LICENSE.stub'    => 'LICENSE',
+            __DIR__.'/stubs/extension/README.md.stub' => 'README.md',
+            __DIR__.'/stubs/extension/LICENSE.stub' => 'LICENSE',
         ]);
 
         // make composer.json
@@ -190,7 +190,7 @@ TREE;
     /**
      * Get root namespace for this package.
      *
-     * @return array|null|string
+     * @return array|string|null
      */
     protected function getRootNameSpace()
     {

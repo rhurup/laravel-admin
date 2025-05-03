@@ -44,8 +44,6 @@ class Tools implements Renderable
 
     /**
      * Tools constructor.
-     *
-     * @param Panel $panel
      */
     public function __construct(Panel $panel)
     {
@@ -58,8 +56,6 @@ class Tools implements Renderable
     /**
      * Append a tools.
      *
-     * @param mixed $tool
-     *
      * @return $this
      */
     public function append($tool)
@@ -71,8 +67,6 @@ class Tools implements Renderable
 
     /**
      * Prepend a tool.
-     *
-     * @param mixed $tool
      *
      * @return $this
      */
@@ -224,9 +218,9 @@ HTML;
     {
         $trans = [
             'delete_confirm' => trans('admin.delete_confirm'),
-            'confirm'        => trans('admin.confirm'),
-            'cancel'         => trans('admin.cancel'),
-            'delete'         => trans('admin.delete'),
+            'confirm' => trans('admin.confirm'),
+            'cancel' => trans('admin.cancel'),
+            'delete' => trans('admin.delete'),
         ];
 
         $class = uniqid();
@@ -288,8 +282,6 @@ HTML;
      * Render custom tools.
      *
      * @param Collection $tools
-     *
-     * @return mixed
      */
     protected function renderCustomTools($tools)
     {

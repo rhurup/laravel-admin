@@ -2,7 +2,6 @@
 
 namespace Encore\Admin\Grid\Concerns;
 
-use Closure;
 use Encore\Admin\Grid;
 
 trait HasActions
@@ -10,7 +9,7 @@ trait HasActions
     /**
      * Callback for grid actions.
      *
-     * @var Closure
+     * @var \Closure
      */
     protected $actionsCallback;
 
@@ -24,13 +23,13 @@ trait HasActions
     /**
      * Set grid action callback.
      *
-     * @param Closure|string $actions
+     * @param \Closure|string $actions
      *
      * @return $this
      */
     public function actions($actions)
     {
-        if ($actions instanceof Closure) {
+        if ($actions instanceof \Closure) {
             $this->actionsCallback = $actions;
         }
 
@@ -56,13 +55,11 @@ trait HasActions
     }
 
     /**
-     * @param string $actionClass
-     *
      * @return $this
      */
     public function setActionClass(string $actionClass)
     {
-        if (is_subclass_of($actionClass, Grid\Displayers\Actions::class) || ($actionClass == Grid\Displayers\Actions::class)) {
+        if (is_subclass_of($actionClass, Grid\Displayers\Actions::class) || (Grid\Displayers\Actions::class === $actionClass)) {
             $this->actionsClass = $actionClass;
         }
 
@@ -82,11 +79,9 @@ trait HasActions
     /**
      * Set grid batch-action callback.
      *
-     * @param Closure $closure
-     *
      * @return $this
      */
-    public function batchActions(Closure $closure)
+    public function batchActions(\Closure $closure)
     {
         $this->tools(function (Grid\Tools $tools) use ($closure) {
             $tools->batch($closure);
@@ -96,8 +91,6 @@ trait HasActions
     }
 
     /**
-     * @param bool $disable
-     *
      * @return Grid|mixed
      */
     public function disableBatchActions(bool $disable = true)

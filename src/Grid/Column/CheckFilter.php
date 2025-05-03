@@ -14,15 +14,13 @@ class CheckFilter extends Filter
 
     /**
      * CheckFilter constructor.
-     *
-     * @param array $options
      */
     public function __construct(array $options)
     {
         $this->options = $options;
 
         $this->class = [
-            'all'  => uniqid('column-filter-all-'),
+            'all' => uniqid('column-filter-all-'),
             'item' => uniqid('column-filter-item-'),
         ];
     }
@@ -31,7 +29,6 @@ class CheckFilter extends Filter
      * Add a binding to the query.
      *
      * @param array $value
-     * @param Model $model
      */
     public function addBinding($value, Model $model)
     {
@@ -90,7 +87,7 @@ HTML;
 
         $this->addScript();
 
-        $allCheck = (count($value) == count($this->options)) ? 'checked' : '';
+        $allCheck = (count($value) === count($this->options)) ? 'checked' : '';
         $active = empty($value) ? '' : 'text-yellow';
 
         return <<<EOT

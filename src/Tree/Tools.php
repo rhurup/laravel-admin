@@ -25,8 +25,6 @@ class Tools implements Renderable
 
     /**
      * Create a new Tools instance.
-     *
-     * @param Tree $tree
      */
     public function __construct(Tree $tree)
     {

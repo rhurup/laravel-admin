@@ -61,8 +61,6 @@ class Relation extends Field
     /**
      * Set parent model for relation.
      *
-     * @param Model $model
-     *
      * @return $this
      */
     public function setModel(Model $model)
@@ -79,7 +77,7 @@ class Relation extends Field
      */
     protected function getNullRenderable()
     {
-        return new class() implements Renderable {
+        return new class implements Renderable {
             public function render()
             {
             }

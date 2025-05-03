@@ -35,9 +35,6 @@ class Textarea extends Field
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         if (!$this->shouldRender()) {
@@ -54,13 +51,10 @@ class Textarea extends Field
 
         return parent::fieldRender([
             'append' => $this->append,
-            'rows'   => $this->rows,
+            'rows' => $this->rows,
         ]);
     }
 
-    /**
-     * @param string $wrap
-     */
     protected function addPickBtn($btn)
     {
         $style = <<<'STYLE'

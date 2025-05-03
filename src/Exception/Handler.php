@@ -10,18 +10,16 @@ class Handler
     /**
      * Render exception.
      *
-     * @param \Exception $exception
-     *
      * @return string
      */
     public static function renderException(\Exception $exception)
     {
         $error = new MessageBag([
-            'type'    => get_class($exception),
+            'type' => get_class($exception),
             'message' => $exception->getMessage(),
-            'file'    => $exception->getFile(),
-            'line'    => $exception->getLine(),
-            'trace'   => $exception->getTraceAsString(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'trace' => $exception->getTraceAsString(),
         ]);
 
         $errors = new ViewErrorBag();
@@ -35,8 +33,6 @@ class Handler
      *
      * @param string $title
      * @param string $message
-     *
-     * @return mixed
      */
     public static function error($title = '', $message = '')
     {

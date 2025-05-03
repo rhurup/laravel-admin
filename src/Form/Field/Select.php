@@ -75,10 +75,6 @@ class Select extends Field
     }
 
     /**
-     * @param array $groups
-     */
-
-    /**
      * Set option groups.
      *
      * eg: $group = [
@@ -91,8 +87,6 @@ class Select extends Field
      *        ],
      *        ...
      *     ]
-     *
-     * @param array $groups
      *
      * @return $this
      */
@@ -123,7 +117,7 @@ class Select extends Field
         }
 
         $placeholder = json_encode([
-            'id'   => '',
+            'id' => '',
             'text' => trans('admin.choose'),
         ]);
 
@@ -173,7 +167,7 @@ EOT;
         $urlsStr = implode('^', $sourceUrls);
 
         $placeholder = json_encode([
-            'id'   => '',
+            'id' => '',
             'text' => trans('admin.choose'),
         ]);
 
@@ -270,10 +264,10 @@ EOT;
             'url' => $url.'?'.http_build_query($parameters),
         ];
         $configs = array_merge([
-            'allowClear'         => true,
-            'placeholder'        => [
-                'id'        => '',
-                'text'      => trans('admin.choose'),
+            'allowClear' => true,
+            'placeholder' => [
+                'id' => '',
+                'text' => trans('admin.choose'),
             ],
         ], $this->config);
 
@@ -308,16 +302,14 @@ EOT;
      * Load options from ajax results.
      *
      * @param string $url
-     * @param $idField
-     * @param $textField
      *
      * @return $this
      */
     public function ajax($url, $idField = 'id', $textField = 'text')
     {
         $configs = array_merge([
-            'allowClear'         => true,
-            'placeholder'        => $this->label,
+            'allowClear' => true,
+            'placeholder' => $this->label,
             'minimumInputLength' => 1,
         ], $this->config);
 
@@ -370,7 +362,6 @@ EOT;
      * all configurations see https://select2.org/configuration/options-api
      *
      * @param string $key
-     * @param mixed  $val
      *
      * @return $this
      */
@@ -381,13 +372,10 @@ EOT;
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function readOnly()
     {
-        //移除特定字段名称,增加MultipleSelect的修订
-        //没有特定字段名可以使多个readonly的JS代码片段被Admin::script的array_unique精简代码
+        // 移除特定字段名称,增加MultipleSelect的修订
+        // 没有特定字段名可以使多个readonly的JS代码片段被Admin::script的array_unique精简代码
         $script = <<<'EOT'
 $("form select").on("select2:opening", function (e) {
     if($(this).attr('readonly') || $(this).is(':hidden')){
@@ -409,15 +397,12 @@ EOT;
         return parent::readOnly();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $configs = array_merge([
-            'allowClear'  => true,
+            'allowClear' => true,
             'placeholder' => [
-                'id'   => '',
+                'id' => '',
                 'text' => $this->label,
             ],
         ], $this->config);
@@ -440,7 +425,7 @@ EOT;
 
         $this->addVariables([
             'options' => $this->options,
-            'groups'  => $this->groups,
+            'groups' => $this->groups,
         ]);
 
         $this->addCascadeScript();

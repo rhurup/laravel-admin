@@ -51,11 +51,11 @@ class UserGridTest extends TestCase
 
     protected function seedsTable($count = 100)
     {
-        factory(\Tests\Models\User::class, $count)
+        factory(UserModel::class, $count)
             ->create()
             ->each(function ($u) {
-                $u->profile()->save(factory(\Tests\Models\Profile::class)->make());
-                $u->tags()->saveMany(factory(\Tests\Models\Tag::class, 5)->make());
+                $u->profile()->save(factory(ProfileModel::class)->make());
+                $u->tags()->saveMany(factory(Tests\Models\Tag::class, 5)->make());
                 $u->data = ['json' => ['field' => random_int(0, 50)]];
                 $u->save();
             });
@@ -193,11 +193,11 @@ class UserGridTest extends TestCase
 
     public function testHasManyRelation()
     {
-        factory(\Tests\Models\User::class, 10)
+        factory(UserModel::class, 10)
             ->create()
             ->each(function ($u) {
-                $u->profile()->save(factory(\Tests\Models\Profile::class)->make());
-                $u->tags()->saveMany(factory(\Tests\Models\Tag::class, 5)->make());
+                $u->profile()->save(factory(ProfileModel::class)->make());
+                $u->tags()->saveMany(factory(Tests\Models\Tag::class, 5)->make());
             });
 
         $this->visit('admin/users')

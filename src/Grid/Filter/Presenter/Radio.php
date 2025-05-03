@@ -54,16 +54,13 @@ class Radio extends Presenter
         Admin::script($script);
     }
 
-    /**
-     * @return array
-     */
     public function variables(): array
     {
         $this->prepare();
 
         return [
             'options' => $this->options,
-            'inline'  => $this->inline,
+            'inline' => $this->inline,
         ];
     }
 }

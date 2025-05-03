@@ -42,8 +42,6 @@ class Footer implements Renderable
 
     /**
      * Footer constructor.
-     *
-     * @param Builder $builder
      */
     public function __construct(Builder $builder)
     {
@@ -197,11 +195,11 @@ EOT;
         ];
 
         $data = [
-            'width'            => $this->builder->getWidth(),
-            'buttons'          => $this->buttons,
-            'checkboxes'       => $this->checkboxes,
+            'width' => $this->builder->getWidth(),
+            'buttons' => $this->buttons,
+            'checkboxes' => $this->checkboxes,
             'submit_redirects' => $submitRedirects,
-            'default_check'    => $this->defaultCheck,
+            'default_check' => $this->defaultCheck,
         ];
 
         return view($this->view, $data)->render();

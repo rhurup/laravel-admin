@@ -141,12 +141,12 @@ class StepForm extends Form
         $index = array_search($this->current, $this->steps);
 
         $trans = [
-            'prev'   => __('admin.prev'),
-            'next'   => __('admin.next'),
+            'prev' => __('admin.prev'),
+            'next' => __('admin.next'),
             'submit' => __('admin.submit'),
         ];
 
-        if ($index !== 0) {
+        if (0 !== $index) {
             $step = $this->steps[$index - 1];
             $prevUrl = request()->fullUrlWithQuery(compact('step'));
             $footer .= "<a href=\"{$prevUrl}\" class=\"btn btn-warning pull-left\">{$trans['prev']}</a>";
@@ -179,9 +179,6 @@ class StepForm extends Form
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function data()
     {
         return session()->get('steps.'.$this->current, []);

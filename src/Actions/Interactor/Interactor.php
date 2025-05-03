@@ -24,16 +24,11 @@ abstract class Interactor
 
     /**
      * Dialog constructor.
-     *
-     * @param Action $action
      */
     public function __construct(Action $action)
     {
         $this->action = $action;
     }
 
-    /**
-     * @return mixed
-     */
     abstract public function addScript();
 }

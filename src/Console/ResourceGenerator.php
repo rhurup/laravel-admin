@@ -15,8 +15,8 @@ class ResourceGenerator
      * @var array
      */
     protected $formats = [
-        'form_field'  => "\$form->%s('%s', __('%s'))",
-        'show_field'  => "\$show->field('%s', __('%s'))",
+        'form_field' => "\$form->%s('%s', __('%s'))",
+        'show_field' => "\$show->field('%s', __('%s'))",
         'grid_column' => "\$grid->column('%s', __('%s'))",
     ];
 
@@ -35,31 +35,24 @@ class ResourceGenerator
      * @var array
      */
     protected $fieldTypeMapping = [
-        'ip'       => 'ip',
-        'email'    => 'email|mail',
+        'ip' => 'ip',
+        'email' => 'email|mail',
         'password' => 'password|pwd',
-        'url'      => 'url|link|src|href',
-        'mobile'   => 'mobile|phone',
-        'color'    => 'color|rgb',
-        'image'    => 'image|img|avatar|pic|picture|cover',
-        'file'     => 'file|attachment',
+        'url' => 'url|link|src|href',
+        'mobile' => 'mobile|phone',
+        'color' => 'color|rgb',
+        'image' => 'image|img|avatar|pic|picture|cover',
+        'file' => 'file|attachment',
     ];
 
     /**
      * ResourceGenerator constructor.
-     *
-     * @param mixed $model
      */
     public function __construct($model)
     {
         $this->model = $this->getModel($model);
     }
 
-    /**
-     * @param mixed $model
-     *
-     * @return mixed
-     */
     protected function getModel($model)
     {
         if ($model instanceof Model) {
@@ -106,7 +99,7 @@ class ResourceGenerator
                 case 'string':
                     $fieldType = 'text';
                     foreach ($this->fieldTypeMapping as $type => $regex) {
-                        if (preg_match("/^($regex)$/i", $name) !== 0) {
+                        if (0 !== preg_match("/^($regex)$/i", $name)) {
                             $fieldType = $type;
                             break;
                         }
@@ -207,16 +200,14 @@ class ResourceGenerator
     /**
      * Get columns of a giving model.
      *
-     * @throws \Exception
-     *
      * @return \Doctrine\DBAL\Schema\Column[]
+     *
+     * @throws \Exception
      */
     protected function getTableColumns()
     {
         if (!$this->model->getConnection()->isDoctrineAvailable()) {
-            throw new \Exception(
-                'You need to require doctrine/dbal: ~2.3 in your own composer.json to get database columns. '
-            );
+            throw new \Exception('You need to require doctrine/dbal: ~2.3 in your own composer.json to get database columns. ');
         }
 
         $table = $this->model->getConnection()->getTablePrefix().$this->model->getTable();

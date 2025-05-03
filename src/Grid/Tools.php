@@ -29,8 +29,6 @@ class Tools implements Renderable
 
     /**
      * Create a new Tools instance.
-     *
-     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -107,7 +105,6 @@ class Tools implements Renderable
      */
     public function disableRefreshButton(bool $disable = true)
     {
-        //
     }
 
     /**
@@ -126,9 +123,6 @@ class Tools implements Renderable
         });
     }
 
-    /**
-     * @param \Closure $closure
-     */
     public function batch(\Closure $closure)
     {
         call_user_func($closure, $this->tools->first(function ($tool) {

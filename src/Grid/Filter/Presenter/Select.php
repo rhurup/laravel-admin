@@ -28,8 +28,6 @@ class Select extends Presenter
 
     /**
      * Select constructor.
-     *
-     * @param mixed $options
      */
     public function __construct($options)
     {
@@ -42,7 +40,6 @@ class Select extends Presenter
      * all configurations see https://select2.org/configuration/options-api
      *
      * @param string $key
-     * @param mixed  $val
      *
      * @return $this
      */
@@ -55,8 +52,6 @@ class Select extends Presenter
 
     /**
      * Build options.
-     *
-     * @return array
      */
     protected function buildOptions(): array
     {
@@ -74,12 +69,12 @@ class Select extends Presenter
 
         if (empty($this->script)) {
             $placeholder = json_encode([
-                'id'   => '',
+                'id' => '',
                 'text' => trans('admin.choose'),
             ]);
 
             $configs = array_merge([
-                'allowClear'         => true,
+                'allowClear' => true,
             ], $this->config);
 
             $configs = json_encode($configs);
@@ -153,14 +148,14 @@ SCRIPT;
     protected function loadRemoteOptions($url, $parameters = [], $options = [])
     {
         $ajaxOptions = [
-            'url'  => $url,
+            'url' => $url,
             'data' => $parameters,
         ];
         $configs = array_merge([
-            'allowClear'         => true,
-            'placeholder'        => [
-                'id'        => '',
-                'text'      => trans('admin.choose'),
+            'allowClear' => true,
+            'placeholder' => [
+                'id' => '',
+                'text' => trans('admin.choose'),
             ],
         ], $this->config);
 
@@ -190,14 +185,12 @@ EOT;
      * Load options from ajax.
      *
      * @param string $resourceUrl
-     * @param $idField
-     * @param $textField
      */
     public function ajax($resourceUrl, $idField = 'id', $textField = 'text')
     {
         $configs = array_merge([
-            'allowClear'         => true,
-            'placeholder'        => trans('admin.choose'),
+            'allowClear' => true,
+            'placeholder' => trans('admin.choose'),
             'minimumInputLength' => 1,
         ], $this->config);
 
@@ -242,20 +235,14 @@ $(".{$this->getElementClass()}").select2({
 EOT;
     }
 
-    /**
-     * @return array
-     */
     public function variables(): array
     {
         return [
             'options' => $this->buildOptions(),
-            'class'   => $this->getElementClass(),
+            'class' => $this->getElementClass(),
         ];
     }
 
-    /**
-     * @return string
-     */
     protected function getElementClass(): string
     {
         return str_replace('.', '_', $this->filter->getColumn());

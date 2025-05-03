@@ -66,9 +66,9 @@ abstract class Extension
      * @var array
      */
     protected $menuValidationRules = [
-        'title'    => 'required',
-        'path'     => 'required',
-        'icon'     => 'required',
+        'title' => 'required',
+        'path' => 'required',
+        'icon' => 'required',
         'children' => 'nullable|array',
     ];
 
@@ -78,9 +78,9 @@ abstract class Extension
      * @var array
      */
     protected $permissionValidationRules = [
-        'name'  => 'required',
-        'slug'  => 'required',
-        'path'  => 'required',
+        'name' => 'required',
+        'slug' => 'required',
+        'path' => 'required',
     ];
 
     /**
@@ -196,7 +196,7 @@ abstract class Extension
      */
     public function enabled()
     {
-        return static::config('enable') !== false;
+        return false !== static::config('enable');
     }
 
     /**
@@ -263,11 +263,9 @@ abstract class Extension
     /**
      * Validate menu fields.
      *
-     * @param array $menu
+     * @return bool
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     public function validateMenu(array $menu)
     {
@@ -291,9 +289,9 @@ abstract class Extension
     protected function getMenuValidationRules()
     {
         return [
-            'title'    => 'required',
-            'path'     => ['required', Rule::unique(Config::get('admin.database.menu_table'), 'uri')],
-            'icon'     => 'required',
+            'title' => 'required',
+            'path' => ['required', Rule::unique(Config::get('admin.database.menu_table'), 'uri')],
+            'icon' => 'required',
             'children' => 'nullable|array',
         ];
     }
@@ -301,11 +299,9 @@ abstract class Extension
     /**
      * Validate permission fields.
      *
-     * @param array $permission
+     * @return bool
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     public function validatePermission(array $permission)
     {
@@ -333,11 +329,11 @@ abstract class Extension
     protected function getPermissionValidationRules()
     {
         return [
-            'name'     => 'required',
-            'slug'     => ['required', Rule::unique(Config::get('admin.database.permissions_table'), 'slug')],
-            'path'     => 'required|array',
-            'path.*'   => 'string',
-            'method'   => 'nullable|array',
+            'name' => 'required',
+            'slug' => ['required', Rule::unique(Config::get('admin.database.permissions_table'), 'slug')],
+            'path' => 'required|array',
+            'path.*' => 'string',
+            'method' => 'nullable|array',
             'method.*' => ['string', Rule::in(Permission::$httpMethods)],
         ];
     }
@@ -349,11 +345,10 @@ abstract class Extension
      * @param string $uri
      * @param string $icon
      * @param int    $parentId
-     * @param array  $children
-     *
-     * @throws \Exception
      *
      * @return Model
+     *
+     * @throws \Exception
      */
     protected static function createMenu($title, $uri, $icon = 'fa-bars', $parentId = 0, array $children = [])
     {
@@ -365,10 +360,10 @@ abstract class Extension
          */
         $menu = $menuModel::create([
             'parent_id' => $parentId,
-            'order'     => $lastOrder + 1,
-            'title'     => $title,
-            'icon'      => $icon,
-            'uri'       => $uri,
+            'order' => $lastOrder + 1,
+            'title' => $title,
+            'icon' => $icon,
+            'uri' => $uri,
         ]);
         if (!empty($children)) {
             $extension = static::getInstance();
@@ -389,9 +384,6 @@ abstract class Extension
     /**
      * Create a permission for this extension.
      *
-     * @param       $name
-     * @param       $slug
-     * @param       $path
      * @param array $methods
      */
     protected static function createPermission($name, $slug, $path, $methods = [])
@@ -399,23 +391,21 @@ abstract class Extension
         $permissionModel = config('admin.database.permissions_model');
 
         $permissionModel::create([
-            'name'        => $name,
-            'slug'        => $slug,
-            'http_path'   => '/'.trim($path, '/'),
+            'name' => $name,
+            'slug' => $slug,
+            'http_path' => '/'.trim($path, '/'),
             'http_method' => $methods,
         ]);
     }
 
     /**
      * Set routes for this extension.
-     *
-     * @param $callback
      */
     public static function routes($callback)
     {
         $attributes = array_merge(
             [
-                'prefix'     => config('admin.route.prefix'),
+                'prefix' => config('admin.route.prefix'),
                 'middleware' => config('admin.route.middleware'),
             ],
             static::config('route', [])

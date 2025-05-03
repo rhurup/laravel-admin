@@ -9,8 +9,6 @@ abstract class AbstractField implements Renderable
 {
     /**
      * Field value.
-     *
-     * @var mixed
      */
     protected $value;
 
@@ -36,8 +34,6 @@ abstract class AbstractField implements Renderable
     public $escape = true;
 
     /**
-     * @param mixed $value
-     *
      * @return AbstractField $this
      */
     public function setValue($value)
@@ -59,8 +55,5 @@ abstract class AbstractField implements Renderable
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     abstract public function render();
 }

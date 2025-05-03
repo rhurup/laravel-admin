@@ -18,8 +18,6 @@ trait HasResourceActions
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return mixed
      */
     public function store()
     {

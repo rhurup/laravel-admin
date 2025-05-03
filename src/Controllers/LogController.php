@@ -8,9 +8,6 @@ use Illuminate\Support\Arr;
 
 class LogController extends AdminController
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function title()
     {
         return trans('admin.operation_log');
@@ -66,8 +63,6 @@ class LogController extends AdminController
     }
 
     /**
-     * @param mixed $id
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
@@ -76,12 +71,12 @@ class LogController extends AdminController
 
         if (OperationLog::destroy(array_filter($ids))) {
             $data = [
-                'status'  => true,
+                'status' => true,
                 'message' => trans('admin.delete_succeeded'),
             ];
         } else {
             $data = [
-                'status'  => false,
+                'status' => false,
                 'message' => trans('admin.delete_failed'),
             ];
         }

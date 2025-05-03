@@ -27,16 +27,10 @@ class Hidden extends AbstractFilter
         $this->value = $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function condition($inputs)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         return "<input type='hidden' name='$this->name' value='$this->value'>";

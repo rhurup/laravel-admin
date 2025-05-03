@@ -22,9 +22,9 @@ class Currency extends Text
      * @var array
      */
     protected $options = [
-        'alias'              => 'currency',
-        'radixPoint'         => '.',
-        'prefix'             => '',
+        'alias' => 'currency',
+        'radixPoint' => '.',
+        'prefix' => '',
         'removeMaskOnSubmit' => true,
     ];
 
@@ -54,17 +54,11 @@ class Currency extends Text
         return $this->options(compact('digits'));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepare($value)
     {
         return (float) $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->inputmask($this->options);

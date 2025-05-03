@@ -7,7 +7,6 @@ class DateMultiple extends Text
     protected static $css = [
         '/vendor/laravel-admin/flatpickr/dist/flatpickr.min.css',
         '/vendor/laravel-admin/flatpickr/dist/shortcut-buttons-flatpickr/themes/light.min.css',
-
     ];
 
     protected static $js = [
@@ -27,7 +26,7 @@ class DateMultiple extends Text
 
     public function prepare($value)
     {
-        if ($value === '') {
+        if ('' === $value) {
             $value = null;
         }
 

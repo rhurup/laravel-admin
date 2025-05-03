@@ -11,7 +11,6 @@ use Encore\Admin\Widgets\Navbar;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use InvalidArgumentException;
 
 /**
  * Class Admin.
@@ -25,7 +24,7 @@ class Admin
      *
      * @var string
      */
-    const VERSION = '1.8.17';
+    public const VERSION = '1.8.17';
 
     /**
      * @var Navbar
@@ -73,27 +72,21 @@ class Admin
     }
 
     /**
-     * @param $model
-     * @param Closure $callable
-     *
-     * @return \Encore\Admin\Grid
+     * @return Grid
      *
      * @deprecated since v1.6.1
      */
-    public function grid($model, Closure $callable)
+    public function grid($model, \Closure $callable)
     {
         return new Grid($this->getModel($model), $callable);
     }
 
     /**
-     * @param $model
-     * @param Closure $callable
-     *
-     * @return \Encore\Admin\Form
+     * @return Form
      *
      *  @deprecated since v1.6.1
      */
-    public function form($model, Closure $callable)
+    public function form($model, \Closure $callable)
     {
         return new Form($this->getModel($model), $callable);
     }
@@ -101,21 +94,15 @@ class Admin
     /**
      * Build a tree.
      *
-     * @param $model
-     * @param Closure|null $callable
-     *
-     * @return \Encore\Admin\Tree
+     * @return Tree
      */
-    public function tree($model, Closure $callable = null)
+    public function tree($model, ?\Closure $callable = null)
     {
         return new Tree($this->getModel($model), $callable);
     }
 
     /**
      * Build show page.
-     *
-     * @param $model
-     * @param mixed $callable
      *
      * @return Show
      *
@@ -127,22 +114,15 @@ class Admin
     }
 
     /**
-     * @param Closure $callable
-     *
-     * @return \Encore\Admin\Layout\Content
+     * @return Content
      *
      * @deprecated since v1.6.1
      */
-    public function content(Closure $callable = null)
+    public function content(?\Closure $callable = null)
     {
         return new Content($callable);
     }
 
-    /**
-     * @param $model
-     *
-     * @return mixed
-     */
     public function getModel($model)
     {
         if ($model instanceof Model) {
@@ -153,7 +133,7 @@ class Admin
             return $this->getModel(new $model());
         }
 
-        throw new InvalidArgumentException("$model is not a valid model");
+        throw new \InvalidArgumentException("$model is not a valid model");
     }
 
     /**
@@ -222,7 +202,7 @@ class Admin
     }
 
     /**
-     * @param null|string $favicon
+     * @param string|null $favicon
      *
      * @return string|void
      */
@@ -260,11 +240,9 @@ class Admin
     /**
      * Set navbar.
      *
-     * @param Closure|null $builder
-     *
      * @return Navbar
      */
-    public function navbar(Closure $builder = null)
+    public function navbar(?\Closure $builder = null)
     {
         if (is_null($builder)) {
             return $this->getNavbar();
@@ -276,7 +254,7 @@ class Admin
     /**
      * Get navbar object.
      *
-     * @return \Encore\Admin\Widgets\Navbar
+     * @return Navbar
      */
     public function getNavbar()
     {
@@ -307,15 +285,13 @@ class Admin
     public function routes()
     {
         $attributes = [
-            'prefix'     => config('admin.route.prefix'),
+            'prefix' => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
         ];
 
         app('router')->group($attributes, function ($router) {
-
             /* @var \Illuminate\Support\Facades\Route $router */
             $router->namespace('\Encore\Admin\Controllers')->group(function ($router) {
-
                 /* @var \Illuminate\Routing\Router $router */
                 $router->resource('auth/users', 'UserController')->names('admin.auth.users');
                 $router->resource('auth/roles', 'RoleController')->names('admin.auth.roles');
@@ -353,17 +329,11 @@ class Admin
         static::$extensions[$name] = $class;
     }
 
-    /**
-     * @param callable $callback
-     */
     public static function booting(callable $callback)
     {
         static::$bootingCallbacks[] = $callback;
     }
 
-    /**
-     * @param callable $callback
-     */
     public static function booted(callable $callback)
     {
         static::$bootedCallbacks[] = $callback;

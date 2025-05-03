@@ -14,8 +14,6 @@ class Modal extends AbstractDisplayer
     protected $renderable;
 
     /**
-     * @param int $multiple
-     *
      * @return string
      */
     protected function getLoadUrl()
@@ -32,9 +30,9 @@ class Modal extends AbstractDisplayer
      */
     public function display($callback = null)
     {
-        if (func_num_args() == 2) {
+        if (2 === func_num_args()) {
             list($title, $callback) = func_get_args();
-        } elseif (func_num_args() == 1) {
+        } elseif (1 === func_num_args()) {
             $title = $this->trans('title');
         }
 
@@ -47,14 +45,14 @@ class Modal extends AbstractDisplayer
         }
 
         return Admin::component('admin::components.column-modal', [
-            'url'     => $this->getLoadUrl(),
-            'async'   => $async,
-            'grid'    => is_subclass_of($callback, Simple::class),
-            'title'   => $title,
-            'html'    => $html,
-            'key'     => $this->getKey(),
-            'value'   => $this->value,
-            'name'    => $this->getKey().'-'.str_replace('.', '_', $this->getColumn()->getName()),
+            'url' => $this->getLoadUrl(),
+            'async' => $async,
+            'grid' => is_subclass_of($callback, Simple::class),
+            'title' => $title,
+            'html' => $html,
+            'key' => $this->getKey(),
+            'value' => $this->value,
+            'name' => $this->getKey().'-'.str_replace('.', '_', $this->getColumn()->getName()),
         ]);
     }
 }

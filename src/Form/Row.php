@@ -37,9 +37,6 @@ class Row implements Renderable
 
     /**
      * Row constructor.
-     *
-     * @param \Closure $callback
-     * @param Form     $form
      */
     public function __construct(\Closure $callback, Form $form)
     {
@@ -99,7 +96,7 @@ class Row implements Renderable
         $field->disableHorizontal();
 
         $this->fields[] = [
-            'width'   => $this->defaultFieldWidth,
+            'width' => $this->defaultFieldWidth,
             'element' => $field,
         ];
 

@@ -117,11 +117,11 @@ class Dialog extends Interactor
         ];
 
         return [
-            'type'                => 'question',
-            'showCancelButton'    => true,
+            'type' => 'question',
+            'showCancelButton' => true,
             'showLoaderOnConfirm' => true,
-            'confirmButtonText'   => $trans['submit'],
-            'cancelButtonText'    => $trans['cancel'],
+            'confirmButtonText' => $trans['submit'],
+            'cancelButtonText' => $trans['cancel'],
         ];
     }
 

@@ -37,8 +37,6 @@ class Tools implements Renderable
 
     /**
      * Create a new Tools instance.
-     *
-     * @param Builder $builder
      */
     public function __construct(Builder $builder)
     {
@@ -49,8 +47,6 @@ class Tools implements Renderable
 
     /**
      * Append a tools.
-     *
-     * @param mixed $tool
      *
      * @return $this
      */
@@ -63,8 +59,6 @@ class Tools implements Renderable
 
     /**
      * Prepend a tool.
-     *
-     * @param mixed $tool
      *
      * @return $this
      */
@@ -212,9 +206,9 @@ HTML;
     {
         $trans = [
             'delete_confirm' => trans('admin.delete_confirm'),
-            'confirm'        => trans('admin.confirm'),
-            'cancel'         => trans('admin.cancel'),
-            'delete'         => trans('admin.delete'),
+            'confirm' => trans('admin.confirm'),
+            'cancel' => trans('admin.cancel'),
+            'delete' => trans('admin.delete'),
         ];
 
         $class = uniqid();
@@ -280,7 +274,7 @@ HTML;
      *
      * @return $this
      *
-     * @deprecated use append instead.
+     * @deprecated use append instead
      */
     public function add($tool)
     {
@@ -303,7 +297,7 @@ HTML;
      *
      * @return $this
      *
-     * @deprecated Use disableList instead.
+     * @deprecated use disableList instead
      */
     public function disableListButton()
     {
@@ -314,8 +308,6 @@ HTML;
      * Render custom tools.
      *
      * @param Collection $tools
-     *
-     * @return mixed
      */
     protected function renderCustomTools($tools)
     {

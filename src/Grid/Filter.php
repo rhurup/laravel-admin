@@ -51,25 +51,25 @@ class Filter implements Renderable
      * @var array
      */
     protected static $supports = [
-        'equal'      => Filter\Equal::class,
-        'notEqual'   => Filter\NotEqual::class,
-        'ilike'      => Filter\Ilike::class,
-        'like'       => Filter\Like::class,
-        'gt'         => Filter\Gt::class,
-        'lt'         => Filter\Lt::class,
-        'between'    => Filter\Between::class,
-        'group'      => Filter\Group::class,
-        'where'      => Filter\Where::class,
-        'in'         => Filter\In::class,
-        'notIn'      => Filter\NotIn::class,
-        'date'       => Filter\Date::class,
-        'day'        => Filter\Day::class,
-        'month'      => Filter\Month::class,
-        'year'       => Filter\Year::class,
-        'hidden'     => Filter\Hidden::class,
-        'contains'   => Filter\Like::class,
+        'equal' => Filter\Equal::class,
+        'notEqual' => Filter\NotEqual::class,
+        'ilike' => Filter\Ilike::class,
+        'like' => Filter\Like::class,
+        'gt' => Filter\Gt::class,
+        'lt' => Filter\Lt::class,
+        'between' => Filter\Between::class,
+        'group' => Filter\Group::class,
+        'where' => Filter\Where::class,
+        'in' => Filter\In::class,
+        'notIn' => Filter\NotIn::class,
+        'date' => Filter\Date::class,
+        'day' => Filter\Day::class,
+        'month' => Filter\Month::class,
+        'year' => Filter\Year::class,
+        'hidden' => Filter\Hidden::class,
+        'contains' => Filter\Like::class,
         'startsWith' => Filter\StartsWith::class,
-        'endsWith'   => Filter\EndsWith::class,
+        'endsWith' => Filter\EndsWith::class,
     ];
 
     /**
@@ -139,15 +139,11 @@ class Filter implements Renderable
 
     /**
      * Primary key of giving model.
-     *
-     * @var mixed
      */
     protected $primaryKey;
 
     /**
      * Create a new filter instance.
-     *
-     * @param Model $model
      */
     public function __construct(Model $model)
     {
@@ -166,7 +162,7 @@ class Filter implements Renderable
      */
     protected function initLayout()
     {
-        $this->layout = new Filter\Layout\Layout($this);
+        $this->layout = new Layout($this);
     }
 
     /**
@@ -223,8 +219,6 @@ class Filter implements Renderable
     }
 
     /**
-     * @param $name
-     *
      * @return $this
      */
     public function setName($name)
@@ -280,13 +274,11 @@ class Filter implements Renderable
 
     /**
      * Remove filter by filter id.
-     *
-     * @param mixed $id
      */
     public function removeFilterByID($id)
     {
         $this->filters = array_filter($this->filters, function (AbstractFilter $filter) use ($id) {
-            return $filter->getId() != $id;
+            return $filter->getId() !== $id;
         });
     }
 
@@ -300,7 +292,7 @@ class Filter implements Renderable
         $inputs = Arr::dot(request()->all());
 
         $inputs = array_filter($inputs, function ($input) {
-            return $input !== '' && !is_null($input);
+            return '' !== $input && !is_null($input);
         });
 
         $this->sanitizeInputs($inputs);
@@ -335,8 +327,6 @@ class Filter implements Renderable
     }
 
     /**
-     * @param $inputs
-     *
      * @return array
      */
     protected function sanitizeInputs(&$inputs)
@@ -369,8 +359,6 @@ class Filter implements Renderable
     /**
      * Add a filter to grid.
      *
-     * @param AbstractFilter $filter
-     *
      * @return AbstractFilter
      */
     protected function addFilter(AbstractFilter $filter)
@@ -389,8 +377,6 @@ class Filter implements Renderable
 
     /**
      * Use a custom filter.
-     *
-     * @param AbstractFilter $filter
      *
      * @return AbstractFilter
      */
@@ -412,8 +398,6 @@ class Filter implements Renderable
     /**
      * @param string $key
      * @param string $label
-     *
-     * @return mixed
      */
     public function scope($key, $label = '')
     {
@@ -424,8 +408,6 @@ class Filter implements Renderable
 
     /**
      * Add separator in filter scope.
-     *
-     * @return mixed
      */
     public function scopeSeparator()
     {
@@ -452,7 +434,7 @@ class Filter implements Renderable
         $key = request(Scope::QUERY_NAME);
 
         return $this->scopes->first(function ($scope) use ($key) {
-            return $scope->key == $key;
+            return $scope->key === $key;
         });
     }
 
@@ -473,8 +455,7 @@ class Filter implements Renderable
     /**
      * Add a new layout column.
      *
-     * @param int      $width
-     * @param \Closure $closure
+     * @param int $width
      *
      * @return $this
      */
@@ -522,8 +503,7 @@ class Filter implements Renderable
     }
 
     /**
-     * @param callable $callback
-     * @param int      $count
+     * @param int $count
      *
      * @return bool
      */
@@ -551,10 +531,10 @@ class Filter implements Renderable
         }
 
         return view($this->view)->with([
-            'action'   => $this->action ?: $this->urlWithoutFilters(),
-            'layout'   => $this->layout,
+            'action' => $this->action ?: $this->urlWithoutFilters(),
+            'layout' => $this->layout,
             'filterID' => $this->filterID,
-            'expand'   => $this->expand,
+            'expand' => $this->expand,
         ])->render();
     }
 
@@ -617,7 +597,7 @@ class Filter implements Renderable
         $query = $request->query();
         Arr::forget($query, $keys);
 
-        $question = $request->getBaseUrl().$request->getPathInfo() == '/' ? '/?' : '?';
+        $question = '/' === $request->getBaseUrl().$request->getPathInfo() ? '/?' : '?';
 
         return count($request->query()) > 0
             ? $request->url().$question.http_build_query($query)

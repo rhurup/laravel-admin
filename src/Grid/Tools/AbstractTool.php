@@ -20,8 +20,6 @@ abstract class AbstractTool implements Renderable
     /**
      * Toggle this button.
      *
-     * @param bool $disable
-     *
      * @return $this
      */
     public function disable(bool $disable = true)
@@ -42,8 +40,6 @@ abstract class AbstractTool implements Renderable
     /**
      * Set parent grid.
      *
-     * @param Grid $grid
-     *
      * @return $this
      */
     public function setGrid(Grid $grid)
@@ -61,9 +57,6 @@ abstract class AbstractTool implements Renderable
         return $this->grid;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     abstract public function render();
 
     /**

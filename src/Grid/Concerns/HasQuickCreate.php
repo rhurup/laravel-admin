@@ -14,8 +14,6 @@ trait HasQuickCreate
     protected $quickCreate;
 
     /**
-     * @param \Closure $closure
-     *
      * @return $this
      */
     public function quickCreate(\Closure $closure)

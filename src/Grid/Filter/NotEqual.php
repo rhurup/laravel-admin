@@ -6,9 +6,6 @@ use Illuminate\Support\Arr;
 
 class NotEqual extends AbstractFilter
 {
-    /**
-     * {@inheritdoc}
-     */
     public function condition($inputs)
     {
         $value = Arr::get($inputs, $this->column);

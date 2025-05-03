@@ -69,8 +69,6 @@ trait InlineEditing
     /**
      * Grid inline date picker.
      *
-     * @param string $format
-     *
      * @return $this
      */
     public function date()
@@ -80,8 +78,6 @@ trait InlineEditing
 
     /**
      * Grid inline time picker.
-     *
-     * @param string $format
      *
      * @return $this
      */
@@ -178,9 +174,9 @@ trait InlineEditing
     public function currency()
     {
         return $this->input([
-            'alias'              => 'currency',
-            'radixPoint'         => '.',
-            'prefix'             => '',
+            'alias' => 'currency',
+            'radixPoint' => '.',
+            'prefix' => '',
             'removeMaskOnSubmit' => true,
         ]);
     }
@@ -193,7 +189,7 @@ trait InlineEditing
     public function decimal()
     {
         return $this->input([
-            'alias'      => 'decimal',
+            'alias' => 'decimal',
             'rightAlign' => true,
         ]);
     }
@@ -240,10 +236,6 @@ trait InlineEditing
 
     /**
      * Grid inline select.
-     *
-     * @param array $options
-     *
-     * @return mixed
      */
     public function select(array $options)
     {
@@ -252,8 +244,6 @@ trait InlineEditing
 
     /**
      * Grid inline multiple-select input.
-     *
-     * @param array $options
      *
      * @return $this
      */
@@ -265,8 +255,6 @@ trait InlineEditing
     /**
      * Grid inline checkbox.
      *
-     * @param array $options
-     *
      * @return $this
      */
     public function checkbox(array $options)
@@ -276,8 +264,6 @@ trait InlineEditing
 
     /**
      * Grid inline checkbox.
-     *
-     * @param array $options
      *
      * @return $this
      */
@@ -289,8 +275,6 @@ trait InlineEditing
     /**
      * Grid inline switch.
      *
-     * @param array $states
-     *
      * @return $this
      */
     public function switch(array $states = [])
@@ -300,8 +284,6 @@ trait InlineEditing
 
     /**
      * Grid inline switch group.
-     *
-     * @param array $states
      *
      * @return $this
      */

@@ -8,9 +8,6 @@ use Encore\Admin\Show;
 
 class RoleController extends AdminController
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function title()
     {
         return trans('admin.roles');
@@ -37,7 +34,7 @@ class RoleController extends AdminController
         $grid->column('updated_at', trans('admin.updated_at'));
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
-            if ($actions->row->slug == 'administrator') {
+            if ('administrator' === $actions->row->slug) {
                 $actions->disableDelete();
             }
         });
@@ -53,8 +50,6 @@ class RoleController extends AdminController
 
     /**
      * Make a show builder.
-     *
-     * @param mixed $id
      *
      * @return Show
      */

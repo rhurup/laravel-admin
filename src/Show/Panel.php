@@ -53,16 +53,14 @@ class Panel implements Renderable
     {
         $this->data = [
             'fields' => new Collection(),
-            'tools'  => new Tools($this),
-            'style'  => 'info',
-            'title'  => trans('admin.detail'),
+            'tools' => new Tools($this),
+            'style' => 'info',
+            'title' => trans('admin.detail'),
         ];
     }
 
     /**
      * Set parent container.
-     *
-     * @param Show $show
      *
      * @return $this
      */
@@ -127,8 +125,6 @@ class Panel implements Renderable
 
     /**
      * Build panel tools.
-     *
-     * @param $callable
      */
     public function tools($callable)
     {

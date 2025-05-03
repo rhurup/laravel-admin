@@ -20,9 +20,6 @@ class BelongsTo extends AbstractDisplayer
         return route(admin_get_route('handle-selectable'), compact('selectable', 'args'));
     }
 
-    /**
-     * @return mixed
-     */
     protected function getOriginalData()
     {
         return $this->getColumn()->getOriginal();
@@ -37,20 +34,18 @@ class BelongsTo extends AbstractDisplayer
     public function display($selectable = null, $column = '')
     {
         if (!class_exists($selectable) || !is_subclass_of($selectable, Selectable::class)) {
-            throw new \InvalidArgumentException(
-                "[Class [{$selectable}] must be a sub class of Encore\Admin\Grid\Selectable"
-            );
+            throw new \InvalidArgumentException("[Class [{$selectable}] must be a sub class of Encore\Admin\Grid\Selectable");
         }
 
         return Admin::component('admin::grid.inline-edit.belongsto', [
-            'modal'     => sprintf('modal-grid-selector-%s', $this->getClassName()),
-            'key'       => $this->getKey(),
-            'original'  => $this->getOriginalData(),
-            'value'     => $this->getValue(),
-            'resource'  => $this->getResource(),
-            'name'      => $column ?: $this->getName(),
-            'relation'  => get_called_class(),
-            'url'       => $this->getLoadUrl($selectable, get_called_class() == BelongsToMany::class),
+            'modal' => sprintf('modal-grid-selector-%s', $this->getClassName()),
+            'key' => $this->getKey(),
+            'original' => $this->getOriginalData(),
+            'value' => $this->getValue(),
+            'resource' => $this->getResource(),
+            'name' => $column ?: $this->getName(),
+            'relation' => get_called_class(),
+            'url' => $this->getLoadUrl($selectable, BelongsToMany::class === get_called_class()),
         ]);
     }
 }

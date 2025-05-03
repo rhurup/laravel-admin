@@ -19,7 +19,7 @@ trait Authorizable
     public function passesAuthorization($model = null)
     {
         if (method_exists($this, 'authorize')) {
-            return $this->authorize(Admin::user(), $model) == true;
+            return true === $this->authorize(Admin::user(), $model);
         }
 
         if ($model instanceof Collection) {
@@ -27,15 +27,12 @@ trait Authorizable
         }
 
         if ($model && method_exists($model, 'actionAuthorize')) {
-            return $model->actionAuthorize(Admin::user(), get_called_class()) == true;
+            return true === $model->actionAuthorize(Admin::user(), get_called_class());
         }
 
         return true;
     }
 
-    /**
-     * @return mixed
-     */
     public function failedAuthorization()
     {
         return $this->response()->error(__('admin.deny'))->send();

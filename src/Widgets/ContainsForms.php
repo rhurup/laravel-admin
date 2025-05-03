@@ -12,8 +12,6 @@ trait ContainsForms
     /**
      * @param array $forms
      * @param null  $active
-     *
-     * @return mixed
      */
     public static function forms($forms, $active = null)
     {
@@ -45,7 +43,7 @@ trait ContainsForms
             /** @var Form $form */
             $form = app()->make($class);
 
-            if ($name == $active) {
+            if ($name === $active) {
                 $this->add($form->title(), $form->unbox(), true);
             } else {
                 $this->addLink($form->title(), $this->getTabUrl($name));

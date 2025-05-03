@@ -53,12 +53,12 @@ class Carousel extends Widget implements Renderable
     public function render()
     {
         $variables = [
-            'items'      => $this->items,
-            'title'      => $this->title,
+            'items' => $this->items,
+            'title' => $this->title,
             'attributes' => $this->formatAttributes(),
-            'id'         => $this->id,
-            'width'      => $this->width ?: 300,
-            'height'     => $this->height ?: 200,
+            'id' => $this->id,
+            'width' => $this->width ?: 300,
+            'height' => $this->height ?: 200,
         ];
 
         return view($this->view, $variables)->render();

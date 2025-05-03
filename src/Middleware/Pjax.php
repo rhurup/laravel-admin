@@ -2,7 +2,6 @@
 
 namespace Encore\Admin\Middleware;
 
-use Closure;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -15,11 +14,10 @@ class Pjax
      * Handle an incoming request.
      *
      * @param Request $request
-     * @param Closure $next
      *
      * @return Response
      */
-    public function handle($request, Closure $next)
+    public function handle($request, \Closure $next)
     {
         $response = $next($request);
 
@@ -42,8 +40,6 @@ class Pjax
 
     /**
      * Send a response through this middleware.
-     *
-     * @param Response $response
      */
     public static function respond(Response $response)
     {
@@ -59,8 +55,6 @@ class Pjax
     /**
      * Handle Response with exceptions.
      *
-     * @param Response $response
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function handleErrorResponse(Response $response)
@@ -68,10 +62,10 @@ class Pjax
         $exception = $response->exception;
 
         $error = new MessageBag([
-            'type'    => get_class($exception),
+            'type' => get_class($exception),
             'message' => $exception->getMessage(),
-            'file'    => $exception->getFile(),
-            'line'    => $exception->getLine(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
         ]);
 
         return back()->withInput()->withErrors($error, 'exception');
@@ -80,8 +74,7 @@ class Pjax
     /**
      * Prepare the PJAX-specific response content.
      *
-     * @param Response $response
-     * @param string   $container
+     * @param string $container
      *
      * @return $this
      */
@@ -146,9 +139,6 @@ class Pjax
 
     /**
      * Set the PJAX-URL header to the current uri.
-     *
-     * @param Response $response
-     * @param Request  $request
      */
     protected function setUriHeader(Response $response, Request $request)
     {

@@ -31,9 +31,6 @@ STYLE;
         Admin::style($style);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->addStyle();

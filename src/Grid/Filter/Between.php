@@ -7,9 +7,6 @@ use Illuminate\Support\Arr;
 
 class Between extends AbstractFilter
 {
-    /**
-     * {@inheritdoc}
-     */
     protected $view = 'admin::filter.between';
 
     /**
@@ -37,7 +34,7 @@ class Between extends AbstractFilter
     {
         $columns = explode('.', $column);
 
-        if (count($columns) == 1) {
+        if (1 === count($columns)) {
             $name = $columns[0];
         } else {
             $name = array_shift($columns);
@@ -54,8 +51,6 @@ class Between extends AbstractFilter
      * Get condition of this filter.
      *
      * @param array $inputs
-     *
-     * @return mixed
      */
     public function condition($inputs)
     {
@@ -70,7 +65,7 @@ class Between extends AbstractFilter
         $this->value = Arr::get($inputs, $this->column);
 
         $value = array_filter($this->value, function ($val) {
-            return $val !== '';
+            return '' !== $val;
         });
 
         if (empty($value)) {

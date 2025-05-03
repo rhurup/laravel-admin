@@ -45,17 +45,12 @@ class File extends Field
 
     /**
      * Default directory for file to upload.
-     *
-     * @return mixed
      */
     public function defaultDirectory()
     {
         return config('admin.upload.directory.file');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getValidator(array $input)
     {
         if (request()->has(static::FILE_DELETE_FLAG)) {
@@ -117,10 +112,6 @@ class File extends Field
 
     /**
      * Upload file and delete original file.
-     *
-     * @param UploadedFile $file
-     *
-     * @return mixed
      */
     protected function uploadAndDeleteOriginal(UploadedFile $file)
     {
@@ -196,9 +187,9 @@ EOT;
 
         if ($this->fileActionSettings['showRemove']) {
             $text = [
-                'title'   => trans('admin.delete_confirm'),
+                'title' => trans('admin.delete_confirm'),
                 'confirm' => trans('admin.confirm'),
-                'cancel'  => trans('admin.cancel'),
+                'cancel' => trans('admin.cancel'),
             ];
 
             $this->script .= <<<EOT

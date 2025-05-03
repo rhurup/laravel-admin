@@ -28,8 +28,6 @@ class DropdownActions extends Actions
     protected $defaultClass = [Edit::class, Show::class, Delete::class];
 
     /**
-     * @param RowAction $action
-     *
      * @return $this
      */
     public function add(RowAction $action)
@@ -56,9 +54,6 @@ class DropdownActions extends Actions
         }
     }
 
-    /**
-     * @param RowAction $action
-     */
     protected function prepareAction(RowAction $action)
     {
         $action->setGrid($this->grid)
@@ -68,8 +63,6 @@ class DropdownActions extends Actions
 
     /**
      * Disable view action.
-     *
-     * @param bool $disable
      *
      * @return $this
      */
@@ -87,9 +80,7 @@ class DropdownActions extends Actions
     /**
      * Disable delete.
      *
-     * @param bool $disable
-     *
-     * @return $this.
+     * @return $this
      */
     public function disableDelete(bool $disable = true)
     {
@@ -105,8 +96,6 @@ class DropdownActions extends Actions
     /**
      * Disable edit.
      *
-     * @param bool $disable
-     *
      * @return $this
      */
     public function disableEdit(bool $disable = true)
@@ -121,7 +110,7 @@ class DropdownActions extends Actions
     }
 
     /**
-     * @param null|\Closure $callback
+     * @param \Closure|null $callback
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
      */
@@ -139,7 +128,7 @@ class DropdownActions extends Actions
 
         $variables = [
             'default' => $this->default,
-            'custom'  => $this->custom,
+            'custom' => $this->custom,
         ];
 
         if (empty($variables['default']) && empty($variables['custom'])) {

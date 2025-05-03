@@ -55,7 +55,7 @@ class EmbeddedForm
     /**
      * @var Form|WidgetForm
      */
-    protected $parent = null;
+    protected $parent;
 
     /**
      * Fields in form.
@@ -103,8 +103,6 @@ class EmbeddedForm
     /**
      * Set parent form for this form.
      *
-     * @param Form $parent
-     *
      * @return $this
      */
     public function setParent(Form $parent)
@@ -116,8 +114,6 @@ class EmbeddedForm
 
     /**
      * Set parent form for this form.
-     *
-     * @param WidgetForm $parent
      *
      * @return $this
      */
@@ -154,8 +150,6 @@ class EmbeddedForm
      * Prepare for insert or update.
      *
      * @param array $input
-     *
-     * @return mixed
      */
     public function prepare($input)
     {
@@ -172,8 +166,6 @@ class EmbeddedForm
      *
      * @param string $key
      * @param string $record
-     *
-     * @return mixed
      */
     protected function prepareValue($key, $record)
     {
@@ -209,8 +201,6 @@ class EmbeddedForm
     /**
      * Fill data to all fields in form.
      *
-     * @param array $data
-     *
      * @return $this
      */
     public function fill(array $data)
@@ -224,8 +214,6 @@ class EmbeddedForm
 
     /**
      * Format form, set `element name` `error key` and `element class`.
-     *
-     * @param Field $field
      *
      * @return Field
      */
@@ -256,8 +244,6 @@ class EmbeddedForm
 
     /**
      * Add a field to form.
-     *
-     * @param Field $field
      *
      * @return $this
      */

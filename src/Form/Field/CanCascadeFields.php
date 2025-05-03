@@ -17,15 +17,11 @@ trait CanCascadeFields
     protected $conditions = [];
 
     /**
-     * @param $operator
-     * @param $value
-     * @param $closure
-     *
      * @return $this
      */
     public function when($operator, $value, $closure = null)
     {
-        if (func_num_args() == 2) {
+        if (2 === func_num_args()) {
             $closure = $value;
             $value = $operator;
             $operator = '=';
@@ -38,10 +34,6 @@ trait CanCascadeFields
         return $this;
     }
 
-    /**
-     * @param string $operator
-     * @param mixed  $value
-     */
     protected function formatValues(string $operator, &$value)
     {
         if (in_array($operator, ['in', 'notIn'])) {
@@ -55,25 +47,17 @@ trait CanCascadeFields
         }
     }
 
-    /**
-     * @param string   $operator
-     * @param mixed    $value
-     * @param \Closure $closure
-     */
     protected function addDependents(string $operator, $value, \Closure $closure)
     {
         $this->conditions[] = compact('operator', 'value', 'closure');
 
         $this->form->cascadeGroup($closure, [
             'column' => $this->column(),
-            'index'  => count($this->conditions) - 1,
-            'class'  => $this->getCascadeClass($value),
+            'index' => count($this->conditions) - 1,
+            'class' => $this->getCascadeClass($value),
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fill($data)
     {
         parent::fill($data);
@@ -82,8 +66,6 @@ trait CanCascadeFields
     }
 
     /**
-     * @param mixed $value
-     *
      * @return string
      */
     protected function getCascadeClass($value)
@@ -113,11 +95,9 @@ trait CanCascadeFields
     }
 
     /**
-     * @param CascadeGroup $group
+     * @return bool
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     protected function hitsCondition(CascadeGroup $group)
     {
@@ -129,7 +109,7 @@ trait CanCascadeFields
 
         switch ($operator) {
             case '=':
-                return $old == $value;
+                return $old === $value;
             case '>':
                 return $old > $value;
             case '<':
@@ -139,7 +119,7 @@ trait CanCascadeFields
             case '<=':
                 return $old <= $value;
             case '!=':
-                return $old != $value;
+                return $old !== $value;
             case 'in':
                 return in_array($old, $value);
             case 'notIn':
@@ -149,7 +129,7 @@ trait CanCascadeFields
             case 'oneIn':
                 return count(array_intersect($value, $old)) >= 1;
             case 'oneNotIn':
-                return count(array_intersect($value, $old)) == 0;
+                return 0 === count(array_intersect($value, $old));
             default:
                 throw new \Exception("Operator [$operator] not support.");
         }
@@ -176,9 +156,9 @@ trait CanCascadeFields
 
         $cascadeGroups = collect($this->conditions)->map(function ($condition) {
             return [
-                'class'    => $this->getCascadeClass($condition['value']),
+                'class' => $this->getCascadeClass($condition['value']),
                 'operator' => $condition['operator'],
-                'value'    => $condition['value'],
+                'value' => $condition['value'],
             ];
         })->toJson();
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2019. Mallto.Co.Ltd.<mall-to.com> All rights reserved.
  */
@@ -33,8 +34,6 @@ class Column
 
     /**
      * Add a filter to this column.
-     *
-     * @param Field $field
      */
     public function add(Field $field)
     {
@@ -43,8 +42,6 @@ class Column
 
     /**
      * Remove fields from column.
-     *
-     * @param $fields
      */
     public function removeFields($fields)
     {

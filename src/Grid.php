@@ -43,21 +43,21 @@ class Grid
     /**
      * The grid data model instance.
      *
-     * @var \Encore\Admin\Grid\Model|\Illuminate\Database\Eloquent\Builder
+     * @var Model|\Illuminate\Database\Eloquent\Builder
      */
     protected $model;
 
     /**
      * Collection of all grid columns.
      *
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $columns;
 
     /**
      * Collection of all data rows.
      *
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $rows;
 
@@ -98,8 +98,6 @@ class Grid
 
     /**
      * Resource path of the grid.
-     *
-     * @var
      */
     protected $resourcePath;
 
@@ -142,16 +140,16 @@ class Grid
      * @var array
      */
     protected $options = [
-        'show_pagination'        => true,
-        'show_tools'             => true,
-        'show_filter'            => true,
-        'show_exporter'          => true,
-        'show_actions'           => true,
-        'show_row_selector'      => true,
-        'show_create_btn'        => true,
-        'show_column_selector'   => true,
+        'show_pagination' => true,
+        'show_tools' => true,
+        'show_filter' => true,
+        'show_exporter' => true,
+        'show_actions' => true,
+        'show_row_selector' => true,
+        'show_create_btn' => true,
+        'show_column_selector' => true,
         'show_define_empty_page' => true,
-        'show_perpage_selector'  => true,
+        'show_perpage_selector' => true,
     ];
 
     /**
@@ -168,11 +166,8 @@ class Grid
 
     /**
      * Create a new grid instance.
-     *
-     * @param Eloquent $model
-     * @param Closure  $builder
      */
-    public function __construct(Eloquent $model, Closure $builder = null)
+    public function __construct(Eloquent $model, ?\Closure $builder = null)
     {
         $this->model = new Model($model, $this);
         $this->keyName = $model->getKeyName();
@@ -199,10 +194,8 @@ class Grid
 
     /**
      * Initialize with user pre-defined default disables and exporter, etc.
-     *
-     * @param Closure $callback
      */
-    public static function init(Closure $callback = null)
+    public static function init(?\Closure $callback = null)
     {
         static::$initCallbacks[] = $callback;
     }
@@ -225,7 +218,6 @@ class Grid
      * Get or set option for grid.
      *
      * @param string $key
-     * @param mixed  $value
      *
      * @return $this|mixed
      */
@@ -284,11 +276,11 @@ class Grid
      */
     public function columns($columns = [])
     {
-        if (func_num_args() == 0) {
+        if (0 === func_num_args()) {
             return $this->columns;
         }
 
-        if (func_num_args() == 1 && is_array($columns)) {
+        if (1 === func_num_args() && is_array($columns)) {
             foreach ($columns as $column => $label) {
                 $this->column($column, $label);
             }
@@ -421,8 +413,6 @@ class Grid
 
     /**
      * Get the grid paginator.
-     *
-     * @return mixed
      */
     public function paginator()
     {
@@ -453,8 +443,6 @@ class Grid
 
     /**
      * Set per-page options.
-     *
-     * @param array $perPages
      */
     public function perPages(array $perPages)
     {
@@ -462,8 +450,6 @@ class Grid
     }
 
     /**
-     * @param bool $disable
-     *
      * @return $this
      */
     public function disablePerPageSelector(bool $disable = true)
@@ -580,9 +566,6 @@ class Grid
     /**
      * Build the grid rows.
      *
-     * @param array      $data
-     * @param Collection $collection
-     *
      * @return void
      */
     protected function buildRows(array $data, Collection $collection)
@@ -599,11 +582,9 @@ class Grid
     /**
      * Set grid row callback function.
      *
-     * @param Closure $callable
-     *
      * @return Collection|null
      */
-    public function rows(Closure $callable = null)
+    public function rows(?\Closure $callable = null)
     {
         if (is_null($callable)) {
             return $this->rows;
@@ -753,9 +734,9 @@ class Grid
             return false;
         }
 
-        if ($relation instanceof Relations\HasOne ||
-            $relation instanceof Relations\BelongsTo ||
-            $relation instanceof Relations\MorphOne
+        if ($relation instanceof Relations\HasOne
+            || $relation instanceof Relations\BelongsTo
+            || $relation instanceof Relations\MorphOne
         ) {
             $this->model()->with($method);
 
@@ -779,9 +760,6 @@ class Grid
 
     /**
      * Dynamically add columns to the grid view.
-     *
-     * @param $method
-     * @param $arguments
      *
      * @return Column
      */
@@ -866,8 +844,6 @@ class Grid
     /**
      * Set relation for grid.
      *
-     * @param Relations\Relation $relation
-     *
      * @return $this
      */
     public function setRelation(Relations\Relation $relation)
@@ -893,8 +869,6 @@ class Grid
 
     /**
      * Set rendering callback.
-     *
-     * @param callable $callback
      *
      * @return $this
      */

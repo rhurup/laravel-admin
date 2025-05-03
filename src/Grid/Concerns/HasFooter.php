@@ -2,24 +2,21 @@
 
 namespace Encore\Admin\Grid\Concerns;
 
-use Closure;
 use Encore\Admin\Grid\Tools\Footer;
 
 trait HasFooter
 {
     /**
-     * @var Closure
+     * @var \Closure
      */
     protected $footer;
 
     /**
      * Set grid footer.
      *
-     * @param Closure|null $closure
-     *
-     * @return $this|Closure
+     * @return $this|\Closure
      */
-    public function footer(Closure $closure = null)
+    public function footer(?\Closure $closure = null)
     {
         if (!$closure) {
             return $this->footer;

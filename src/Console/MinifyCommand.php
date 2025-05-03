@@ -29,7 +29,7 @@ class MinifyCommand extends Command
      */
     protected $assets = [
         'css' => [],
-        'js'  => [],
+        'js' => [],
     ];
 
     /**

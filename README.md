@@ -4,38 +4,13 @@
 </a>
 
 <p align="center">⛵<code>laravel-admin</code> is administrative interface builder for laravel which can help you build CRUD backends just with few lines of code.</p>
-
+<p align="center">Forked from <a href="https://github.com/z-song/laravel-admin">github.com/z-song/laravel-admin</a></p> 
 <p align="center">
 <a href="https://laravel-admin.org/docs">Documentation</a> |
 <a href="https://laravel-admin.org/docs/zh">中文文档</a> |
 <a href="https://demo.laravel-admin.org">Demo</a> |
-<a href="https://github.com/z-song/demo.laravel-admin.org">Demo source code</a> |
 <a href="#extensions">Extensions</a>
 </p>
-
-<p align="center">
-    <a href="https://travis-ci.org/z-song/laravel-admin">
-        <img src="https://travis-ci.org/z-song/laravel-admin.svg?branch=master" alt="Build Status">
-    </a>
-    <a href="https://styleci.io/repos/48796179">
-        <img src="https://styleci.io/repos/48796179/shield" alt="StyleCI">
-    </a>
-    <a href="https://packagist.org/packages/encore/laravel-admin">
-        <img src="https://img.shields.io/packagist/l/encore/laravel-admin.svg?maxAge=2592000&&style=flat-square" alt="Packagist">
-    </a>
-    <a href="https://packagist.org/packages/encore/laravel-admin">
-        <img src="https://img.shields.io/packagist/dt/encore/laravel-admin.svg?style=flat-square" alt="Total Downloads">
-    </a>
-    <a href="https://github.com/z-song/laravel-admin">
-        <img src="https://img.shields.io/badge/Awesome-Laravel-brightgreen.svg?style=flat-square" alt="Awesome Laravel">
-    </a>
-    <a href="#backers" alt="sponsors on Open Collective">
-        <img src="https://opencollective.com/laravel-admin/backers/badge.svg?style=flat-square" />
-    </a> 
-    <a href="https://www.paypal.me/zousong" alt="Paypal donate">
-        <img src="https://img.shields.io/badge/Donate-Paypal-green.svg?style=flat-square" />
-    </a> 
-</div>
 
 <p align="center">
     Inspired by <a href="https://github.com/sleeping-owl/admin" target="_blank">SleepingOwlAdmin</a> and <a href="https://github.com/zofe/rapyd-laravel" target="_blank">rapyd-laravel</a>.
@@ -51,8 +26,8 @@ Sponsor
 
 Requirements
 ------------
- - PHP >= 7.0.0
- - Laravel >= 5.5.0
+ - PHP >= 8.3.0
+ - Laravel >= 11.43.0
  - Fileinfo PHP Extension
 
 Installation
@@ -60,7 +35,7 @@ Installation
 
 > This package requires PHP 7+ and Laravel 5.5, for old versions please refer to [1.4](https://laravel-admin.org/docs/v1.4/#/)
 
-First, install laravel 5.5, and make sure that the database connection settings are correct.
+First, install laravel 11.xx, and make sure that the database connection settings are correct.
 
 ```
 composer require encore/laravel-admin
