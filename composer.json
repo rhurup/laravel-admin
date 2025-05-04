@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Rhurup\\Admin\\": "src/"
+            "Encore\\Admin\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -50,10 +50,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Rhurup\\Admin\\AdminServiceProvider"
+                "Encore\\Admin\\AdminServiceProvider"
             ],
             "aliases": {
-                "Admin": "Rhurup\\Admin\\Facades\\Admin"
+                "Admin": "Encore\\Admin\\Facades\\Admin"
             }
         }
     }
