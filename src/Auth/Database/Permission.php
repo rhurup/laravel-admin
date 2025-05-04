@@ -1,12 +1,12 @@
 <?php
 
-namespace Rhurup\Admin\Auth\Database;
+namespace Encore\Admin\Auth\Database;
 
+use Encore\Admin\Traits\DefaultDatetimeFormat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Traits\DefaultDatetimeFormat;
 
 class Permission extends Model
 {

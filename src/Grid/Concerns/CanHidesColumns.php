@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Concerns;
+namespace Encore\Admin\Grid\Concerns;
 
+use Encore\Admin\Grid;
+use Encore\Admin\Grid\Tools\ColumnSelector;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Grid\Tools\ColumnSelector;
 
 trait CanHidesColumns
 {

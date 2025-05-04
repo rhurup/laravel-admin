@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Displayers;
+namespace Encore\Admin\Grid\Displayers;
 
+use Encore\Admin\Facades\Admin;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Facades\Admin;
 
 class Limit extends AbstractDisplayer
 {

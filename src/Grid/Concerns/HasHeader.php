@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Concerns;
+namespace Encore\Admin\Grid\Concerns;
 
-use Rhurup\Admin\Grid\Tools\Header;
+use Encore\Admin\Grid\Tools\Header;
 
 trait HasHeader
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Filter\Presenter;
+namespace Encore\Admin\Grid\Filter\Presenter;
 
-use Rhurup\Admin\Grid\Filter\AbstractFilter;
+use Encore\Admin\Grid\Filter\AbstractFilter;
 
 abstract class Presenter
 {

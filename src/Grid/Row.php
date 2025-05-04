@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Grid;
+namespace Encore\Admin\Grid;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Filter\Presenter;
+namespace Encore\Admin\Grid\Filter\Presenter;
 
+use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Admin;
 
 class DateTime extends Presenter
 {

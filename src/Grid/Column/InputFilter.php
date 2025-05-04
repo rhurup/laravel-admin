@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Column;
+namespace Encore\Admin\Grid\Column;
 
-use Rhurup\Admin\Admin;
-use Rhurup\Admin\Grid\Model;
+use Encore\Admin\Admin;
+use Encore\Admin\Grid\Model;
 
 class InputFilter extends Filter
 {

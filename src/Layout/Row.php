@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Layout;
+namespace Encore\Admin\Layout;
 
 use Illuminate\Contracts\Support\Renderable;
 

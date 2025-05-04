@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Tools;
+namespace Encore\Admin\Grid\Tools;
 
 class BatchDelete extends BatchAction
 {

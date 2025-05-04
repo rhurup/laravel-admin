@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Controllers;
+namespace Encore\Admin\Controllers;
 
 /**
  * Trait ModelForm.

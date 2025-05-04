@@ -1,7 +1,7 @@
 <?php
 
-use Rhurup\Admin\Auth\Database\Administrator;
-use Rhurup\Admin\Auth\Database\OperationLog;
+use Encore\Admin\Auth\Database\Administrator;
+use Encore\Admin\Auth\Database\OperationLog;
 
 class OperationLogTest extends TestCase
 {

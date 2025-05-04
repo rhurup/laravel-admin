@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Form\Concerns;
+namespace Encore\Admin\Form\Concerns;
 
 use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\Response;

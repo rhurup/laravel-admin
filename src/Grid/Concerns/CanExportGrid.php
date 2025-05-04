@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Concerns;
+namespace Encore\Admin\Grid\Concerns;
 
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Grid\Exporter;
-use Rhurup\Admin\Grid\Exporters\AbstractExporter;
+use Encore\Admin\Grid;
+use Encore\Admin\Grid\Exporter;
+use Encore\Admin\Grid\Exporters\AbstractExporter;
 
 trait CanExportGrid
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Controllers;
+namespace Encore\Admin\Controllers;
 
+use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Admin;
 
 class Dashboard
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Form\Field;
+namespace Encore\Admin\Form\Field;
 
-use Rhurup\Admin\Admin;
-use Rhurup\Admin\Form\Field;
+use Encore\Admin\Admin;
+use Encore\Admin\Form\Field;
 
 class Textarea extends Field
 {

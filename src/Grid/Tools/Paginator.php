@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Tools;
+namespace Encore\Admin\Grid\Tools;
 
+use Encore\Admin\Grid;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Rhurup\Admin\Grid;
 
 class Paginator extends AbstractTool
 {

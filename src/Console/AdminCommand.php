@@ -1,11 +1,11 @@
 <?php
 
-namespace Rhurup\Admin\Console;
+namespace Encore\Admin\Console;
 
+use Encore\Admin\Admin;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Admin;
 
 class AdminCommand extends Command
 {

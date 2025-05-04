@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Middleware;
+namespace Encore\Admin\Middleware;
 
+use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
-use Rhurup\Admin\Facades\Admin;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
 

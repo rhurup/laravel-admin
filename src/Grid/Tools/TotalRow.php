@@ -1,11 +1,11 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Tools;
+namespace Encore\Admin\Grid\Tools;
 
+use Encore\Admin\Grid\Column;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Grid\Column;
 
 class TotalRow extends AbstractTool
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Displayers;
+namespace Encore\Admin\Grid\Displayers;
 
+use Encore\Admin\Grid;
+use Encore\Admin\Grid\Column;
 use Illuminate\Database\Eloquent\Model;
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Grid\Column;
 
 abstract class AbstractDisplayer
 {
@@ -108,8 +108,8 @@ abstract class AbstractDisplayer
         $keys = collect(explode('.', $name ?: $this->getName()));
 
         return $keys->shift().$keys->reduce(function ($carry, $val) {
-            return $carry."[$val]";
-        });
+                return $carry."[$val]";
+            });
     }
 
     /**

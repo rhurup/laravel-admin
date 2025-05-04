@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Form\Field;
+namespace Encore\Admin\Form\Field;
 
-use Rhurup\Admin\Admin;
+use Encore\Admin\Admin;
 
 class BelongsTo extends Select
 {

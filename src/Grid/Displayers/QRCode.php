@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Displayers;
+namespace Encore\Admin\Grid\Displayers;
 
-use Rhurup\Admin\Facades\Admin;
+use Encore\Admin\Facades\Admin;
 
 /**
  * Class QRCode.

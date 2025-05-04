@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Displayers;
+namespace Encore\Admin\Grid\Displayers;
 
+use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Admin;
 
 class SwitchDisplay extends AbstractDisplayer
 {

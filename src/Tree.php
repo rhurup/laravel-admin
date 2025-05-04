@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin;
+namespace Encore\Admin;
 
+use Encore\Admin\Tree\Tools;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
-use Rhurup\Admin\Tree\Tools;
 
 class Tree implements Renderable
 {

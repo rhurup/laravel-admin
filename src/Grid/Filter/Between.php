@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Filter;
+namespace Encore\Admin\Grid\Filter;
 
+use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Admin;
 
 class Between extends AbstractFilter
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Widgets\Navbar;
+namespace Encore\Admin\Widgets\Navbar;
 
+use Encore\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
-use Rhurup\Admin\Admin;
 
 class RefreshButton implements Renderable
 {

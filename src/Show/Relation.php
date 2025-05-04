@@ -1,7 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Show;
+namespace Encore\Admin\Show;
 
+use Encore\Admin\Grid;
+use Encore\Admin\Show;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,8 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Show;
 
 class Relation extends Field
 {

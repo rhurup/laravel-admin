@@ -1,16 +1,16 @@
 <?php
 
-namespace Rhurup\Admin\Controllers;
+namespace Encore\Admin\Controllers;
 
+use Encore\Admin\Facades\Admin;
+use Encore\Admin\Form;
+use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Rhurup\Admin\Facades\Admin;
-use Rhurup\Admin\Form;
-use Rhurup\Admin\Layout\Content;
 
 class AuthController extends Controller
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Auth;
+namespace Encore\Admin\Auth;
 
-use Rhurup\Admin\Facades\Admin;
-use Rhurup\Admin\Middleware\Pjax;
+use Encore\Admin\Facades\Admin;
+use Encore\Admin\Middleware\Pjax;
 
 class Permission
 {

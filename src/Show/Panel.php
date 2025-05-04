@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Show;
+namespace Encore\Admin\Show;
 
+use Encore\Admin\Show;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Show;
 
 class Panel implements Renderable
 {

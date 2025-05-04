@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Exporters;
+namespace Encore\Admin\Grid\Exporters;
 
-use Rhurup\Admin\Grid\Column;
+use Encore\Admin\Grid\Column;
 
 class CsvExporter extends AbstractExporter
 {

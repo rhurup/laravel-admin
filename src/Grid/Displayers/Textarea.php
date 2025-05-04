@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Displayers;
+namespace Encore\Admin\Grid\Displayers;
 
-use Rhurup\Admin\Admin;
+use Encore\Admin\Admin;
 
 class Textarea extends AbstractDisplayer
 {

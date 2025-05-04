@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Form\Field;
+namespace Encore\Admin\Form\Field;
 
-use Rhurup\Admin\Form;
+use Encore\Admin\Form;
 
 class Captcha extends Text
 {

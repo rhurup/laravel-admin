@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Form\Field;
+namespace Encore\Admin\Form\Field;
 
-use Rhurup\Admin\Form\Field;
+use Encore\Admin\Form\Field;
 
 class Nullable extends Field
 {

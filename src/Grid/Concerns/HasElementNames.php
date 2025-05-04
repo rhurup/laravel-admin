@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Concerns;
+namespace Encore\Admin\Grid\Concerns;
 
 trait HasElementNames
 {

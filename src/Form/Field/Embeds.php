@@ -1,12 +1,12 @@
 <?php
 
-namespace Rhurup\Admin\Form\Field;
+namespace Encore\Admin\Form\Field;
 
+use Encore\Admin\Form\EmbeddedForm;
+use Encore\Admin\Form\Field;
+use Encore\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Form\EmbeddedForm;
-use Rhurup\Admin\Form\Field;
-use Rhurup\Admin\Widgets\Form as WidgetForm;
 
 class Embeds extends Field
 {

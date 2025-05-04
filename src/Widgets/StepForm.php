@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Widgets;
+namespace Encore\Admin\Widgets;
 
 class StepForm extends Form
 {

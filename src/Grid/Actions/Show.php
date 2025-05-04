@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Actions;
+namespace Encore\Admin\Grid\Actions;
 
-use Rhurup\Admin\Actions\RowAction;
+use Encore\Admin\Actions\RowAction;
 
 class Show extends RowAction
 {

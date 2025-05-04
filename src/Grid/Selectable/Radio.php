@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Selectable;
+namespace Encore\Admin\Grid\Selectable;
 
-use Rhurup\Admin\Grid\Displayers\AbstractDisplayer;
+use Encore\Admin\Grid\Displayers\AbstractDisplayer;
 
 class Radio extends AbstractDisplayer
 {

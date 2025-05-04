@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Form\Field;
+namespace Encore\Admin\Form\Field;
 
+use Encore\Admin\Form\Field;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Form\Field;
 
 class Html extends Field
 {

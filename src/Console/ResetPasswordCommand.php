@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Console;
+namespace Encore\Admin\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;

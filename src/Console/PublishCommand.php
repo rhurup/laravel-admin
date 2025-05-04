@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Console;
+namespace Encore\Admin\Console;
 
 use Illuminate\Console\Command;
 
@@ -28,7 +28,7 @@ class PublishCommand extends Command
     public function handle()
     {
         $force = $this->option('force');
-        $options = ['--provider' => 'Rhurup\Admin\AdminServiceProvider'];
+        $options = ['--provider' => 'Encore\Admin\AdminServiceProvider'];
         if (true === $force) {
             $options['--force'] = true;
         }

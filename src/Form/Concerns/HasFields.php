@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Form\Concerns;
+namespace Encore\Admin\Form\Concerns;
 
+use Encore\Admin\Form\Field;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Form\Field;
 
 /**
  * @method Field\Text           text($column, $label = '')

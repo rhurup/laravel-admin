@@ -1,12 +1,12 @@
 <?php
 
-namespace Rhurup\Admin\Console;
+namespace Encore\Admin\Console;
 
+use Encore\Admin\Auth\Database\Menu;
 use Illuminate\Console\Command;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Auth\Database\Menu;
 
 class GenerateMenuCommand extends Command
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Form;
+namespace Encore\Admin\Form;
 
+use Encore\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
-use Rhurup\Admin\Admin;
 
 class Footer implements Renderable
 {

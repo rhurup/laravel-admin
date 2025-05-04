@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Selectable;
+namespace Encore\Admin\Grid\Selectable;
 
 use Illuminate\Contracts\Support\Renderable;
 

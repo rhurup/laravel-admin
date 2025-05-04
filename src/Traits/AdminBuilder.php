@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Traits;
+namespace Encore\Admin\Traits;
 
-use Rhurup\Admin\Form;
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Tree;
+use Encore\Admin\Form;
+use Encore\Admin\Grid;
+use Encore\Admin\Tree;
 
 /**
  * @deprecated

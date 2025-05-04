@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Column;
+namespace Encore\Admin\Grid\Column;
 
 use Illuminate\Contracts\Support\Renderable;
 

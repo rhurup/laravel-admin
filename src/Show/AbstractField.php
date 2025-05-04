@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Show;
+namespace Encore\Admin\Show;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Filter\Presenter;
+namespace Encore\Admin\Grid\Filter\Presenter;
 
+use Encore\Admin\Facades\Admin;
 use Illuminate\Contracts\Support\Arrayable;
-use Rhurup\Admin\Facades\Admin;
 
 class Radio extends Presenter
 {

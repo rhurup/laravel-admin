@@ -1,21 +1,21 @@
 <?php
 
-namespace Rhurup\Admin;
+namespace Encore\Admin;
 
+use Encore\Admin\Exception\Handler;
+use Encore\Admin\Grid\Column;
+use Encore\Admin\Grid\Concerns;
+use Encore\Admin\Grid\Displayers;
+use Encore\Admin\Grid\Model;
+use Encore\Admin\Grid\Row;
+use Encore\Admin\Grid\Tools;
+use Encore\Admin\Traits\ShouldSnakeAttributes;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Jenssegers\Mongodb\Eloquent\Model as MongodbModel;
-use Rhurup\Admin\Exception\Handler;
-use Rhurup\Admin\Grid\Column;
-use Rhurup\Admin\Grid\Concerns;
-use Rhurup\Admin\Grid\Displayers;
-use Rhurup\Admin\Grid\Model;
-use Rhurup\Admin\Grid\Row;
-use Rhurup\Admin\Grid\Tools;
-use Rhurup\Admin\Traits\ShouldSnakeAttributes;
 
 class Grid
 {
@@ -36,8 +36,8 @@ class Grid
         Concerns\CanDoubleClick,
         ShouldSnakeAttributes,
         Macroable {
-            __call as macroCall;
-        }
+        __call as macroCall;
+    }
 
     /**
      * The grid data model instance.

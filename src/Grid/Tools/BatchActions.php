@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Tools;
+namespace Encore\Admin\Grid\Tools;
 
+use Encore\Admin\Admin;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Admin;
 
 class BatchActions extends AbstractTool
 {

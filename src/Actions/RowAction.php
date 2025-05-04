@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Actions;
+namespace Encore\Admin\Actions;
 
+use Encore\Admin\Grid\Column;
 use Illuminate\Http\Request;
-use Rhurup\Admin\Grid\Column;
 
 abstract class RowAction extends GridAction
 {

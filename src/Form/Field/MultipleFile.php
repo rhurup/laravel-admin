@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Form\Field;
+namespace Encore\Admin\Form\Field;
 
+use Encore\Admin\Form;
+use Encore\Admin\Form\Field;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Form;
-use Rhurup\Admin\Form\Field;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MultipleFile extends Field

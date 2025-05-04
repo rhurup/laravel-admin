@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Middleware;
+namespace Encore\Admin\Middleware;
 
 use Illuminate\Http\Request;
 

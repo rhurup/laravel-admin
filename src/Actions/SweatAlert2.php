@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Actions;
+namespace Encore\Admin\Actions;
 
 class SweatAlert2
 {

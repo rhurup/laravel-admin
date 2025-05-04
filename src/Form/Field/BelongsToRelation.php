@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Form\Field;
+namespace Encore\Admin\Form\Field;
 
-use Rhurup\Admin\Admin;
-use Rhurup\Admin\Grid\Selectable;
+use Encore\Admin\Admin;
+use Encore\Admin\Grid\Selectable;
 
 trait BelongsToRelation
 {
@@ -36,7 +36,7 @@ trait BelongsToRelation
     protected function setSelectable($selectable)
     {
         if (!class_exists($selectable) || !is_subclass_of($selectable, Selectable::class)) {
-            throw new \InvalidArgumentException("[Class [{$selectable}] must be a sub class of Rhurup\Admin\Grid\Selectable");
+            throw new \InvalidArgumentException("[Class [{$selectable}] must be a sub class of Encore\Admin\Grid\Selectable");
         }
 
         $this->selectable = $selectable;
@@ -141,7 +141,7 @@ STYLE;
     }
 
     /**
-     * @return \Rhurup\Admin\Grid
+     * @return \Encore\Admin\Grid
      */
     protected function makeGrid()
     {

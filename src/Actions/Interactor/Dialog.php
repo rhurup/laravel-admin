@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Actions\Interactor;
+namespace Encore\Admin\Actions\Interactor;
 
-use Rhurup\Admin\Admin;
+use Encore\Admin\Admin;
 
 class Dialog extends Interactor
 {

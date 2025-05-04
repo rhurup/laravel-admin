@@ -1,7 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid;
+namespace Encore\Admin\Grid;
 
+use Encore\Admin\Grid;
+use Encore\Admin\Middleware\Pjax;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,8 +14,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Middleware\Pjax;
 
 class Model
 {

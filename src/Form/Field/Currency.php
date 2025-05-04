@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Form\Field;
+namespace Encore\Admin\Form\Field;
 
 class Currency extends Text
 {

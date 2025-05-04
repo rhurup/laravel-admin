@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Filter;
+namespace Encore\Admin\Grid\Filter;
 
+use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Admin;
 
 class Group extends AbstractFilter
 {

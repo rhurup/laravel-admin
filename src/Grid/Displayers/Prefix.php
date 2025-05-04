@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Displayers;
+namespace Encore\Admin\Grid\Displayers;
 
 class Prefix extends AbstractDisplayer
 {

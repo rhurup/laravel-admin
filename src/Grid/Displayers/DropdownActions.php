@@ -1,12 +1,12 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Displayers;
+namespace Encore\Admin\Grid\Displayers;
 
-use Rhurup\Admin\Actions\RowAction;
-use Rhurup\Admin\Admin;
-use Rhurup\Admin\Grid\Actions\Delete;
-use Rhurup\Admin\Grid\Actions\Edit;
-use Rhurup\Admin\Grid\Actions\Show;
+use Encore\Admin\Actions\RowAction;
+use Encore\Admin\Admin;
+use Encore\Admin\Grid\Actions\Delete;
+use Encore\Admin\Grid\Actions\Edit;
+use Encore\Admin\Grid\Actions\Show;
 
 class DropdownActions extends Actions
 {

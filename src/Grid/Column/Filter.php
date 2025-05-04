@@ -1,11 +1,11 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Column;
+namespace Encore\Admin\Grid\Column;
 
+use Encore\Admin\Grid\Column;
+use Encore\Admin\Grid\Model;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Grid\Column;
-use Rhurup\Admin\Grid\Model;
 
 class Filter implements Renderable
 {

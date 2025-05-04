@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Exporters;
+namespace Encore\Admin\Grid\Exporters;
 
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Exportable;

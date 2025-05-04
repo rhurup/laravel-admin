@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Traits;
+namespace Encore\Admin\Traits;
 
 use Carbon\Carbon;
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Rhurup\Admin\Form;
+namespace Encore\Admin\Form;
 
+use Encore\Admin\Admin;
+use Encore\Admin\Form;
+use Encore\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
-use Rhurup\Admin\Admin;
-use Rhurup\Admin\Form;
-use Rhurup\Admin\Widgets\Form as WidgetForm;
 
 /**
  * Class Field.

@@ -1,15 +1,15 @@
 <?php
 
-namespace Rhurup\Admin\Grid;
+namespace Encore\Admin\Grid;
 
+use Encore\Admin\Actions\RowAction;
+use Encore\Admin\Grid;
+use Encore\Admin\Grid\Displayers\AbstractDisplayer;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Actions\RowAction;
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Grid\Displayers\AbstractDisplayer;
 
 class Column
 {
@@ -448,7 +448,7 @@ class Column
     public function action($action)
     {
         if (!is_subclass_of($action, RowAction::class)) {
-            throw new \InvalidArgumentException("Action class [$action] must be sub-class of [Rhurup\Admin\Actions\GridAction]");
+            throw new \InvalidArgumentException("Action class [$action] must be sub-class of [Encore\Admin\Actions\GridAction]");
         }
 
         $grid = $this->grid;

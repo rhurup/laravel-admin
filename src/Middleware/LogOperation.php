@@ -1,11 +1,11 @@
 <?php
 
-namespace Rhurup\Admin\Middleware;
+namespace Encore\Admin\Middleware;
 
+use Encore\Admin\Auth\Database\OperationLog as OperationLogModel;
+use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Auth\Database\OperationLog as OperationLogModel;
-use Rhurup\Admin\Facades\Admin;
 
 class LogOperation
 {

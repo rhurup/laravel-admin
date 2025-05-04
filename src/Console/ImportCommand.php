@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Console;
+namespace Encore\Admin\Console;
 
+use Encore\Admin\Admin;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Admin;
 
 class ImportCommand extends Command
 {

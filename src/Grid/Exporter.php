@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid;
+namespace Encore\Admin\Grid;
 
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Grid\Exporters\CsvExporter;
+use Encore\Admin\Grid;
+use Encore\Admin\Grid\Exporters\CsvExporter;
 
 class Exporter
 {

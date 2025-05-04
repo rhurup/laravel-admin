@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Exception;
+namespace Encore\Admin\Exception;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;

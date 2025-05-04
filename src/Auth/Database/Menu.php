@@ -1,12 +1,12 @@
 <?php
 
-namespace Rhurup\Admin\Auth\Database;
+namespace Encore\Admin\Auth\Database;
 
+use Encore\Admin\Traits\DefaultDatetimeFormat;
+use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
-use Rhurup\Admin\Traits\DefaultDatetimeFormat;
-use Rhurup\Admin\Traits\ModelTree;
 
 /**
  * Class Menu.

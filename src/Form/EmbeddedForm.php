@@ -1,11 +1,11 @@
 <?php
 
-namespace Rhurup\Admin\Form;
+namespace Encore\Admin\Form;
 
+use Encore\Admin\Form;
+use Encore\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Form;
-use Rhurup\Admin\Widgets\Form as WidgetForm;
 
 /**
  * Class EmbeddedForm.

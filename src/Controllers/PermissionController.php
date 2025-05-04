@@ -1,11 +1,11 @@
 <?php
 
-namespace Rhurup\Admin\Controllers;
+namespace Encore\Admin\Controllers;
 
+use Encore\Admin\Form;
+use Encore\Admin\Grid;
+use Encore\Admin\Show;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Form;
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Show;
 
 class PermissionController extends AdminController
 {

@@ -1,7 +1,17 @@
 <?php
 
-namespace Rhurup\Admin;
+namespace Encore\Admin;
 
+use Encore\Admin\Exception\Handler;
+use Encore\Admin\Form\Builder;
+use Encore\Admin\Form\Concerns\HandleCascadeFields;
+use Encore\Admin\Form\Concerns\HasFields;
+use Encore\Admin\Form\Concerns\HasHooks;
+use Encore\Admin\Form\Field;
+use Encore\Admin\Form\Layout\Layout;
+use Encore\Admin\Form\Row;
+use Encore\Admin\Form\Tab;
+use Encore\Admin\Traits\ShouldSnakeAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
@@ -13,16 +23,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
-use Rhurup\Admin\Exception\Handler;
-use Rhurup\Admin\Form\Builder;
-use Rhurup\Admin\Form\Concerns\HandleCascadeFields;
-use Rhurup\Admin\Form\Concerns\HasFields;
-use Rhurup\Admin\Form\Concerns\HasHooks;
-use Rhurup\Admin\Form\Field;
-use Rhurup\Admin\Form\Layout\Layout;
-use Rhurup\Admin\Form\Row;
-use Rhurup\Admin\Form\Tab;
-use Rhurup\Admin\Traits\ShouldSnakeAttributes;
 use Spatie\EloquentSortable\Sortable;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,6 +35,7 @@ class Form implements Renderable
     use HasFields;
     use HandleCascadeFields;
     use ShouldSnakeAttributes;
+
     /**
      * Remove flag in `has many` form.
      */
@@ -450,7 +451,7 @@ class Form implements Renderable
 
         foreach ($inputs as $column => $value) {
             if ((method_exists($this->model, $column)
-                || method_exists($this->model, $column = Str::camel($column)))
+                    || method_exists($this->model, $column = Str::camel($column)))
                 && !method_exists(Model::class, $column)
             ) {
                 $relation = call_user_func([$this->model, $column]);

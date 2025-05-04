@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Exporters;
+namespace Encore\Admin\Grid\Exporters;
 
-use Rhurup\Admin\Grid;
+use Encore\Admin\Grid;
 
 abstract class AbstractExporter implements ExporterInterface
 {

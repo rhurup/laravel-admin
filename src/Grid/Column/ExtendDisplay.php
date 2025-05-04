@@ -1,11 +1,11 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Column;
+namespace Encore\Admin\Grid\Column;
 
 use Carbon\Carbon;
+use Encore\Admin\Grid\Displayers;
+use Encore\Admin\Grid\Model;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Grid\Displayers;
-use Rhurup\Admin\Grid\Model;
 
 /**
  * Trait ExtendDisplay.

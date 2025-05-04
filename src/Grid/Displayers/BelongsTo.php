@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Displayers;
+namespace Encore\Admin\Grid\Displayers;
 
-use Rhurup\Admin\Admin;
-use Rhurup\Admin\Grid\Selectable;
+use Encore\Admin\Admin;
+use Encore\Admin\Grid\Selectable;
 
 class BelongsTo extends AbstractDisplayer
 {
@@ -34,7 +34,7 @@ class BelongsTo extends AbstractDisplayer
     public function display($selectable = null, $column = '')
     {
         if (!class_exists($selectable) || !is_subclass_of($selectable, Selectable::class)) {
-            throw new \InvalidArgumentException("[Class [{$selectable}] must be a sub class of Rhurup\Admin\Grid\Selectable");
+            throw new \InvalidArgumentException("[Class [{$selectable}] must be a sub class of Encore\Admin\Grid\Selectable");
         }
 
         return Admin::component('admin::grid.inline-edit.belongsto', [

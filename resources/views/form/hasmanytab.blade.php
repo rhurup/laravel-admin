@@ -28,12 +28,12 @@
                 <a href="#{{ $relationName . '_' . $pk }}" data-toggle="tab">
                     {{ $pk }} <i class="fa fa-exclamation-circle text-red hide"></i>
                 </a>
-                <i class="close-tab fa fa-times" ></i>
+                <i class="close-tab fa fa-times"></i>
             </li>
         @endforeach
 
     </ul>
-    
+
     <div class="tab-content has-many-{{$column}}-forms">
 
         @foreach($forms as $pk => $form)
@@ -48,9 +48,9 @@
 
     <template class="nav-tab-tpl">
         <li class="new">
-            <a href="#{{ $relationName . '_new_' . \Rhurup\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}"
+            <a href="#{{ $relationName . '_new_' . \Encore\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}"
                data-toggle="tab">
-                &nbsp;New {{ \Rhurup\Admin\Form\NestedForm::DEFAULT_KEY_NAME }} <i
+                &nbsp;New {{ \Encore\Admin\Form\NestedForm::DEFAULT_KEY_NAME }} <i
                         class="fa fa-exclamation-circle text-red hide"></i>
             </a>
             <i class="close-tab fa fa-times"></i>
@@ -58,7 +58,7 @@
     </template>
     <template class="pane-tpl">
         <div class="tab-pane fields-group new"
-             id="{{ $relationName . '_new_' . \Rhurup\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}">
+             id="{{ $relationName . '_new_' . \Encore\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}">
             {!! $template !!}
         </div>
     </template>

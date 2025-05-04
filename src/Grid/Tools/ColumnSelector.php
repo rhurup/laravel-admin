@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Tools;
+namespace Encore\Admin\Grid\Tools;
 
+use Encore\Admin\Admin;
+use Encore\Admin\Grid;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Admin;
-use Rhurup\Admin\Grid;
 
 class ColumnSelector extends AbstractTool
 {

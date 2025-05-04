@@ -1,17 +1,17 @@
 <?php
 
-namespace Rhurup\Admin\Facades;
+namespace Encore\Admin\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * Class Admin.
  *
- * @method static \Rhurup\Admin\Grid                                                        grid($model, \Closure $callable)
- * @method static \Rhurup\Admin\Form                                                        form($model, \Closure $callable)
- * @method static \Rhurup\Admin\Show                                                        show($model, $callable = null)
- * @method static \Rhurup\Admin\Tree                                                        tree($model, \Closure $callable = null)
- * @method static \Rhurup\Admin\Layout\Content                                              content(\Closure $callable = null)
+ * @method static \Encore\Admin\Grid                                                        grid($model, \Closure $callable)
+ * @method static \Encore\Admin\Form                                                        form($model, \Closure $callable)
+ * @method static \Encore\Admin\Show                                                        show($model, $callable = null)
+ * @method static \Encore\Admin\Tree                                                        tree($model, \Closure $callable = null)
+ * @method static \Encore\Admin\Layout\Content                                              content(\Closure $callable = null)
  * @method static \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void             css($css = null)
  * @method static \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void             js($js = null)
  * @method static \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void             headerJs($js = null)
@@ -29,12 +29,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static void                                                                      bootstrap()
  * @method static void                                                                      routes()
  *
- * @see \Rhurup\Admin\Admin
+ * @see \Encore\Admin\Admin
  */
 class Admin extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Rhurup\Admin\Admin::class;
+        return \Encore\Admin\Admin::class;
     }
 }

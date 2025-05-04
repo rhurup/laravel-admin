@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Filter\Layout;
+namespace Encore\Admin\Grid\Filter\Layout;
 
+use Encore\Admin\Grid\Filter;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Grid\Filter;
 
 class Layout
 {

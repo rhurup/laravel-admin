@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Console;
+namespace Encore\Admin\Console;
 
 use Illuminate\Console\Command;
 
@@ -51,7 +51,7 @@ class InstallCommand extends Command
         $userModel = config('admin.database.users_model');
 
         if (0 === $userModel::count()) {
-            $this->call('db:seed', ['--class' => \Rhurup\Admin\Auth\Database\AdminTablesSeeder::class]);
+            $this->call('db:seed', ['--class' => \Encore\Admin\Auth\Database\AdminTablesSeeder::class]);
         }
     }
 

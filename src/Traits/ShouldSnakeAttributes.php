@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Traits;
+namespace Encore\Admin\Traits;
 
-use Rhurup\Admin\Grid\Model as GridModel;
+use Encore\Admin\Grid\Model as GridModel;
 
 trait ShouldSnakeAttributes
 {

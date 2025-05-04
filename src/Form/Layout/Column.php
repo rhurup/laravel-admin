@@ -4,10 +4,10 @@
  * Copyright (c) 2019. Mallto.Co.Ltd.<mall-to.com> All rights reserved.
  */
 
-namespace Rhurup\Admin\Form\Layout;
+namespace Encore\Admin\Form\Layout;
 
+use Encore\Admin\Form\Field;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Form\Field;
 
 class Column
 {

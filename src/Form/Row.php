@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Form;
+namespace Encore\Admin\Form;
 
+use Encore\Admin\Form;
 use Illuminate\Contracts\Support\Renderable;
-use Rhurup\Admin\Form;
 
 class Row implements Renderable
 {

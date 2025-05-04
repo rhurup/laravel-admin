@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Actions\Interactor;
+namespace Encore\Admin\Actions\Interactor;
 
-use Rhurup\Admin\Actions\Action;
+use Encore\Admin\Actions\Action;
 
 abstract class Interactor
 {

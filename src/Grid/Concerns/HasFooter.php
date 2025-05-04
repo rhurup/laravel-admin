@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Concerns;
+namespace Encore\Admin\Grid\Concerns;
 
-use Rhurup\Admin\Grid\Tools\Footer;
+use Encore\Admin\Grid\Tools\Footer;
 
 trait HasFooter
 {

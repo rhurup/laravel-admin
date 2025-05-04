@@ -1,15 +1,15 @@
 <?php
 
-namespace Rhurup\Admin\Grid;
+namespace Encore\Admin\Grid;
 
+use Encore\Admin\Actions\GridAction;
+use Encore\Admin\Grid;
+use Encore\Admin\Grid\Tools\AbstractTool;
+use Encore\Admin\Grid\Tools\BatchActions;
+use Encore\Admin\Grid\Tools\FilterButton;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Actions\GridAction;
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Grid\Tools\AbstractTool;
-use Rhurup\Admin\Grid\Tools\BatchActions;
-use Rhurup\Admin\Grid\Tools\FilterButton;
 
 class Tools implements Renderable
 {

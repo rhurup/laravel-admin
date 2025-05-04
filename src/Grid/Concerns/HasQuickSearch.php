@@ -1,13 +1,13 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Concerns;
+namespace Encore\Admin\Grid\Concerns;
 
+use Encore\Admin\Grid\Column;
+use Encore\Admin\Grid\Model;
+use Encore\Admin\Grid\Tools;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Rhurup\Admin\Grid\Column;
-use Rhurup\Admin\Grid\Model;
-use Rhurup\Admin\Grid\Tools;
 
 /**
  * Trait HasQuickSearch.

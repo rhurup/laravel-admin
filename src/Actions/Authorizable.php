@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Actions;
+namespace Encore\Admin\Actions;
 
+use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Rhurup\Admin\Facades\Admin;
 
 /**
  * @mixin Action

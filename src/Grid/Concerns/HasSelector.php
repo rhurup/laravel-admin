@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Concerns;
+namespace Encore\Admin\Grid\Concerns;
 
-use Rhurup\Admin\Grid;
-use Rhurup\Admin\Grid\Tools\Selector;
+use Encore\Admin\Grid;
+use Encore\Admin\Grid\Tools\Selector;
 
 /**
  * @mixin Grid

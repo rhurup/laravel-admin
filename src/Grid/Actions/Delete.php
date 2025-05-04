@@ -1,11 +1,11 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Actions;
+namespace Encore\Admin\Grid\Actions;
 
+use Encore\Admin\Actions\Response;
+use Encore\Admin\Actions\RowAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Rhurup\Admin\Actions\Response;
-use Rhurup\Admin\Actions\RowAction;
 
 class Delete extends RowAction
 {

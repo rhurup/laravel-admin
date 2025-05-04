@@ -2,9 +2,9 @@
 
 namespace Tests\Controllers;
 
-use Rhurup\Admin\Controllers\AdminController;
-use Rhurup\Admin\Form;
-use Rhurup\Admin\Grid;
+use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Form;
+use Encore\Admin\Grid;
 use Tests\Models\MultipleImage;
 
 class MultipleImageController extends AdminController

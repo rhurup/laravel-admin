@@ -1,9 +1,9 @@
 <?php
 
-namespace Rhurup\Admin\Layout;
+namespace Encore\Admin\Layout;
 
+use Encore\Admin\Grid;
 use Illuminate\Contracts\Support\Renderable;
-use Rhurup\Admin\Grid;
 
 class Column implements Buildable
 {
@@ -36,8 +36,7 @@ class Column implements Buildable
         // if null, or $this->width is empty array, set as "md" => "12"
         if (is_null($width) || (is_array($width) && 0 === count($width))) {
             $this->width['md'] = 12;
-        }
-        // $this->width is number(old version), set as "md" => $width
+        } // $this->width is number(old version), set as "md" => $width
         elseif (is_numeric($width)) {
             $this->width['md'] = $width;
         } else {

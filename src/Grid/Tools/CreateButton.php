@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Tools;
+namespace Encore\Admin\Grid\Tools;
 
-use Rhurup\Admin\Grid;
+use Encore\Admin\Grid;
 
 class CreateButton extends AbstractTool
 {

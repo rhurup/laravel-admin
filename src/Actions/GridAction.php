@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Actions;
+namespace Encore\Admin\Actions;
 
+use Encore\Admin\Grid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
-use Rhurup\Admin\Grid;
 
 /**
  * Class GridAction.

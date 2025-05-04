@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Filter;
+namespace Encore\Admin\Grid\Filter;
 
 class Hidden extends AbstractFilter
 {

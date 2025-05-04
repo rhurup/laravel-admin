@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Grid\Concerns;
+namespace Encore\Admin\Grid\Concerns;
 
-use Rhurup\Admin\Grid\Tools\TotalRow;
+use Encore\Admin\Grid\Tools\TotalRow;
 
 trait HasTotalRow
 {

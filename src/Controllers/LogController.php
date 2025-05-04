@@ -1,10 +1,10 @@
 <?php
 
-namespace Rhurup\Admin\Controllers;
+namespace Encore\Admin\Controllers;
 
+use Encore\Admin\Auth\Database\OperationLog;
+use Encore\Admin\Grid;
 use Illuminate\Support\Arr;
-use Rhurup\Admin\Auth\Database\OperationLog;
-use Rhurup\Admin\Grid;
 
 class LogController extends AdminController
 {

@@ -1,6 +1,6 @@
 <?php
 
-use Rhurup\Admin\Auth\Database\Administrator;
+use Encore\Admin\Auth\Database\Administrator;
 
 class UsersTest extends TestCase
 {

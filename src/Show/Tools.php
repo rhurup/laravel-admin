@@ -1,11 +1,11 @@
 <?php
 
-namespace Rhurup\Admin\Show;
+namespace Encore\Admin\Show;
 
+use Encore\Admin\Admin;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use Rhurup\Admin\Admin;
 
 class Tools implements Renderable
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Rhurup\Admin\Middleware;
+namespace Encore\Admin\Middleware;
 
-use Rhurup\Admin\Facades\Admin;
+use Encore\Admin\Facades\Admin;
 
 class Authenticate
 {

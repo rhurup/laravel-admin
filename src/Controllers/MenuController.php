@@ -1,14 +1,14 @@
 <?php
 
-namespace Rhurup\Admin\Controllers;
+namespace Encore\Admin\Controllers;
 
+use Encore\Admin\Form;
+use Encore\Admin\Layout\Column;
+use Encore\Admin\Layout\Content;
+use Encore\Admin\Layout\Row;
+use Encore\Admin\Tree;
+use Encore\Admin\Widgets\Box;
 use Illuminate\Routing\Controller;
-use Rhurup\Admin\Form;
-use Rhurup\Admin\Layout\Column;
-use Rhurup\Admin\Layout\Content;
-use Rhurup\Admin\Layout\Row;
-use Rhurup\Admin\Tree;
-use Rhurup\Admin\Widgets\Box;
 
 class MenuController extends Controller
 {
@@ -28,7 +28,7 @@ class MenuController extends Controller
                 $row->column(6, $this->treeView()->render());
 
                 $row->column(6, function (Column $column) {
-                    $form = new \Rhurup\Admin\Widgets\Form();
+                    $form = new \Encore\Admin\Widgets\Form();
                     $form->action(admin_url('auth/menu'));
 
                     $menuModel = config('admin.database.menu_model');

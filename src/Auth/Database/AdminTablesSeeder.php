@@ -1,6 +1,6 @@
 <?php
 
-namespace Rhurup\Admin\Auth\Database;
+namespace Encore\Admin\Auth\Database;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
