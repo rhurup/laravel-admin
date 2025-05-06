@@ -83,18 +83,18 @@
 
       if (n === 1) {
         // Fade out
-        css(progress, { 
-          transition: 'none', 
-          opacity: 1 
+        css(progress, {
+          transition: 'none',
+          opacity: 1
         });
         progress.offsetWidth; /* Repaint */
 
-        setTimeout(function() {
-          css(progress, { 
-            transition: 'all ' + speed + 'ms linear', 
-            opacity: 0 
+        setTimeout(function () {
+          css(progress, {
+            transition: 'all ' + speed + 'ms linear',
+            opacity: 0
           });
-          setTimeout(function() {
+          setTimeout(function () {
             NProgress.remove();
             next();
           }, speed);
@@ -199,10 +199,10 @@
       $promise.always(function() {
         current--;
         if (current === 0) {
-            initial = 0;
-            NProgress.done();
+          initial = 0;
+          NProgress.done();
         } else {
-            NProgress.set((initial - current) / initial);
+          NProgress.set((initial - current) / initial);
         }
       });
 
@@ -220,7 +220,7 @@
     if (NProgress.isRendered()) return document.getElementById('nprogress');
 
     addClass(document.documentElement, 'nprogress-busy');
-    
+
     var progress = document.createElement('div');
     progress.id = 'nprogress';
     progress.innerHTML = Settings.template;
@@ -229,7 +229,7 @@
         perc     = fromStart ? '-100' : toBarPerc(NProgress.status || 0),
         parent   = document.querySelector(Settings.parent),
         spinner;
-    
+
     css(bar, {
       transition: 'all 0 linear',
       transform: 'translate3d(' + perc + '%,0,0)'
@@ -277,9 +277,9 @@
 
     // Sniff prefixes
     var vendorPrefix = ('WebkitTransform' in bodyStyle) ? 'Webkit' :
-                       ('MozTransform' in bodyStyle) ? 'Moz' :
-                       ('msTransform' in bodyStyle) ? 'ms' :
-                       ('OTransform' in bodyStyle) ? 'O' : '';
+        ('MozTransform' in bodyStyle) ? 'Moz' :
+            ('msTransform' in bodyStyle) ? 'ms' :
+                ('OTransform' in bodyStyle) ? 'O' : '';
 
     if (vendorPrefix + 'Perspective' in bodyStyle) {
       // Modern browsers with 3D support, e.g. Webkit, IE10
@@ -340,7 +340,7 @@
 
   var queue = (function() {
     var pending = [];
-    
+
     function next() {
       var fn = pending.shift();
       if (fn) {
@@ -355,10 +355,10 @@
   })();
 
   /**
-   * (Internal) Applies css properties to an element, similar to the jQuery 
+   * (Internal) Applies css properties to an element, similar to the jQuery
    * css method.
    *
-   * While this helper does assist with vendor prefixed property names, it 
+   * While this helper does assist with vendor prefixed property names, it
    * does not perform any manipulation of values prior to setting styles.
    */
 
@@ -399,7 +399,7 @@
 
     return function(element, properties) {
       var args = arguments,
-          prop, 
+          prop,
           value;
 
       if (args.length == 2) {
@@ -430,7 +430,7 @@
     var oldList = classList(element),
         newList = oldList + name;
 
-    if (hasClass(oldList, name)) return; 
+    if (hasClass(oldList, name)) return;
 
     // Trim the opening space.
     element.className = newList.substring(1);
@@ -454,8 +454,8 @@
   }
 
   /**
-   * (Internal) Gets a space separated list of the class names on the element. 
-   * The list is wrapped with a single space on each end to facilitate finding 
+   * (Internal) Gets a space separated list of the class names on the element.
+   * The list is wrapped with a single space on each end to facilitate finding
    * matches within the list.
    */
 
@@ -473,4 +473,3 @@
 
   return NProgress;
 });
-
