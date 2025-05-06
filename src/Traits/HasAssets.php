@@ -68,7 +68,7 @@ trait HasAssets
         'vendor/laravel-admin/sweetalert2/dist/sweetalert2.css',
         'vendor/laravel-admin/nestable/nestable.css',
         'vendor/laravel-admin/toastr/build/toastr.min.css',
-        'vendor/laravel-admin/dark-editable-2.1.5/dark-editable.css',
+        'vendor/laravel-admin/bootstrap3-editable/bootstrap-editable.css',
         'vendor/laravel-admin/google-fonts/fonts.css',
         'vendor/laravel-admin/AdminLTE/dist/css/AdminLTE.min.css',
     ];
@@ -85,6 +85,7 @@ trait HasAssets
         'vendor/laravel-admin/nprogress/nprogress.js',
         'vendor/laravel-admin/nestable/jquery.nestable.js',
         'vendor/laravel-admin/toastr/build/toastr.min.js',
+        'vendor/laravel-admin/bootstrap3-editable/bootstrap-editable.js',
         'vendor/laravel-admin/moment/min/moment-with-locales.min.js',
         'vendor/laravel-admin/sweetalert2/dist/sweetalert2.min.js',
         'vendor/laravel-admin/laravel-admin/laravel-admin.js',

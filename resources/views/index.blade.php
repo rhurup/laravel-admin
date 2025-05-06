@@ -88,6 +88,5 @@
 
 <!-- REQUIRED JS SCRIPTS -->
 {!! Admin::js() !!}
-<script type="module" src="/vendor/laravel-admin/dark-editable-2.1.5/dark-editable.js"></script>
 </body>
 </html>
