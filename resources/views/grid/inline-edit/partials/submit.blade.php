@@ -11,20 +11,20 @@ $(document).off('click', '.ie-content .ie-submit').on('click', '.ie-content .ie-
 
     var original = $trigger.data('original');
 
-    if (val == original) {
-        $('[data-toggle="popover"]').popover('hide');
-        return;
-    }
+if (val == original) {
+$('[data-bs-toggle="popover"]').popover('hide');
+return;
+}
 
-    var data = {
-        _token: LA.token,
-        _method: 'PUT',
-        _edit_inline: true,
-    };
-    data[$trigger.data('name')] = val;
+var data = {
+_token: LA.token,
+_method: 'PUT',
+_edit_inline: true,
+};
+data[$trigger.data('name')] = val;
 
-    $.ajax({
-        url: "{{ $resource }}/" + $trigger.data('key'),
+$.ajax({
+url: "{{ $resource }}/" + $trigger.data('key'),
         type: "POST",
         data: data,
         success: function (data) {
@@ -32,19 +32,20 @@ $(document).off('click', '.ie-content .ie-submit').on('click', '.ie-content .ie-
 
             {{ $slot }}
 
-            $trigger.data('value', val)
-                .data('original', val);
+$trigger.data('value', val)
+.data('original', val);
 
-            $('[data-toggle="popover"]').popover('hide');
-        },
-        statusCode: {
-            422: function(xhr) {
-                $popover.find('.error').empty();
-                var errors = xhr.responseJSON.errors;
-                for (var key in errors) {
-                    $popover.find('.error').append('<div><i class="fa fa-times-circle-o"></i> '+errors[key]+'</div>')
-                }
-            }
-        }
-    });
+$('[data-bs-toggle="popover"]').popover('hide');
+},
+statusCode: {
+422: function(xhr) {
+$popover.find('.error').empty();
+var errors = xhr.responseJSON.errors;
+for (var key in errors) {
+$popover.find('.error').append('
+<div><i class="fa fa-times-circle-o"></i> '+errors[key]+'</div>')
+}
+}
+}
+});
 });

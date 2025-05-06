@@ -1,5 +1,5 @@
 <style>
-    td .form-group {
+    td .row mb-3up {
         margin-bottom: 0 !important;
     }
 </style>
@@ -41,9 +41,10 @@
                         <td class="hidden">{!! $hidden !!}</td>
 
                         @if($options['allowDelete'])
-                            <td class="form-group">
+                            <td class="row mb-3up">
                                 <div>
-                                    <div class="remove btn btn-warning btn-sm pull-right"><i class="fa fa-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                                    <div class="remove btn btn-warning btn-sm pull-right"><i
+                                                class="fa fa-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
                                 </div>
                             </td>
                         @endif
@@ -57,7 +58,7 @@
 
                     {!! $template !!}
 
-                    <td class="form-group">
+                    <td class="row mb-3up">
                         <div>
                             <div class="remove btn btn-warning btn-sm pull-right"><i class="fa fa-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
                         </div>
@@ -66,7 +67,7 @@
             </template>
 
             @if($options['allowCreate'])
-                <div class="form-group">
+                <div class="row mb-3up">
                     <div class="{{$viewClass['field']}}">
                         <div class="add btn btn-success btn-sm"><i class="fa fa-save"></i>&nbsp;{{ trans('admin.new') }}</div>
                     </div>

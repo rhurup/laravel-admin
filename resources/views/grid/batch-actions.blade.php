@@ -1,7 +1,7 @@
 @if(!$holdAll)
 <div class="btn-group {{ $all }}-btn" style="display:none;margin-right: 5px;">
     <a class="btn btn-sm btn-default hidden-xs"><span class="selected"></span></a>
-    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-bs-toggle="dropdown">
         <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>
     </button>

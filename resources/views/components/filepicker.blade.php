@@ -39,47 +39,47 @@ modal.on('show.bs.modal', function (e) {
 }).on('click', 'tr', function (e) {
     $(this).find('input.select').iCheck('toggle');
     e.preventDefault();
-}).on('submit', '.box-header form', function (e) {
-    load($(this).attr('action')+'&'+$(this).serialize());
+}).on('submit', '.card-header form', function (e) {
+    load($(this).attr('action') + '&' + $(this).serialize());
     return false;
 })
 
 @if($multiple)
 
-    var updateValue = function () {
-        value = pickInput.val().split(separator).filter(function (val) {
-            return val != '';
+var updateValue = function () {
+    value = pickInput.val().split(separator).filter(function (val) {
+        return val != '';
+    });
+};
+
+var load = function (url) {
+    $.get(url, function (data) {
+        modal.find('.modal-body').html(data);
+        modal.find('input.select').iCheck({
+            radioClass: 'iradio_minimal-blue',
+            checkboxClass: 'icheckbox_minimal-blue'
         });
-    };
+        modal.find('.card-header:first').hide();
 
-    var load = function (url) {
-        $.get(url, function (data) {
-            modal.find('.modal-body').html(data);
-            modal.find('input.select').iCheck({
-                radioClass:'iradio_minimal-blue',
-                checkboxClass:'icheckbox_minimal-blue'
-            });
-            modal.find('.box-header:first').hide();
-
-            modal.find('input.select').each(function (index, el) {
-                if ($.inArray($(el).val().toString(), value) >=0 ) {
-                    $(el).iCheck('toggle');
-                }
-            });
+        modal.find('input.select').each(function (index, el) {
+            if ($.inArray($(el).val().toString(), value) >= 0) {
+                $(el).iCheck('toggle');
+            }
         });
-    };
+    });
+};
 
-    modal.on('ifChecked', 'input.select', function (e) {
-        if ($(this).val().length == 0) {
-            return;
-        }
+modal.on('ifChecked', 'input.select', function (e) {
+    if ($(this).val().length == 0) {
+        return;
+    }
 
-        if (value.indexOf($(this).val()) < 0) {
-            value.push($(this).val());
-        }
-    }).on('ifUnchecked', 'input.select', function (e) {
-        var val = $(this).val();
-        var index = value.indexOf(val);
+    if (value.indexOf($(this).val()) < 0) {
+        value.push($(this).val());
+    }
+}).on('ifUnchecked', 'input.select', function (e) {
+    var val = $(this).val();
+    var index = value.indexOf(val);
         if (index !== -1) {
             value.splice(index, 1);
         }
@@ -92,35 +92,35 @@ modal.on('show.bs.modal', function (e) {
 
 @else
 
-    var updateValue = function () {
-        value = pickInput.val();
-    };
+var updateValue = function () {
+    value = pickInput.val();
+};
 
-    var load = function (url) {
-        $.get(url, function (data) {
-            modal.find('.modal-body').html(data);
-            modal.find('input.select').iCheck({
-                radioClass:'iradio_minimal-blue',
-                checkboxClass:'icheckbox_minimal-blue'
-            });
-            modal.find('.box-header:first').hide();
-
-            modal.find('input.select').each(function (index, el) {
-                if ($(el).val() == value) {
-                    $(el).iCheck('toggle');
-                }
-            });
+var load = function (url) {
+    $.get(url, function (data) {
+        modal.find('.modal-body').html(data);
+        modal.find('input.select').iCheck({
+            radioClass: 'iradio_minimal-blue',
+            checkboxClass: 'icheckbox_minimal-blue'
         });
-    };
+        modal.find('.card-header:first').hide();
 
-    modal.on('ifChecked', 'input.select', function (e) {
-        value = $(this).val();
-    }).find('.modal-footer .submit').click(function () {
-        pickInput.val(value);
-        modal.modal('toggle');
-
-        refresh();
+        modal.find('input.select').each(function (index, el) {
+            if ($(el).val() == value) {
+                $(el).iCheck('toggle');
+            }
+        });
     });
+};
+
+modal.on('ifChecked', 'input.select', function (e) {
+    value = $(this).val();
+}).find('.modal-footer .submit').click(function () {
+    pickInput.val(value);
+    modal.modal('toggle');
+
+    refresh();
+});
 
 @endif
 

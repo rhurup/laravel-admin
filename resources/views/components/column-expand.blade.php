@@ -1,6 +1,6 @@
 <div>
     <span class="{{ $elementClass }}" data-inserted="0" data-key="{{ $key }}" data-name="{{ $name }}"
-          data-toggle="collapse" data-target="#grid-collapse-{{ $name }}">
+          data-bs-toggle="collapse" data-target="#grid-collapse-{{ $name }}">
         <a href="javascript:void(0)"><i class="fa fa-angle-double-down"></i>&nbsp;&nbsp;{{ $value }}</a>
     </span>
     <template class="grid-expand-{{ $name }}">
@@ -55,7 +55,7 @@
         // load($(this).attr('href'), $(this).parent('.collapse'));
         e.preventDefault();
         return false;
-    }).on('pjax:submit', '.collapse .box-header form', function (e) {
+    }).on('pjax:submit', '.collapse .card-header form', function (e) {
         // load($(this).attr('action')+'&'+$(this).serialize(), $(this).parent('.collapse'));
         return false;
     });
@@ -80,14 +80,14 @@
     @endif
 
     @if ($expand)
-        expand.trigger('click');
+    expand.trigger('click');
     @endif
 </script>
 
 @if($loadGrid)
-<style>
-    .collapse .grid-box .box-header:first-child {
-        display: none;
-    }
-</style>
+    <style>
+        .collapse .grid-box .card-header:first-child {
+            display: none;
+        }
+    </style>
 @endif

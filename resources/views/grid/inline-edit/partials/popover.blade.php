@@ -29,6 +29,6 @@ $('.{{ $trigger }}').popover({
     {{ $shown ?? '' }}
 
 }).click(function () {
-    $('[data-toggle="popover"]').popover('hide');
-    $(this).popover('toggle');
+$('[data-bs-toggle="popover"]').popover('hide');
+$(this).popover('toggle');
 });

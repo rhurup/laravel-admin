@@ -1,38 +1,38 @@
-<div class="box grid-box">
+<div class="card">
     @if(isset($title))
-    <div class="box-header with-border">
-        <h3 class="box-title"> {{ $title }}</h3>
-    </div>
+        <div class="card-header">
+            <h3 class="card-title"> {{ $title }}</h3>
+        </div>
     @endif
 
     @if ( $grid->showTools() || $grid->showExportBtn() || $grid->showCreateBtn() )
-    <div class="box-header with-border">
-        <div class="pull-right">
-            {!! $grid->renderColumnSelector() !!}
-            {!! $grid->renderExportButton() !!}
-            {!! $grid->renderCreateButton() !!}
+        <div class="card-header">
+            <div class="float-end">
+                {!! $grid->renderColumnSelector() !!}
+                {!! $grid->renderExportButton() !!}
+                {!! $grid->renderCreateButton() !!}
+            </div>
+            @if ( $grid->showTools() )
+                <div class="float-start">
+                    {!! $grid->renderHeaderTools() !!}
+                </div>
+            @endif
         </div>
-        @if ( $grid->showTools() )
-        <div class="pull-left">
-            {!! $grid->renderHeaderTools() !!}
-        </div>
-        @endif
-    </div>
     @endif
 
     {!! $grid->renderFilter() !!}
 
     {!! $grid->renderHeader() !!}
 
-    <!-- /.box-header -->
-    <div class="box-body table-responsive no-padding">
+    <!-- /.card-header -->
+    <div class="card-body">
         <table class="table table-hover grid-table" id="{{ $grid->tableID }}">
             <thead>
-                <tr>
-                    @foreach($grid->visibleColumns() as $column)
+            <tr>
+                @foreach($grid->visibleColumns() as $column)
                     <th {!! $column->formatHtmlAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
-                    @endforeach
-                </tr>
+                @endforeach
+            </tr>
             </thead>
 
             @if ($grid->hasQuickCreate())
@@ -41,8 +41,8 @@
 
             <tbody>
 
-                @if($grid->rows()->isEmpty() && $grid->showDefineEmptyPage())
-                    @include('admin::grid.empty-grid')
+            @if($grid->rows()->isEmpty() && $grid->showDefineEmptyPage())
+                @include('admin::grid.empty-grid')
                 @endif
 
                 @foreach($grid->rows() as $row)
@@ -64,8 +64,8 @@
 
     {!! $grid->renderFooter() !!}
 
-    <div class="box-footer clearfix">
+    <div class="card-footer clearfix">
         {!! $grid->paginator() !!}
     </div>
-    <!-- /.box-body -->
+    <!-- /.card-body -->
 </div>

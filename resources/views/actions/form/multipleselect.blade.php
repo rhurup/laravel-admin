@@ -1,6 +1,7 @@
-<div class="form-group">
+<div class="row mb-3up">
     <label>{{ $label }}</label>
-    <select class="form-control {{$class}}" style="width: 100%;" name="{{$name}}[]" {!! $attributes !!} multiple data-placeholder="{{ $label }}">
+    <select class="c {{$class}}" style="width: 100%;" name="{{$name}}[]" {!! $attributes !!} multiple
+            data-placeholder="{{ $label }}">
 
         <option value=""></option>
         @foreach($options as $select => $option)

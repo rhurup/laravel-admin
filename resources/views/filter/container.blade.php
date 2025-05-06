@@ -1,22 +1,22 @@
-<div class="box-header with-border {{ $expand?'':'hide' }} filter-box" id="{{ $filterID }}">
+<div class="card-header with-border {{ $expand?'':'hide' }} filter-box" id="{{ $filterID }}">
     <form action="{!! $action !!}" class="form-horizontal" pjax-container method="get">
 
         <div class="row">
             @foreach($layout->columns() as $column)
-            <div class="col-md-{{ $column->width() }}">
-                <div class="box-body">
-                    <div class="fields-group">
-                        @foreach($column->filters() as $filter)
-                            {!! $filter->render() !!}
-                        @endforeach
+                <div class="col-md-{{ $column->width() }}">
+                    <div class="card-body">
+                        <div class="fields-group">
+                            @foreach($column->filters() as $filter)
+                                {!! $filter->render() !!}
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
-        <!-- /.box-body -->
+        <!-- /.card-body -->
 
-        <div class="box-footer">
+        <div class="card-footer">
             <div class="row">
                 <div class="col-md-{{ $layout->columns()->first()->width() }}">
                     <div class="col-md-2"></div>

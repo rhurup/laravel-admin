@@ -1,6 +1,6 @@
 <div class="box box-default">
-    <div class="box-header with-border">
-        <h3 class="box-title">Dependencies</h3>
+    <div class="card-header with-border">
+        <h3 class="card-title">Dependencies</h3>
 
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -9,8 +9,8 @@
         </div>
     </div>
 
-    <!-- /.box-header -->
-    <div class="box-body dependencies">
+    <!-- /.card-header -->
+    <div class="card-body dependencies">
         <div class="table-responsive">
             <table class="table table-striped">
                 @foreach($dependencies as $dependency => $version)
@@ -23,9 +23,9 @@
         </div>
         <!-- /.table-responsive -->
     </div>
-    <!-- /.box-body -->
+    <!-- /.card-body -->
 </div>
 
 <script>
-    $('.dependencies').slimscroll({height:'510px',size:'3px'});
+    $('.dependencies').slimscroll({height: '510px', size: '3px'});
 </script>

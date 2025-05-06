@@ -1,10 +1,10 @@
-<div class="dropdown pull-right column-selector">
-    <button type="button" class="btn btn-sm btn-instagram dropdown-toggle" data-toggle="dropdown">
+<div class="btn-group float-end column-selector">
+    <button type="button" class="btn btn-sm btn-instagram dropdown-toggle" data-bs-toggle="dropdown">
         <i class="fa fa-table"></i>
         &nbsp;
         <span class="caret"></span>
     </button>
-    <ul class="dropdown-menu" role="menu">
+    <ul class="dropdown-menu">
         <li>
             <ul>
                 @foreach($columns as $key => $label)

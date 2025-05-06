@@ -1,9 +1,11 @@
 @extends('admin::grid.inline-edit.comm')
 
 @section('field')
-    <select name='multiple-select-{{ $name }}' class="form-control ie-input" multiple>
+    <select name='multiple-select-{{ $name }}' class="form-select ie-input" multiple>
         @foreach($options as $option => $label)
-            <option name='multiple-select-{{ $name }}' value="{{ $option }}" data-label="{{ $label }}">&nbsp;{{$label}}&nbsp;&nbsp;</option>
+            <option name='multiple-select-{{ $name }}' value="{{ $option }}" data-label="{{ $label }}">&nbsp;{{$label}}
+                &nbsp;&nbsp;
+            </option>
         @endforeach
     </select>
 @endsection
@@ -11,9 +13,9 @@
 @section('assert')
     <script>
         @component('admin::grid.inline-edit.partials.popover', compact('trigger'))
-            @slot('content')
-            $template.find('select>option').each(function (index, option) {
-                if($.inArray($(option).attr('value'), $trigger.data('value')) >= 0) {
+        @slot('content')
+        $template.find('select>option').each(function (index, option) {
+            if ($.inArray($(option).attr('value'), $trigger.data('value')) >= 0) {
                     $(option).attr('selected', true);
                 }
             });

@@ -1,4 +1,4 @@
-<div class="{{$viewClass['form-group']}}">
+<div class="{{$viewClass['row mb-3up']}}">
 
     <label class="{{$viewClass['label']}} control-label"></label>
 

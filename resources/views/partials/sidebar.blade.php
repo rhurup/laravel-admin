@@ -1,49 +1,21 @@
-<aside class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="{{ Admin::user()->avatar }}" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-                <p>{{ Admin::user()->name }}</p>
-                <!-- Status -->
-                <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('admin.online') }}</a>
-            </div>
-        </div>
-
-        @if(config('admin.enable_menu_search'))
-        <!-- search form (Optional) -->
-        <form class="sidebar-form" style="overflow: initial;" onsubmit="return false;">
-            <div class="input-group">
-                <input type="text" autocomplete="off" class="form-control autocomplete" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-                <ul class="dropdown-menu" role="menu" style="min-width: 210px;max-height: 300px;overflow: auto;">
-                    @foreach(Admin::menuLinks() as $link)
-                    <li>
-                        <a href="{{ admin_url($link['uri']) }}"><i class="fa {{ $link['icon'] }}"></i>{{ admin_trans($link['title']) }}</a>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
-        </form>
-        <!-- /.search form -->
-        @endif
-
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <!-- Sidebar user panel (optional) -->
+    <div class="sidebar-brand">
+        <!-- Logo -->
+        <a href="{{ admin_url('/') }}" class="brand-link">
+            <span class="brand-text fw-light">{!! config('admin.logo', config('admin.name')) !!}</span>
+        </a>
+    </div>
+    <div class="sidebar-wrapper" data-overlayscrollbars="host">
         <!-- Sidebar Menu -->
-        <ul class="sidebar-menu">
-            <li class="header">{{ trans('admin.menu') }}</li>
-
-            @each('admin::partials.menu', Admin::menu(), 'item')
-
-        </ul>
-        <!-- /.sidebar-menu -->
-    </section>
+        <nav class="mt-2">
+            <ul class="nav sidebar-menu flex-column"
+                data-lte-toggle="treeview"
+                role="menu"
+                data-accordion="false">
+                @each('admin::partials.menu', Admin::menu(), 'item')
+            </ul>
+        </nav>
+    </div>
     <!-- /.sidebar -->
 </aside>

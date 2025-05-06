@@ -1,7 +1,7 @@
 
 @php($listErrorKey = "$column.values")
 
-<div class="{{$viewClass['form-group']}} {{ $errors->has($listErrorKey) ? 'has-error' : '' }}">
+<div class="{{$viewClass['row mb-3up']}} {{ $errors->has($listErrorKey) ? 'has-error' : '' }}">
 
     <label class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
@@ -9,7 +9,8 @@
 
         @if($errors->has($listErrorKey))
             @foreach($errors->get($listErrorKey) as $message)
-                <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {{$message}}</label><br/>
+                <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {{$message}}</label>
+                <br/>
             @endforeach
         @endif
 
@@ -23,12 +24,14 @@
 
                 <tr>
                     <td>
-                        <div class="form-group {{ $errors->has($itemErrorKey) ? 'has-error' : '' }}">
+                        <div class="row mb-3up {{ $errors->has($itemErrorKey) ? 'has-error' : '' }}">
                             <div class="col-sm-12">
-                                <input name="{{ $column }}[values][]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
+                                <input name="{{ $column }}[values][]" value="{{ old("{$column}.values.{$k}", $v) }}"
+                                       class="form-control"/>
                                 @if($errors->has($itemErrorKey))
                                     @foreach($errors->get($itemErrorKey) as $message)
-                                        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {{$message}}</label><br/>
+                                        <label class="control-label" for="inputError"><i
+                                                    class="fa fa-times-circle-o"></i> {{$message}}</label><br/>
                                     @endforeach
                                 @endif
                             </div>
@@ -58,7 +61,7 @@
     <template class="{{$column}}-tpl">
         <tr>
             <td>
-                <div class="form-group">
+                <div class="row mb-3up">
                     <div class="col-sm-12">
                         <input name="{{ $column }}[values][]" class="form-control" />
                     </div>

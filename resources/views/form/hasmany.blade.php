@@ -19,7 +19,7 @@
                 @endforeach
 
                 @if($options['allowDelete'])
-                <div class="form-group">
+                <div class="row mb-3up">
                     <label class="{{$viewClass['label']}} control-label"></label>
                     <div class="{{$viewClass['field']}}">
                         <div class="remove btn btn-warning btn-sm pull-right"><i class="fa fa-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
@@ -38,10 +38,11 @@
 
             {!! $template !!}
 
-            <div class="form-group">
+            <div class="row mb-3up">
                 <label class="{{$viewClass['label']}} control-label"></label>
                 <div class="{{$viewClass['field']}}">
-                    <div class="remove btn btn-warning btn-sm pull-right"><i class="fa fa-trash"></i>&nbsp;{{ trans('admin.remove') }}</div>
+                    <div class="remove btn btn-warning btn-sm pull-right"><i
+                                class="fa fa-trash"></i>&nbsp;{{ trans('admin.remove') }}</div>
                 </div>
             </div>
             <hr>
@@ -49,12 +50,12 @@
     </template>
 
     @if($options['allowCreate'])
-    <div class="form-group">
-        <label class="{{$viewClass['label']}} control-label"></label>
-        <div class="{{$viewClass['field']}}">
-            <div class="add btn btn-success btn-sm"><i class="fa fa-save"></i>&nbsp;{{ trans('admin.new') }}</div>
+        <div class="row mb-3up">
+            <label class="{{$viewClass['label']}} control-label"></label>
+            <div class="{{$viewClass['field']}}">
+                <div class="add btn btn-success btn-sm"><i class="fa fa-save"></i>&nbsp;{{ trans('admin.new') }}</div>
+            </div>
         </div>
-    </div>
     @endif
 
 </div>

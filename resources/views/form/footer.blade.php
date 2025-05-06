@@ -1,4 +1,4 @@
-<div class="box-footer">
+<div class="card-footer">
 
     {{ csrf_field() }}
 

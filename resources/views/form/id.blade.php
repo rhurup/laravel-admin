@@ -1,8 +1,9 @@
-<div class="{{$viewClass['form-group']}}">
+<div class="{{$viewClass['row mb-3up']}}">
     <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
     <div class="{{$viewClass['field']}}">
-        <input type="text" id="{{$id}}" name="{{$name}}" value="{{$value}}" class="form-control" readonly {!! $attributes !!} />
+        <input type="text" id="{{$id}}" name="{{$name}}" value="{{$value}}" class="form-control"
+               readonly {!! $attributes !!} />
 
         @include('admin::form.help-block')
 

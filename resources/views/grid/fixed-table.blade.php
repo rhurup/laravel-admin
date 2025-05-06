@@ -1,51 +1,49 @@
-<div class="box">
+<div class="card">
     @if(isset($title))
-    <div class="box-header with-border">
-        <h3 class="box-title"> {{ $title }}</h3>
-    </div>
+        <div class="card-header">
+            <h3 class="card-title"> {{ $title }}</h3>
+        </div>
     @endif
 
     @if ( $grid->showTools() || $grid->showExportBtn() || $grid->showCreateBtn() )
-    <div class="box-header with-border">
-        <div class="pull-right">
-            {!! $grid->renderColumnSelector() !!}
-            {!! $grid->renderExportButton() !!}
-            {!! $grid->renderCreateButton() !!}
+        <div class="card-header">
+            <div class="float-end">
+                {!! $grid->renderColumnSelector() !!}
+                {!! $grid->renderExportButton() !!}
+                {!! $grid->renderCreateButton() !!}
+            </div>
+            @if ( $grid->showTools() )
+                <div class="float-start">
+                    {!! $grid->renderHeaderTools() !!}
+                </div>
+            @endif
         </div>
-        @if ( $grid->showTools() )
-        <div class="pull-left">
-            {!! $grid->renderHeaderTools() !!}
-        </div>
-        @endif
-    </div>
     @endif
 
     {!! $grid->renderFilter() !!}
 
     {!! $grid->renderHeader() !!}
 
-    <!-- /.box-header -->
-    <div class="box-body table-responsive no-padding">
-        <div class="tables-container">
-            <div class="table-wrap table-main">
-                <table class="table grid-table" id="{{ $grid->tableID }}">
-                    <thead>
-                        <tr>
-                            @foreach($grid->visibleColumns() as $column)
-                            <th {!! $column->formatHtmlAttributes() !!}>{{$column->getLabel()}}{!! $column->renderHeader() !!}</th>
-                            @endforeach
-                        </tr>
-                    </thead>
+    <!-- /.card-header -->
+    <div class="card-body table-responsive no-padding">
+        <table class="table grid-table" id="{{ $grid->tableID }}">
+            <thead>
+            <tr>
+                @foreach($grid->visibleColumns() as $column)
+                    <th {!! $column->formatHtmlAttributes() !!}>{{$column->getLabel()}}{!! $column->renderHeader() !!}</th>
+                @endforeach
+            </tr>
+            </thead>
 
-                    <tbody>
+            <tbody>
 
-                        @foreach($grid->rows() as $row)
-                        <tr {!! $row->getRowAttributes() !!}>
-                            @foreach($grid->visibleColumnNames() as $name)
-                            <td {!! $row->getColumnAttributes($name) !!} class="column-{!! $name !!}">
-                                {!! $row->column($name) !!}
-                            </td>
-                            @endforeach
+            @foreach($grid->rows() as $row)
+                <tr {!! $row->getRowAttributes() !!}>
+                    @foreach($grid->visibleColumnNames() as $name)
+                        <td {!! $row->getColumnAttributes($name) !!} class="column-{!! $name !!}">
+                            {!! $row->column($name) !!}
+                        </td>
+                    @endforeach
                         </tr>
                         @endforeach
                     </tbody>
@@ -119,58 +117,14 @@
                 </table>
             </div>
             @endif
-        </div>
-    </div>
 
     {!! $grid->renderFooter() !!}
 
-    <div class="box-footer clearfix">
+    <div class="card-footer clearfix">
         {!! $grid->paginator() !!}
     </div>
-    <!-- /.box-body -->
+    <!-- /.card-body -->
 </div>
-
-
-<style>
-    .tables-container {
-        position:relative;
-    }
-
-    .tables-container table {
-        margin-bottom: 0px !important;
-    }
-
-    .tables-container table th, .tables-container table td {
-        white-space:nowrap;
-    }
-
-    .table-wrap table tr .active {
-        background: #f5f5f5;
-    }
-
-    .table-main {
-        overflow-x: auto;
-        width: 100%;
-    }
-
-    .table-fixed {
-        position:absolute;
-        top: 0px;
-        background:#ffffff;
-        z-index:10;
-    }
-
-    .table-fixed-left {
-        left:0;
-        box-shadow: 7px 0 5px -5px rgba(0,0,0,.12);
-    }
-
-    .table-fixed-right {
-        right:0;
-        box-shadow: -5px 0 5px -5px rgba(0,0,0,.12);
-    }
-</style>
-
 <script>
     var theadHeight = $('.table-main thead tr')[0].getBoundingClientRect().height;
     $('.table-fixed thead tr').outerHeight(theadHeight);
@@ -178,7 +132,7 @@
     var tfootHeight = $('.table-main tfoot tr').outerHeight();
     $('.table-fixed tfoot tr').outerHeight(tfootHeight);
 
-    $('.table-main tbody tr').each(function(i, obj) {
+    $('.table-main tbody tr').each(function (i, obj) {
         var height = obj.getBoundingClientRect().height;
 
         $('.table-fixed-left tbody tr').eq(i).outerHeight(height);

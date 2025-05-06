@@ -1,4 +1,4 @@
-<span data-toggle="modal" data-target="#grid-modal-{{ $name }}" data-key="{{ $key }}">
+<span data-bs-toggle="modal" data-target="#grid-modal-{{ $name }}" data-key="{{ $key }}">
    <a href="javascript:void(0)"><i class="fa fa-clone"></i>&nbsp;&nbsp;{{ $value }}</a>
 </span>
 
@@ -6,7 +6,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="border-radius: 5px;">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title">{{ $title }}</h4>
             </div>
             <div class="modal-body">
@@ -17,21 +18,21 @@
 </div>
 
 @if($grid)
-<style>
-    .box.grid-box {
-        box-shadow: none;
-        border-top: none;
-    }
+    <style>
+        .box.grid-box {
+            box-shadow: none;
+            border-top: none;
+        }
 
-    .grid-box .box-header:first-child {
-        display: none;
-    }
-</style>
+        .grid-box .card-header:first-child {
+            display: none;
+        }
+    </style>
 @endif
 
 @if($async)
-<script>
-    var modal = $('#grid-modal-{{ $name }}');
+    <script>
+        var modal = $('#grid-modal-{{ $name }}');
     var modalBody = modal.find('.modal-body');
 
     var load = function (url) {
@@ -45,15 +46,15 @@
         });
     };
 
-    modal.on('show.bs.modal', function (e) {
-        var key = $(e.relatedTarget).data('key');
-        load('{{ $url }}'+'&key='+key);
-    }).on('click', '.page-item a, .filter-box a', function (e) {
-        load($(this).attr('href'));
-        e.preventDefault();
-    }).on('submit', '.box-header form', function (e) {
-        load($(this).attr('action')+'&'+$(this).serialize());
-        return false;
-    });
-</script>
+        modal.on('show.bs.modal', function (e) {
+            var key = $(e.relatedTarget).data('key');
+            load('{{ $url }}' + '&key=' + key);
+        }).on('click', '.page-item a, .filter-box a', function (e) {
+            load($(this).attr('href'));
+            e.preventDefault();
+        }).on('submit', '.card-header form', function (e) {
+            load($(this).attr('action') + '&' + $(this).serialize());
+            return false;
+        });
+    </script>
 @endif

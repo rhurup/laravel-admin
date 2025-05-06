@@ -1,16 +1,17 @@
 <style>
     .ext-icon {
-        color: rgba(0,0,0,0.5);
+        color: rgba(0, 0, 0, 0.5);
         margin-left: 10px;
     }
+
     .installed {
         color: #00a65a;
         margin-right: 10px;
     }
 </style>
 <div class="box box-default">
-    <div class="box-header with-border">
-        <h3 class="box-title">Available extensions</h3>
+    <div class="card-header with-border">
+        <h3 class="card-title">Available extensions</h3>
 
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -18,8 +19,8 @@
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
         </div>
     </div>
-    <!-- /.box-header -->
-    <div class="box-body">
+    <!-- /.card-header -->
+    <div class="card-body">
         <ul class="products-list product-list-in-box">
 
             @foreach($extensions as $extension)
@@ -41,9 +42,9 @@
             <!-- /.item -->
         </ul>
     </div>
-    <!-- /.box-body -->
-    <div class="box-footer text-center">
+    <!-- /.card-body -->
+    <div class="card-footer text-center">
         <a href="https://github.com/laravel-admin-extensions" target="_blank" class="uppercase">View All Extensions</a>
     </div>
-    <!-- /.box-footer -->
+    <!-- /.card-footer -->
 </div>

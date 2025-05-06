@@ -1,4 +1,5 @@
-<span class="grid-selector" data-toggle="modal" data-target="#{{ $modal }}" key="{{ $key }}" data-val="{{ $original }}">
+<span class="grid-selector" data-bs-toggle="modal" data-target="#{{ $modal }}" key="{{ $key }}"
+      data-val="{{ $original }}">
    <a href="javascript:void(0)" class="text-muted">
        <i class="fa fa-check-square-o"></i>&nbsp;&nbsp;
        <span class="text">{{ $value }}</span>
@@ -72,12 +73,12 @@
         $.get(url, function (data) {
             $modal.find('.modal-body').html(data);
             $modal.find('.select').iCheck({
-                radioClass:'iradio_minimal-blue',
-                checkboxClass:'icheckbox_minimal-blue'
+                radioClass: 'iradio_minimal-blue',
+                checkboxClass: 'icheckbox_minimal-blue'
             });
-            $modal.find('.box-header:first').hide();
+            $modal.find('.card-header:first').hide();
 
-            $modal.find('input.select').each(function (index,    el) {
+            $modal.find('input.select').each(function (index, el) {
                 if ($(el).val() == selected) {
                     $(el).iCheck('toggle');
                 }
@@ -115,13 +116,13 @@
         $.get(url, function (data) {
             $modal.find('.modal-body').html(data);
             $modal.find('.select').iCheck({
-                radioClass:'iradio_minimal-blue',
-                checkboxClass:'icheckbox_minimal-blue'
+                radioClass: 'iradio_minimal-blue',
+                checkboxClass: 'icheckbox_minimal-blue'
             });
-            $modal.find('.box-header:first').hide();
+            $modal.find('.card-header:first').hide();
 
             $modal.find('input.select').each(function (index, el) {
-                if ($.inArray($(el).val().toString(), selected) >=0 ) {
+                if ($.inArray($(el).val().toString(), selected) >= 0) {
                     $(el).iCheck('toggle');
                 }
             });
@@ -163,16 +164,16 @@
     });
 @endif
 
-    $modal.on('click', '.page-item a, .filter-box a', function (e) {
-        load($(this).attr('href'));
-        e.preventDefault();
-    }).on('click', 'tr', function (e) {
-        $(this).find('input.select').iCheck('toggle');
-        e.preventDefault();
-    }).on('submit', '.box-header form', function (e) {
-        load($(this).attr('action')+'&'+$(this).serialize());
-        e.preventDefault();
-        return false;
-    })
+$modal.on('click', '.page-item a, .filter-box a', function (e) {
+    load($(this).attr('href'));
+    e.preventDefault();
+}).on('click', 'tr', function (e) {
+    $(this).find('input.select').iCheck('toggle');
+    e.preventDefault();
+}).on('submit', '.card-header form', function (e) {
+    load($(this).attr('action') + '&' + $(this).serialize());
+    e.preventDefault();
+    return false;
+})
 
 </script>
