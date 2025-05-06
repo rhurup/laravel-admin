@@ -18,17 +18,17 @@
 
             <div class="col-md-{{$width['field']}}">
                 @if(in_array('reset', $buttons))
-                    <div class="btn-group pull-left">
-                        <button type="reset" class="btn btn-warning pull-right">{{ trans('admin.reset') }}</button>
+                    <div class="btn-group float-start">
+                        <button type="reset" class="btn btn-warning float-end">{{ trans('admin.reset') }}</button>
                     </div>
                 @endif
 
                 @if(in_array('submit', $buttons))
-                    <div class="btn-group pull-right">
-                <button type="submit" class="btn btn-info pull-right">{{ trans('admin.submit') }}</button>
+                    <div class="btn-group float-end">
+                        <button type="submit" class="btn btn-info float-end">{{ trans('admin.submit') }}</button>
+                    </div>
+                @endif
             </div>
-            @endif
         </div>
-    </div>
     @endif
 </form>

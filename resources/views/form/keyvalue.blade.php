@@ -51,7 +51,7 @@
 
                     <td class="row mb-3up">
                         <div>
-                            <div class="{{$column}}-remove btn btn-warning btn-sm pull-right">
+                            <div class="{{$column}}-remove btn btn-warning btn-sm float-end">
                                 <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
                             </div>
                         </div>
@@ -60,15 +60,15 @@
             @endforeach
             </tbody>
             <tfoot>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <div class="{{ $column }}-add btn btn-success btn-sm pull-right">
-                            <i class="fa fa-save"></i>&nbsp;{{ __('admin.new') }}
-                        </div>
-                    </td>
-                </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="{{ $column }}-add btn btn-success btn-sm float-end">
+                        <i class="fa fa-save"></i>&nbsp;{{ __('admin.new') }}
+                    </div>
+                </td>
+            </tr>
             </tfoot>
         </table>
     </div>
@@ -91,7 +91,7 @@
 
             <td class="row mb-3up">
                 <div>
-                    <div class="{{$column}}-remove btn btn-warning btn-sm pull-right">
+                    <div class="{{$column}}-remove btn btn-warning btn-sm float-end">
                         <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
                     </div>
                 </div>

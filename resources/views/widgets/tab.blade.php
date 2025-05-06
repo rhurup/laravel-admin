@@ -23,12 +23,12 @@
                 </ul>
             </li>
         @endif
-        <li class="pull-right header">{{ $title }}</li>
+        <li class="float-end header">{{ $title }}</li>
     </ul>
     <div class="tab-content">
         @foreach($tabs as $id => $tab)
             <div class="tab-pane {{ $id == $active ? 'active' : '' }}" id="tab_{{ $tab['id'] }}">
-            @php($content = \Illuminate\Support\Arr::get($tab, 'content'))
+                @php($content = \Illuminate\Support\Arr::get($tab, 'content'))
                 @if($content instanceof \Illuminate\Contracts\Support\Renderable)
                     {!! $content->render() !!}
                 @else

@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="{{$viewClass['label']}}"><h4 class="pull-right">{{ $label }}</h4></div>
+    <div class="{{$viewClass['label']}}"><h4 class="float-end">{{ $label }}</h4></div>
     <div class="{{$viewClass['field']}}"></div>
 </div>
 
@@ -19,19 +19,20 @@
                 @endforeach
 
                 @if($options['allowDelete'])
-                <div class="row mb-3up">
-                    <label class="{{$viewClass['label']}} control-label"></label>
-                    <div class="{{$viewClass['field']}}">
-                        <div class="remove btn btn-warning btn-sm pull-right"><i class="fa fa-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                    <div class="row mb-3up">
+                        <label class="{{$viewClass['label']}} control-label"></label>
+                        <div class="{{$viewClass['field']}}">
+                            <div class="remove btn btn-warning btn-sm float-end"><i
+                                        class="fa fa-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                        </div>
                     </div>
-                </div>
                 @endif
                 <hr>
             </div>
 
         @endforeach
     </div>
-    
+
 
     <template class="{{$column}}-tpl">
         <div class="has-many-{{$column}}-form fields-group">
@@ -41,7 +42,7 @@
             <div class="row mb-3up">
                 <label class="{{$viewClass['label']}} control-label"></label>
                 <div class="{{$viewClass['field']}}">
-                    <div class="remove btn btn-warning btn-sm pull-right"><i
+                    <div class="remove btn btn-warning btn-sm float-end"><i
                                 class="fa fa-trash"></i>&nbsp;{{ trans('admin.remove') }}</div>
                 </div>
             </div>

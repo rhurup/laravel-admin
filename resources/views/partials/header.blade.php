@@ -35,11 +35,11 @@
                             </p>
                         </li>
                         <li class="user-body">
-                            <div class="pull-left">
+                            <div class="float-start">
                                 <a href="{{ admin_url('auth/setting') }}"
                                    class="btn btn-default btn-flat">{{ trans('admin.setting') }}</a>
                             </div>
-                            <div class="pull-right">
+                            <div class="float-end">
                                 <a href="{{ admin_url('auth/logout') }}"
                                    class="btn btn-default btn-flat">{{ trans('admin.logout') }}</a>
                             </div>
