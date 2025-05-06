@@ -48,11 +48,11 @@
     @endif
 @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
+    <section class="content-header px-2">
+        <legend>
             {!! $header ?: trans('admin.title') !!}
             <small>{!! $description ?: trans('admin.description') !!}</small>
-        </h1>
+        </legend>
 
 
         <!-- breadcrumb end -->
