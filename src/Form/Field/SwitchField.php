@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 class SwitchField extends Field
 {
     protected static $css = [
-        '/vendor/laravel-admin/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css',
+        '/vendor/laravel-admin/bootstrap-switch/dist/css/bootstrap4/bootstrap-switch.min.css',
     ];
 
     protected static $js = [
