@@ -1,11 +1,11 @@
-<div class="{{$viewClass['row mb-3up']}} {!! !$errors->has($column) ?: 'has-error' !!}">
+<div class=" {!! !$errors->has($column) ?: 'has-error' !!}">
 
     <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
     <div class="{{$viewClass['field']}}" id="{{$id}}">
 
         @if($canCheckAll)
-            <span class="icheck">
+            <span class="">
             <label class="checkbox-inline">
                 <input type="checkbox" class="{{ $checkAllClass }}"/>&nbsp;{{ __('admin.all') }}
             </label>
@@ -23,10 +23,10 @@
 
             @foreach($options as $option => $label)
 
-            <div class="checkbox icheck">
+                    <div class="checkbox">
 
-                <label>
-                    <input type="checkbox" name="{{$name}}[]" value="{{$option}}" class="{{$class}}" {{ false !== array_search($option, array_filter(old($column, $value ?? []))) || ($value === null && in_array($option, $checked)) ?'checked':'' }} {!! $attributes !!} />&nbsp;{{$label}}&nbsp;&nbsp;
+                        <label>
+                            <input type="checkbox" name="{{$name}}[]" value="{{$option}}" class="{{$class}}" {{ false !== array_search($option, array_filter(old($column, $value ?? []))) || ($value === null && in_array($option, $checked)) ?'checked':'' }} {!! $attributes !!} />&nbsp;{{$label}}&nbsp;&nbsp;
                 </label>
 
             </div>
@@ -39,7 +39,7 @@
 
         @foreach($options as $option => $label)
 
-            {!! $inline ? '<span class="icheck">' : '<div class="checkbox icheck">' !!}
+                {!! $inline ? '<span class="">' : '<div class="">' !!}
 
                 <label @if($inline)class="checkbox-inline"@endif>
                     <input type="checkbox" name="{{$name}}[]" value="{{$option}}" class="{{$class}}" {{ false !== array_search($option, array_filter(old($column, $value ?? []))) || ($value === null && in_array($option, $checked)) ?'checked':'' }} {!! $attributes !!} />&nbsp;{{$label}}&nbsp;&nbsp;

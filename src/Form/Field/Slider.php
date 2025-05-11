@@ -12,7 +12,7 @@ class Slider extends Field
     ];
 
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.min.js',
+        '/vendor/laravel-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.min.js' => 'application/javascript',
     ];
 
     protected $options = [

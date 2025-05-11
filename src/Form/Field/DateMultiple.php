@@ -10,9 +10,9 @@ class DateMultiple extends Text
     ];
 
     protected static $js = [
-        '/vendor/laravel-admin/flatpickr/dist/flatpickr.js',
-        '/vendor/laravel-admin/flatpickr/dist/shortcut-buttons-flatpickr/shortcut-buttons-flatpickr.min.js',
-        '/vendor/laravel-admin/flatpickr/dist/l10n/zh.js',
+        '/vendor/laravel-admin/flatpickr/dist/flatpickr.js' => 'application/javascript',
+        '/vendor/laravel-admin/flatpickr/dist/shortcut-buttons-flatpickr/shortcut-buttons-flatpickr.min.js' => 'application/javascript',
+        '/vendor/laravel-admin/flatpickr/dist/l10n/zh.js' => 'application/javascript',
     ];
 
     protected $format = 'YYYY-MM-DD';

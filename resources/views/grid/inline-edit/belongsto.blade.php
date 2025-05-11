@@ -72,17 +72,7 @@
     var load = function (url) {
         $.get(url, function (data) {
             $modal.find('.modal-body').html(data);
-            $modal.find('.select').iCheck({
-                radioClass: 'iradio_minimal-blue',
-                checkboxClass: 'icheckbox_minimal-blue'
-            });
             $modal.find('.card-header:first').hide();
-
-            $modal.find('input.select').each(function (index, el) {
-                if ($(el).val() == selected) {
-                    $(el).iCheck('toggle');
-                }
-            });
         });
     };
 
@@ -115,17 +105,7 @@
     var load = function (url) {
         $.get(url, function (data) {
             $modal.find('.modal-body').html(data);
-            $modal.find('.select').iCheck({
-                radioClass: 'iradio_minimal-blue',
-                checkboxClass: 'icheckbox_minimal-blue'
-            });
             $modal.find('.card-header:first').hide();
-
-            $modal.find('input.select').each(function (index, el) {
-                if ($.inArray($(el).val().toString(), selected) >= 0) {
-                    $(el).iCheck('toggle');
-                }
-            });
         });
     };
 

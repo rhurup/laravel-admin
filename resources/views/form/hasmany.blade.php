@@ -19,7 +19,7 @@
                 @endforeach
 
                 @if($options['allowDelete'])
-                    <div class="row mb-3up">
+                    <div class="row mb-3 up">
                         <label class="{{$viewClass['label']}} control-label"></label>
                         <div class="{{$viewClass['field']}}">
                             <div class="remove btn btn-warning btn-sm float-end"><i
@@ -39,7 +39,7 @@
 
             {!! $template !!}
 
-            <div class="row mb-3up">
+            <div class="row mb-3 up">
                 <label class="{{$viewClass['label']}} control-label"></label>
                 <div class="{{$viewClass['field']}}">
                     <div class="remove btn btn-warning btn-sm float-end"><i
@@ -51,7 +51,7 @@
     </template>
 
     @if($options['allowCreate'])
-        <div class="row mb-3up">
+        <div class="row mb-3 up">
             <label class="{{$viewClass['label']}} control-label"></label>
             <div class="{{$viewClass['field']}}">
                 <div class="add btn btn-success btn-sm"><i class="fa fa-save"></i>&nbsp;{{ trans('admin.new') }}</div>

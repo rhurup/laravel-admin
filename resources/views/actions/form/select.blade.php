@@ -1,4 +1,4 @@
-<div class="row mb-3up">
+<div class="row mb-3 up">
     <label>{{ $label }}</label>
 
     <select class="form-select {{$class}}" style="width: 100%;" name="{{$name}}" {!! $attributes !!} >

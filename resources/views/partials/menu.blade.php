@@ -6,7 +6,7 @@
                     @else
                         <a href="{{ admin_url($item['uri']) }}" class="nav-link">
                             @endif
-                            <i class="nav-icon fa {{$item['icon']}}"></i>
+                            <i class="nav-icon fa {{$item['icon']}} fs-8"></i>
                             @if (Lang::has($titleTranslation = 'admin.menu_titles.' . trim(str_replace(' ', '_', strtolower($item['title'])))))
                                 <p>{{ __($titleTranslation) }}</p>
                             @else

@@ -1,4 +1,4 @@
-<div class="row mb-3up ">
+<div class="row mb-3 up ">
     <label class="col-sm-{{$width['label']}} control-label">{{ $label }}</label>
     <div class="col-sm-{{$width['field']}}">
         @if($wrapped)

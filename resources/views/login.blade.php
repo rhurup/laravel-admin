@@ -17,8 +17,6 @@
   <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/dist/css/AdminLTE.min.css") }}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/square/blue.css") }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,7 +36,7 @@
         <p class="login-box-msg">{{ trans('admin.login') }}</p>
 
         <form action="{{ admin_url('auth/login') }}" method="post">
-            <div class="row mb-3up has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
+            <div class="row mb-3 up has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
                 @if($errors->has('username'))
                     @foreach($errors->get('username') as $message)
@@ -51,7 +49,7 @@
                        value="{{ old('username') }}">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
-            <div class="row mb-3up has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
+            <div class="row mb-3 up has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
 
                 @if($errors->has('password'))
                     @foreach($errors->get('password') as $message)
@@ -66,7 +64,7 @@
             <div class="row">
                 <div class="col-xs-8">
                     @if(config('admin.auth.remember'))
-                        <div class="checkbox icheck">
+                        <div class="">
                             <label>
                                 <input type="checkbox" name="remember"
                                        value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
@@ -93,16 +91,5 @@
 <script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}}"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js")}}"></script>
-<!-- iCheck -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js")}}"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
 </body>
 </html>

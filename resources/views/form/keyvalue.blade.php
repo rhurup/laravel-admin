@@ -1,4 +1,4 @@
-<div class="{{$viewClass['row mb-3up']}}">
+<div class="">
 
     <label class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
@@ -20,7 +20,7 @@
 
                 <tr>
                     <td>
-                        <div class="row mb-3up {{ $errors->has($keysErrorKey) ? 'has-error' : '' }}">
+                        <div class="row mb-3 up {{ $errors->has($keysErrorKey) ? 'has-error' : '' }}">
                             <div class="col-sm-12">
                                 <input name="{{ $name }}[keys][]" value="{{ old("{$column}.keys.{$k}", $k) }}"
                                        class="form-control" required/>
@@ -35,7 +35,7 @@
                         </div>
                     </td>
                     <td>
-                        <div class="row mb-3up {{ $errors->has($valsErrorKey) ? 'has-error' : '' }}">
+                        <div class="row mb-3 up {{ $errors->has($valsErrorKey) ? 'has-error' : '' }}">
                             <div class="col-sm-12">
                                 <input name="{{ $name }}[values][]" value="{{ old("{$column}.values.{$k}", $v) }}"
                                        class="form-control"/>
@@ -49,7 +49,7 @@
                         </div>
                     </td>
 
-                    <td class="row mb-3up">
+                    <td class="row mb-3 up">
                         <div>
                             <div class="{{$column}}-remove btn btn-warning btn-sm float-end">
                                 <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
@@ -75,21 +75,21 @@
     <template class="{{$column}}-tpl">
         <tr>
             <td>
-                <div class="row mb-3up  ">
+                <div class="row mb-3 up  ">
                     <div class="col-sm-12">
                         <input name="{{ $name }}[keys][]" class="form-control" required/>
                     </div>
                 </div>
             </td>
             <td>
-                <div class="row mb-3up  ">
+                <div class="row mb-3 up  ">
                     <div class="col-sm-12">
                         <input name="{{ $name }}[values][]" class="form-control"/>
                     </div>
                 </div>
             </td>
 
-            <td class="row mb-3up">
+            <td class="row mb-3 up">
                 <div>
                     <div class="{{$column}}-remove btn btn-warning btn-sm float-end">
                         <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}

@@ -1,8 +1,8 @@
-<div class="row mb-3up">
+<div class="row mb-3 up">
     <label>{{ $label }}</label>
     <div>
     @foreach($options as $option => $label)
-        <span class="icheck">
+            <span class="">OKOKOKOKKOKOKOOKOK
             <label class="checkbox-inline">
                 <input type="checkbox" name="{{$name}}[]" value="{{$option}}" class="{{$class}}" {{ in_array($option, (array)old($column, $value)) || ($value === null && in_array($label, $checked)) ?'checked':'' }} {!! $attributes !!} />&nbsp;{{$label}}&nbsp;&nbsp;
             </label>

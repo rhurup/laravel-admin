@@ -185,20 +185,20 @@ class Editable extends AbstractDisplayer
     ,
     "success":function(response, newValue){
         if (response.status){
-            $.admin.toastr.success(response.message, '', {positionClass:"toast-top-center"});
+            $.admin.toastr.success(response.message, '');
         } else {
-            $.admin.toastr.error(response.message, '', {positionClass:"toast-top-center"});
+            $.admin.toastr.error(response.message, '');
         }
     }
 }
 STR;
-
         Admin::script("$('.$class').editable($options);");
 
         $this->value = htmlentities($this->value ?? '');
 
         $attributes = [
             'href' => '#',
+            'mode' => 'inline',
             'class' => "$class",
             'data-type' => $this->type,
             'data-pk' => "{$this->getKey()}",

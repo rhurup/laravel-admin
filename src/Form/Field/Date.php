@@ -9,8 +9,8 @@ class Date extends Text
     ];
 
     protected static $js = [
-        '/vendor/laravel-admin/moment/min/moment-with-locales.min.js',
-        '/vendor/laravel-admin/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+        '/vendor/laravel-admin/moment/min/moment-with-locales.min.js' => 'application/javascript',
+        '/vendor/laravel-admin/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' => 'application/javascript',
     ];
 
     protected $format = 'YYYY-MM-DD';

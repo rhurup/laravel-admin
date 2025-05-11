@@ -49,16 +49,13 @@ class CheckFilter extends Filter
         $script = <<<SCRIPT
 $('.{$this->class['all']}').on('ifChanged', function () {
     if (this.checked) {
-        $('.{$this->class['item']}').iCheck('check');
+    
     } else {
-        $('.{$this->class['item']}').iCheck('uncheck');
+    
     }
     return false;
 });
 
-$('.{$this->class['item']},.{$this->class['all']}').iCheck({
-    checkboxClass:'icheckbox_minimal-blue'
-});
 SCRIPT;
 
         Admin::script($script);
@@ -77,10 +74,13 @@ SCRIPT;
             $checked = in_array($key, $value) ? 'checked' : '';
 
             return <<<HTML
-<li class="checkbox icheck" style="margin: 0;">
-    <label style="width: 100%;padding: 3px;">
-        <input type="checkbox" class="{$this->class['item']}" name="{$this->getColumnName()}[]" value="{$key}" {$checked}/>&nbsp;&nbsp;&nbsp;{$label}
-    </label>
+<li class="" style="margin: 0;">
+    <div class="form-check ps-0">
+        <input type="checkbox" class="{$this->class['item']}" name="{$this->getColumnName()}[]" value="{$key}" {$checked}/>
+        <label class="form-check-label" for="checkDefault">
+        {$label}
+        </label>
+    </div>
 </li>
 HTML;
         })->implode("\r\n");
@@ -93,19 +93,22 @@ HTML;
         return <<<EOT
 <span class="dropdown">
 <form action="{$this->getFormAction()}" pjax-container style="display: inline-block;">
-    <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-toggle="dropdown">
+    <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-bs-toggle="dropdown">
         <i class="fa fa-filter"></i>
     </a>
     <ul class="dropdown-menu" role="menu" style="padding: 10px;box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);left: -70px;border-radius: 0;">
 
         <li>
             <ul style='padding: 0;'>
-            <li class="checkbox icheck" style="margin: 0;">
-                <label style="width: 100%;padding: 3px;">
-                    <input type="checkbox" class="{$this->class['all']}" {$allCheck}/>&nbsp;&nbsp;&nbsp;{$this->trans('all')}
-                </label>
+            <li class="" style="margin: 0;">
+                <div class="form-check ps-0">
+                    <input type="checkbox" class="{$this->class['all']}" {$allCheck}/>
+                    <label class="form-check-label" for="checkDefault">
+                        {$this->trans('all')}
+                    </label>
+                </div>
             </li>
-                <li class="divider"></li>
+                <li><hr class="dropdown-divider"></li>
                 {$lists}
             </ul>
         </li>

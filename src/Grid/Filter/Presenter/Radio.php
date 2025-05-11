@@ -2,7 +2,6 @@
 
 namespace Encore\Admin\Grid\Filter\Presenter;
 
-use Encore\Admin\Facades\Admin;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Radio extends Presenter
@@ -49,9 +48,6 @@ class Radio extends Presenter
 
     protected function prepare()
     {
-        $script = "$('.{$this->filter->getId()}').iCheck({radioClass:'iradio_minimal-blue'});";
-
-        Admin::script($script);
     }
 
     public function variables(): array

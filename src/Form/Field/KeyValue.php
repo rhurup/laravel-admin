@@ -82,7 +82,7 @@ SCRIPT;
     {
         $this->setupScript();
 
-        Admin::style('td .row mb-3up {margin-bottom: 0 !important;}');
+        Admin::style('td .row mb-3 up {margin-bottom: 0 !important;}');
 
         return parent::render();
     }

@@ -14,13 +14,62 @@
 //     }
 //     return msg
 // };
+import {Toaster, ToasterPosition, ToasterTimer, ToasterType} from "https://cdn.skypack.dev/bs-toaster";
 
-toastr.options = {
-    closeButton: true,
-    progressBar: true,
-    showMethod: 'slideDown',
-    timeOut: 4000
-};
+import {form_check_input} from './form-check-input.js';
+
+// Basic
+const successToaster = new Toaster({
+    position: ToasterPosition.BOTTOM_END,
+    type: ToasterType.SUCCESS,
+    delay: 5000,
+    timer: ToasterTimer.ELAPSED
+});
+
+// Danger
+const dangerToaster = new Toaster({
+    position: ToasterPosition.BOTTOM_END,
+    type: ToasterType.DANGER,
+    delay: 5000,
+    timer: ToasterTimer.ELAPSED
+});
+
+// Advanced
+const warningToaster = new Toaster({
+    position: ToasterPosition.BOTTOM_END,
+    type: ToasterType.WARNING,
+    delay: 5000,
+    timer: ToasterTimer.WARNING,
+    defaultIconMarkup: '<i class="advanced fas fa-bolt me-2 %TYPE%"></i>'
+});
+
+toastr.success = function (text, value) {
+    if (value == undefined) {
+        value = '';
+    }
+    return successToaster.create(
+        text,
+        value
+    );
+}
+toastr.warning = function (text, value) {
+    if (value == undefined) {
+        value = '';
+    }
+    return warningToaster.create(
+        text,
+        value
+    );
+}
+toastr.danger = function (text, value) {
+    if (value == undefined) {
+        value = '';
+    }
+    return dangerToaster.create(
+        text,
+        value
+    );
+}
 
 $.pjax.defaults.timeout = 5000;
 $.pjax.defaults.maxCacheLength = 0;
@@ -73,6 +122,9 @@ $(document).click(function () {
 });
 
 $(function () {
+    form_check_input();
+
+
     $('.sidebar-menu li:not(.treeview) > a').on('click', function () {
         var $parent = $(this).parent().addClass('active');
         $parent.siblings('.treeview.active').find('> a').trigger('click');
@@ -158,6 +210,7 @@ $('#totop').on('click', function (e) {
     $.admin = LA;
     $.admin.swal = swal;
     $.admin.toastr = toastr;
+
     $.admin.grid = new Grid();
 
     $.admin.reload = function () {

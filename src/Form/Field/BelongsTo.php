@@ -39,17 +39,7 @@ class BelongsTo extends Select
     var load = function (url) {
         $.get(url, function (data) {
             modal.find('.modal-body').html(data);
-            modal.find('.select').iCheck({
-                radioClass:'iradio_minimal-blue',
-                checkboxClass:'icheckbox_minimal-blue'
-            });
             modal.find('.box-header:first').hide();
-
-            modal.find('input.select').each(function (index, el) {
-                if ($(el).val() == selected) {
-                    $(el).iCheck('toggle');
-                }
-            });
         });
     };
 
@@ -77,7 +67,6 @@ class BelongsTo extends Select
         load($(this).attr('href'));
         e.preventDefault();
     }).on('click', 'tr', function (e) {
-        $(this).find('input.select').iCheck('toggle');
         e.preventDefault();
     }).on('submit', '.box-header form', function (e) {
         load($(this).attr('action')+'&'+$(this).serialize());

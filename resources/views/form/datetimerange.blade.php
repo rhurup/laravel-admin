@@ -1,4 +1,4 @@
-<div class="{{$viewClass['row mb-3up']}} {!! ($errors->has($errorKey['start']) || $errors->has($errorKey['end'])) ? 'has-error' : ''  !!}">
+<div class=" {!! ($errors->has($errorKey['start']) || $errors->has($errorKey['end'])) ? 'has-error' : ''  !!}">
 
     <label for="{{$id['start']}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
 

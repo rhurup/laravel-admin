@@ -16,7 +16,7 @@ class Listbox extends MultipleSelect
     ];
 
     protected static $js = [
-        '/vendor/laravel-admin/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js',
+        '/vendor/laravel-admin/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js' => 'application/javascript',
     ];
 
     public function settings(array $settings)

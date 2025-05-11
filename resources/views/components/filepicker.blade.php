@@ -37,7 +37,6 @@ modal.on('show.bs.modal', function (e) {
     load($(this).attr('href'));
     e.preventDefault();
 }).on('click', 'tr', function (e) {
-    $(this).find('input.select').iCheck('toggle');
     e.preventDefault();
 }).on('submit', '.card-header form', function (e) {
     load($(this).attr('action') + '&' + $(this).serialize());
@@ -55,17 +54,7 @@ var updateValue = function () {
 var load = function (url) {
     $.get(url, function (data) {
         modal.find('.modal-body').html(data);
-        modal.find('input.select').iCheck({
-            radioClass: 'iradio_minimal-blue',
-            checkboxClass: 'icheckbox_minimal-blue'
-        });
         modal.find('.card-header:first').hide();
-
-        modal.find('input.select').each(function (index, el) {
-            if ($.inArray($(el).val().toString(), value) >= 0) {
-                $(el).iCheck('toggle');
-            }
-        });
     });
 };
 
@@ -99,17 +88,7 @@ var updateValue = function () {
 var load = function (url) {
     $.get(url, function (data) {
         modal.find('.modal-body').html(data);
-        modal.find('input.select').iCheck({
-            radioClass: 'iradio_minimal-blue',
-            checkboxClass: 'icheckbox_minimal-blue'
-        });
         modal.find('.card-header:first').hide();
-
-        modal.find('input.select').each(function (index, el) {
-            if ($(el).val() == value) {
-                $(el).iCheck('toggle');
-            }
-        });
     });
 };
 

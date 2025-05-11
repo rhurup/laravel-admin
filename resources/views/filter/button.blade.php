@@ -1,4 +1,4 @@
-<div class="btn-group" style="margin-right: 5px" data-bs-toggle="buttons">
+<div class="btn-group" style="margin-right: 5px" data-bs-toggle="buttons">HER_SDSD
     <label class="btn btn-sm btn-dropbox {{ $btn_class }} {{ $expand ? 'active' : '' }}"
            title="{{ trans('admin.filter') }}">
         <input type="checkbox"><i class="fa fa-filter"></i><span
@@ -16,7 +16,9 @@
             @foreach($scopes as $scope)
                 {!! $scope->render() !!}
             @endforeach
-            <li role="separator" class="divider"></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
             <li><a href="{{ $cancel }}">{{ trans('admin.cancel') }}</a></li>
         </ul>
     @endif

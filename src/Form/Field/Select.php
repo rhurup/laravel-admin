@@ -24,7 +24,7 @@ class Select extends Field
      * @var array
      */
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min.js',
+        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min.js' => 'application/javascript',
     ];
 
     /**
@@ -385,9 +385,9 @@ $("form select").on("select2:opening", function (e) {
 $(document).ready(function(){
     $('select').each(function(){
         if($(this).is('[readonly]')){
-            $(this).closest('.row mb-3up').find('span.select2-selection__choice__remove').remove();
-            $(this).closest('.row mb-3up').find('li.select2-search').first().remove();
-            $(this).closest('.row mb-3up').find('span.select2-selection__clear').first().remove();
+            $(this).closest('.row mb-3 up').find('span.select2-selection__choice__remove').remove();
+            $(this).closest('.row mb-3 up').find('li.select2-search').first().remove();
+            $(this).closest('.row mb-3 up').find('span.select2-selection__clear').first().remove();
         }
     });
 });

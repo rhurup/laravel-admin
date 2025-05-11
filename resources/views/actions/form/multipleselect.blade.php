@@ -1,4 +1,4 @@
-<div class="row mb-3up">
+<div class="row mb-3 up">
     <label>{{ $label }}</label>
     <select class="c {{$class}}" style="width: 100%;" name="{{$name}}[]" {!! $attributes !!} multiple
             data-placeholder="{{ $label }}">

@@ -1,7 +1,7 @@
 
 @php($listErrorKey = "$column.values")
 
-<div class="{{$viewClass['row mb-3up']}} {{ $errors->has($listErrorKey) ? 'has-error' : '' }}">
+<div class=" {{ $errors->has($listErrorKey) ? 'has-error' : '' }}">
 
     <label class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
@@ -24,7 +24,7 @@
 
                 <tr>
                     <td>
-                        <div class="row mb-3up {{ $errors->has($itemErrorKey) ? 'has-error' : '' }}">
+                        <div class="row mb-3 up {{ $errors->has($itemErrorKey) ? 'has-error' : '' }}">
                             <div class="col-sm-12">
                                 <input name="{{ $column }}[values][]" value="{{ old("{$column}.values.{$k}", $v) }}"
                                        class="form-control"/>
@@ -61,7 +61,7 @@
     <template class="{{$column}}-tpl">
         <tr>
             <td>
-                <div class="row mb-3up">
+                <div class="row mb-3 up">
                     <div class="col-sm-12">
                         <input name="{{ $column }}[values][]" class="form-control"/>
                     </div>

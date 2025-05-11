@@ -1,4 +1,4 @@
-<div class="{{$viewClass['row mb-3up']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+<div class=" {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
 
     <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
@@ -8,7 +8,7 @@
 
         @foreach($options as $option => $label)
 
-            {!! $inline ? '<span class="icheck">' : '<div class="radio icheck">'  !!}
+            {!! $inline ? '<span class="">' : '<div class="radio">'  !!}
 
                 <label @if($inline)class="radio-inline"@endif>
                     <input type="radio" name="{{$name}}" value="{{$option}}" class="minimal {{$class}}" {{ ($option == old($column, $value)) || ($value === null && in_array($label, $checked)) ?'checked':'' }} {!! $attributes !!} />&nbsp;{{$label}}&nbsp;&nbsp;

@@ -200,8 +200,8 @@ trait HasFields
             return static::$collectedAssets;
         }
 
-        $css = collect();
-        $js = collect();
+        $css = [];
+        $js = [];
 
         foreach (static::$availableFields as $field) {
             if (!method_exists($field, 'getAssets')) {
@@ -210,13 +210,17 @@ trait HasFields
 
             $assets = call_user_func([$field, 'getAssets']);
 
-            $css->push(Arr::get($assets, 'css'));
-            $js->push(Arr::get($assets, 'js'));
+            foreach (Arr::get($assets, 'css') as $key => $value) {
+                $css[$key] = $value;
+            }
+            foreach (Arr::get($assets, 'js') as $key => $value) {
+                $js[$key] = $value;
+            }
         }
 
         return static::$collectedAssets = [
-            'css' => $css->flatten()->unique()->filter()->toArray(),
-            'js' => $js->flatten()->unique()->filter()->toArray(),
+            'css' => $css,
+            'js' => $js,
         ];
     }
 }

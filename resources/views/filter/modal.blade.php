@@ -19,7 +19,7 @@
                 <div class="modal-body">
                     <div class="form">
                         @foreach($filters as $filter)
-                            <div class="row mb-3up">
+                            <div class="row mb-3 up">
                                 {!! $filter->render() !!}
                             </div>
                         @endforeach

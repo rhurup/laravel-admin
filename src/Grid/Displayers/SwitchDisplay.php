@@ -11,8 +11,8 @@ class SwitchDisplay extends AbstractDisplayer
      * @var array
      */
     protected $states = [
-        'on' => ['value' => 1, 'text' => 'ON', 'color' => 'primary'],
-        'off' => ['value' => 0, 'text' => 'OFF', 'color' => 'default'],
+        'on' => ['value' => 1, 'text' => 'ON', 'color' => 'success'],
+        'off' => ['value' => 0, 'text' => 'OFF', 'color' => 'secondary'],
     ];
 
     protected function overrideStates($states)

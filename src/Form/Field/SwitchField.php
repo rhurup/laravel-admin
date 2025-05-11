@@ -12,15 +12,15 @@ class SwitchField extends Field
     ];
 
     protected static $js = [
-        '/vendor/laravel-admin/bootstrap-switch/dist/js/bootstrap-switch.min.js',
+        '/vendor/laravel-admin/bootstrap-switch/dist/js/bootstrap-switch.min.js' => 'application/javascript',
     ];
 
     protected $states = [
-        'on' => ['value' => 1, 'text' => 'ON', 'color' => 'primary'],
-        'off' => ['value' => 0, 'text' => 'OFF', 'color' => 'default'],
+        'on' => ['value' => 1, 'text' => 'ON', 'color' => 'success'],
+        'off' => ['value' => 0, 'text' => 'OFF', 'color' => 'secondary'],
     ];
 
-    protected $size = 'small';
+    protected $size = 'mini';
 
     public function setSize($size)
     {
@@ -59,11 +59,12 @@ class SwitchField extends Field
                 break;
             }
         }
-
         $this->script = <<<EOT
+{$this->view}
 
 $('{$this->getElementClassSelector()}.la_checkbox').bootstrapSwitch({
     size:'{$this->size}',
+    state:'{$this->value}',
     onText: '{$this->states['on']['text']}',
     offText: '{$this->states['off']['text']}',
     onColor: '{$this->states['on']['color']}',

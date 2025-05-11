@@ -9,24 +9,18 @@
         margin-right: 10px;
     }
 </style>
-<div class="box box-default">
+<div class="card">
     <div class="card-header with-border">
         <h3 class="card-title">Available extensions</h3>
-
-        <div class="box-tools float-end">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <ul class="products-list product-list-in-box">
+        <ul class="list-group">
 
             @foreach($extensions as $extension)
-            <li class="item">
-                <div class="product-img">
-                    <i class="fa fa-{{$extension['icon']}} fa-2x ext-icon"></i>
+                <li class="list-group-item">
+                    <div class="product-img">
+                        <i class="fa fa-{{$extension['icon']}} fa-2x ext-icon"></i>
                 </div>
                 <div class="product-info">
                     <a href="{{ $extension['link'] }}" target="_blank" class="product-title">

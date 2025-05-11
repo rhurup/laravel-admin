@@ -8,23 +8,23 @@
         <li>
             <ul>
                 @foreach($columns as $key => $label)
-                @php
-                if (empty($visible)) {
-                    $checked = 'checked';
-                } else {
-                    $checked = in_array($key, $visible) ? 'checked' : '';
-                }
-                @endphp
+                    @php
+                        if (empty($visible)) {
+                            $checked = 'checked';
+                        } else {
+                            $checked = in_array($key, $visible) ? 'checked' : '';
+                        }
+                    @endphp
 
-                <li class="checkbox icheck">
-                    <label>
+                    <li class="checkbox">
                         <input type="checkbox" class="column-select-item" value="{{ $key }}" {{ $checked }}/>&nbsp;&nbsp;&nbsp;{{ $label }}
-                    </label>
-                </li>
+                    </li>
                 @endforeach
             </ul>
         </li>
-        <li class="divider"></li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
         <li class="text-right">
             <button class="btn btn-sm btn-default column-select-all">{{ __('admin.all') }}</button>&nbsp;&nbsp;
             <button class="btn btn-sm btn-primary column-select-submit">{{ __('admin.submit') }}</button>
@@ -83,12 +83,4 @@ $('.column-select-submit').on('click', function () {
     $.pjax({container:'#pjax-container', url: url.toString()});
 });
 
-$('.column-select-all').on('click', function () {
-    $('.column-select-item').iCheck('check');
-    return false;
-});
-
-$('.column-select-item').iCheck({
-    checkboxClass:'icheckbox_minimal-blue'
-});
 </script>

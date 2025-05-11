@@ -1,4 +1,4 @@
-<div class="{{$viewClass['row mb-3up']}}">
+<div class="">
     <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
     <div class="{{$viewClass['field']}}">

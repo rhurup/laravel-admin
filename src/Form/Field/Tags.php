@@ -51,7 +51,7 @@ class Tags extends Field
      * @var array
      */
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min.js',
+        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min.js' => 'application/javascript',
     ];
 
     public function fill($data)
