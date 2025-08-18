@@ -13,15 +13,10 @@
     ],
     "require": {
         "php": ">=8.3.0",
-        "symfony/dom-crawler": "~3.1|~4.0|~5.0",
-        "laravel/framework": ">=11.41.3",
-        "doctrine/dbal": "2.*|3.*"
+        "laravel/framework": ">=11.41.3"
     },
     "require-dev": {
-        "laravel/laravel": ">=11.41.3",
-        "fzaninotto/faker": "~1.4",
-        "laravel/browser-kit-testing": "^6.0",
-        "spatie/phpunit-watcher": "^1.22.0"
+        "laravel/laravel": ">=11.41.3"
     },
     "autoload": {
         "psr-4": {
