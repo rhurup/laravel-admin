@@ -1,6 +1,6 @@
 # v1.8.1
 
-Support for Laravel 12
+Support for Laravel 12.
 
 # v1.8.0
 
