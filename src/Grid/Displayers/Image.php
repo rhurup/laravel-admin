@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +14,7 @@ class Image extends AbstractDisplayer
         }
 
         return collect((array) $this->value)->filter()->map(function ($path) use ($server, $width, $height) {
-            if (url()->isValidUrl($path) || 0 === strpos($path, 'data:image')) {
+            if (url()->isValidUrl($path) || strpos($path, 'data:image') === 0) {
                 $src = $path;
             } elseif ($server) {
                 $src = rtrim($server, '/').'/'.ltrim($path, '/');

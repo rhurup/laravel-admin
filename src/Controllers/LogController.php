@@ -1,13 +1,16 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace OpenAdmin\Admin\Controllers;
 
-use Encore\Admin\Auth\Database\OperationLog;
-use Encore\Admin\Grid;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Auth\Database\OperationLog;
+use OpenAdmin\Admin\Grid;
 
 class LogController extends AdminController
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function title()
     {
         return trans('admin.operation_log');
@@ -43,7 +46,7 @@ class LogController extends AdminController
 
         $grid->column('created_at', trans('admin.created_at'));
 
-        $grid->actions(function (Grid\Displayers\Actions $actions) {
+        $grid->actions(function (Grid\Displayers\Actions\Actions $actions) {
             $actions->disableEdit();
             $actions->disableView();
         });
@@ -63,6 +66,8 @@ class LogController extends AdminController
     }
 
     /**
+     * @param mixed $id
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)

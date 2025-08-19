@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 
 class Scope implements Renderable
 {
-    public const QUERY_NAME = '_scope_';
-    public const SEPARATOR = '_separator_';
+    const QUERY_NAME = '_scope_';
+    const SEPARATOR = '_separator_';
 
     /**
      * @var string
@@ -29,6 +29,7 @@ class Scope implements Renderable
     /**
      * Scope constructor.
      *
+     * @param $key
      * @param string $label
      */
     public function __construct($key, $label = '')
@@ -66,13 +67,13 @@ class Scope implements Renderable
      */
     public function render()
     {
-        if ($this->key === static::SEPARATOR) {
+        if ($this->key == static::SEPARATOR) {
             return '<li role="separator" class="divider"></li>';
         }
 
         $url = request()->fullUrlWithQuery([static::QUERY_NAME => $this->key]);
 
-        return "<li><a href=\"{$url}\">{$this->label}</a></li>";
+        return "<li><a class='dropdown-item' href=\"{$url}\">{$this->label}</a></li>";
     }
 
     /**

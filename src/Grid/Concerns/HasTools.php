@@ -1,8 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace OpenAdmin\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid\Tools;
+use Closure;
+use OpenAdmin\Admin\Grid\Tools;
 
 trait HasTools
 {
@@ -40,9 +41,11 @@ trait HasTools
     /**
      * Setup grid tools.
      *
+     * @param Closure $callback
+     *
      * @return void
      */
-    public function tools(\Closure $callback)
+    public function tools(Closure $callback)
     {
         call_user_func($callback, $this->tools);
     }

@@ -1,15 +1,17 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
-use Encore\Admin\Auth\Database\Menu;
-use Encore\Admin\Controllers\AuthController;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Traits\HasAssets;
-use Encore\Admin\Widgets\Navbar;
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
+use OpenAdmin\Admin\Auth\Database\Menu;
+use OpenAdmin\Admin\Controllers\AuthController;
+use OpenAdmin\Admin\Layout\Content;
+use OpenAdmin\Admin\Traits\HasAssets;
+use OpenAdmin\Admin\Widgets\Navbar;
 
 /**
  * Class Admin.
@@ -19,11 +21,11 @@ class Admin
     use HasAssets;
 
     /**
-     * The Laravel admin version.
+     * The Open-admin version.
      *
      * @var string
      */
-    public const VERSION = '1.8.17';
+    public const VERSION = '1.0.27';
 
     /**
      * @var Navbar
@@ -61,31 +63,37 @@ class Admin
     protected static $bootedCallbacks = [];
 
     /**
-     * Returns the long version of Laravel-admin.
+     * Returns the long version of Open-admin.
      *
      * @return string The long application version
      */
     public static function getLongVersion()
     {
-        return sprintf('Laravel-admin <comment>version</comment> <info>%s</info>', self::VERSION);
+        return sprintf('Open-admin <comment>version</comment> <info>%s</info>', self::VERSION);
     }
 
     /**
-     * @return Grid
+     * @param $model
+     * @param Closure $callable
+     *
+     * @return \OpenAdmin\Admin\Grid
      *
      * @deprecated since v1.6.1
      */
-    public function grid($model, \Closure $callable)
+    public function grid($model, Closure $callable)
     {
         return new Grid($this->getModel($model), $callable);
     }
 
     /**
-     * @return Form
+     * @param $model
+     * @param Closure $callable
+     *
+     * @return \OpenAdmin\Admin\Form
      *
      *  @deprecated since v1.6.1
      */
-    public function form($model, \Closure $callable)
+    public function form($model, Closure $callable)
     {
         return new Form($this->getModel($model), $callable);
     }
@@ -93,9 +101,12 @@ class Admin
     /**
      * Build a tree.
      *
-     * @return Tree
+     * @param $model
+     * @param Closure|null $callable
+     *
+     * @return \OpenAdmin\Admin\Tree
      */
-    public function tree($model, ?\Closure $callable = null)
+    public function tree($model, Closure $callable = null)
     {
         return new Tree($this->getModel($model), $callable);
     }
@@ -103,9 +114,10 @@ class Admin
     /**
      * Build show page.
      *
-     * @return Show
+     * @param $model
+     * @param mixed $callable
      *
-     * @deprecated since v1.6.1
+     * @return Show
      */
     public function show($model, $callable = null)
     {
@@ -113,15 +125,20 @@ class Admin
     }
 
     /**
-     * @return Content
+     * @param Closure $callable
      *
-     * @deprecated since v1.6.1
+     * @return \OpenAdmin\Admin\Layout\Content
      */
-    public function content(?\Closure $callable = null)
+    public function content(Closure $callable = null)
     {
         return new Content($callable);
     }
 
+    /**
+     * @param $model
+     *
+     * @return mixed
+     */
     public function getModel($model)
     {
         if ($model instanceof Model) {
@@ -132,7 +149,7 @@ class Admin
             return $this->getModel(new $model());
         }
 
-        throw new \InvalidArgumentException("$model is not a valid model");
+        throw new InvalidArgumentException("$model is not a valid model");
     }
 
     /**
@@ -201,11 +218,11 @@ class Admin
     }
 
     /**
-     * @param string|null $favicon
+     * @param null|string $favicon
      *
      * @return string|void
      */
-    public static function favicon($favicon = null)
+    public function favicon($favicon = null)
     {
         if (is_null($favicon)) {
             return static::$favicon;
@@ -221,7 +238,17 @@ class Admin
      */
     public function user()
     {
-        return $this->guard()->user();
+        return static::guard()->user();
+    }
+
+    /**
+     * Get the guard name.
+     *
+     * @return string
+     */
+    public function guardName()
+    {
+        return config('admin.auth.guard') ?: 'admin';
     }
 
     /**
@@ -231,17 +258,17 @@ class Admin
      */
     public function guard()
     {
-        $guard = config('admin.auth.guard') ?: 'admin';
-
-        return Auth::guard($guard);
+        return Auth::guard(static::guardName());
     }
 
     /**
      * Set navbar.
      *
+     * @param Closure|null $builder
+     *
      * @return Navbar
      */
-    public function navbar(?\Closure $builder = null)
+    public function navbar(Closure $builder = null)
     {
         if (is_null($builder)) {
             return $this->getNavbar();
@@ -253,7 +280,7 @@ class Admin
     /**
      * Get navbar object.
      *
-     * @return Navbar
+     * @return \OpenAdmin\Admin\Widgets\Navbar
      */
     public function getNavbar()
     {
@@ -265,7 +292,7 @@ class Admin
     }
 
     /**
-     * Register the laravel-admin builtin routes.
+     * Register the open-admin builtin routes.
      *
      * @return void
      *
@@ -277,7 +304,7 @@ class Admin
     }
 
     /**
-     * Register the laravel-admin builtin routes.
+     * Register the open-admin builtin routes.
      *
      * @return void
      */
@@ -290,7 +317,7 @@ class Admin
 
         app('router')->group($attributes, function ($router) {
             /* @var \Illuminate\Support\Facades\Route $router */
-            $router->namespace('\Encore\Admin\Controllers')->group(function ($router) {
+            $router->namespace('\OpenAdmin\Admin\Controllers')->group(function ($router) {
                 /* @var \Illuminate\Routing\Router $router */
                 $router->resource('auth/users', 'UserController')->names('admin.auth.users');
                 $router->resource('auth/roles', 'RoleController')->names('admin.auth.roles');
@@ -328,11 +355,17 @@ class Admin
         static::$extensions[$name] = $class;
     }
 
+    /**
+     * @param callable $callback
+     */
     public static function booting(callable $callback)
     {
         static::$bootingCallbacks[] = $callback;
     }
 
+    /**
+     * @param callable $callback
+     */
     public static function booted(callable $callback)
     {
         static::$bootedCallbacks[] = $callback;
@@ -383,15 +416,15 @@ class Admin
         }
     }
 
-    /*
-     * Disable Pjax for current Request
-     *
-     * @return void
-     */
-    public function disablePjax()
+    public static function asset($asset)
     {
-        if (request()->pjax()) {
-            request()->headers->set('X-PJAX', false);
-        }
+        return url('/vendor/open-admin/' . $asset);
+    }
+
+    public static function js_trans()
+    {
+        $lang_array = json_encode(__('admin'));
+
+        return '<script>var admin_lang_arr = ' . $lang_array . '</script>';
     }
 }

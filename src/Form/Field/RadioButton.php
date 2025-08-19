@@ -1,8 +1,6 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
-
-use Encore\Admin\Admin;
+namespace OpenAdmin\Admin\Form\Field;
 
 class RadioButton extends Radio
 {
@@ -11,22 +9,11 @@ class RadioButton extends Radio
      */
     protected $cascadeEvent = 'change';
 
-    protected function addScript()
-    {
-        $script = <<<'SCRIPT'
-$('.radio-group-toggle label').click(function() {
-    $(this).parent().children().removeClass('active');
-    $(this).addClass('active');
-});
-SCRIPT;
-
-        Admin::script($script);
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
-        $this->addScript();
-
         $this->addCascadeScript();
 
         $this->addVariables([

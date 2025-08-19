@@ -1,8 +1,7 @@
 <?php
 
-namespace Encore\Admin\Show;
+namespace OpenAdmin\Admin\Show;
 
-use Encore\Admin\Admin;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
@@ -44,6 +43,8 @@ class Tools implements Renderable
 
     /**
      * Tools constructor.
+     *
+     * @param Panel $panel
      */
     public function __construct(Panel $panel)
     {
@@ -56,6 +57,8 @@ class Tools implements Renderable
     /**
      * Append a tools.
      *
+     * @param mixed $tool
+     *
      * @return $this
      */
     public function append($tool)
@@ -67,6 +70,8 @@ class Tools implements Renderable
 
     /**
      * Prepend a tool.
+     *
+     * @param mixed $tool
      *
      * @return $this
      */
@@ -183,9 +188,9 @@ class Tools implements Renderable
         $list = trans('admin.list');
 
         return <<<HTML
-<div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="{$this->getListPath()}" class="btn btn-sm btn-default" title="{$list}">
-        <i class="fa fa-list"></i><span class="hidden-xs"> {$list}</span>
+<div class="btn-group pull-right">
+    <a href="{$this->getListPath()}" class="btn btn-sm btn-light " title="{$list}">
+        <i class="icon-list"></i><span class="hidden-xs"> {$list}</span>
     </a>
 </div>
 HTML;
@@ -201,9 +206,9 @@ HTML;
         $edit = trans('admin.edit');
 
         return <<<HTML
-<div class="btn-group pull-right" style="margin-right: 5px">
+<div class="btn-group pull-right me-2">
     <a href="{$this->getEditPath()}" class="btn btn-sm btn-primary" title="{$edit}">
-        <i class="fa fa-edit"></i><span class="hidden-xs"> {$edit}</span>
+        <i class="icon-edit"></i><span class="hidden-xs"> {$edit}</span>
     </a>
 </div>
 HTML;
@@ -217,62 +222,13 @@ HTML;
     protected function renderDelete()
     {
         $trans = [
-            'delete_confirm' => trans('admin.delete_confirm'),
-            'confirm' => trans('admin.confirm'),
-            'cancel' => trans('admin.cancel'),
             'delete' => trans('admin.delete'),
         ];
 
-        $class = uniqid();
-
-        $script = <<<SCRIPT
-
-$('.{$class}-delete').unbind('click').click(function() {
-
-    swal({
-        title: "{$trans['delete_confirm']}",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "{$trans['confirm']}",
-        showLoaderOnConfirm: true,
-        cancelButtonText: "{$trans['cancel']}",
-        preConfirm: function() {
-            return new Promise(function(resolve) {
-                $.ajax({
-                    method: 'post',
-                    url: '{$this->getDeletePath()}',
-                    data: {
-                        _method:'delete',
-                        _token:LA.token,
-                    },
-                    success: function (data) {
-                        $.pjax({container:'#pjax-container', url: '{$this->getListPath()}' });
-
-                        resolve(data);
-                    }
-                });
-            });
-        }
-    }).then(function(result) {
-        var data = result.value;
-        if (typeof data === 'object') {
-            if (data.status) {
-                swal(data.message, '', 'success');
-            } else {
-                swal(data.message, '', 'error');
-            }
-        }
-    });
-});
-
-SCRIPT;
-        Admin::script($script);
-
         return <<<HTML
-<div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="javascript:void(0);" class="btn btn-sm btn-danger {$class}-delete" title="{$trans['delete']}">
-        <i class="fa fa-trash"></i><span class="hidden-xs">  {$trans['delete']}</span>
+<div class="btn-group pull-right me-2">
+    <a onclick="admin.resource.delete(event,this)" data-url="{$this->getDeletePath()}" data-list_url="{$this->getListPath()}"  class="btn btn-sm btn-danger delete" title="{$trans['delete']}">
+        <i class="icon-trash"></i><span class="hidden-xs">  {$trans['delete']}</span>
     </a>
 </div>
 HTML;
@@ -282,6 +238,8 @@ HTML;
      * Render custom tools.
      *
      * @param Collection $tools
+     *
+     * @return mixed
      */
     protected function renderCustomTools($tools)
     {

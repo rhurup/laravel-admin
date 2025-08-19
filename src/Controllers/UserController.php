@@ -1,14 +1,17 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace OpenAdmin\Admin\Controllers;
 
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Show;
 use Illuminate\Support\Facades\Hash;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Show;
 
 class UserController extends AdminController
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function title()
     {
         return trans('admin.administrator');
@@ -32,8 +35,8 @@ class UserController extends AdminController
         $grid->column('created_at', trans('admin.created_at'));
         $grid->column('updated_at', trans('admin.updated_at'));
 
-        $grid->actions(function (Grid\Displayers\Actions $actions) {
-            if (1 === $actions->getKey()) {
+        $grid->actions(function (Grid\Displayers\Actions\Actions $actions) {
+            if ($actions->getKey() == 1) {
                 $actions->disableDelete();
             }
         });
@@ -49,6 +52,8 @@ class UserController extends AdminController
 
     /**
      * Make a show builder.
+     *
+     * @param mixed $id
      *
      * @return Show
      */
@@ -111,7 +116,7 @@ class UserController extends AdminController
         $form->display('updated_at', trans('admin.updated_at'));
 
         $form->saving(function (Form $form) {
-            if ($form->password && $form->model()->password !== $form->password) {
+            if ($form->password && $form->model()->password != $form->password) {
                 $form->password = Hash::make($form->password);
             }
         });

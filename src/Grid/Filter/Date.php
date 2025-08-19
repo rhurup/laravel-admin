@@ -1,9 +1,12 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
 class Date extends AbstractFilter
 {
+    /**
+     * {@inheritdoc}
+     */
     protected $query = 'whereDate';
 
     /**
@@ -11,6 +14,9 @@ class Date extends AbstractFilter
      */
     protected $fieldName = 'date';
 
+    /**
+     * {@inheritdoc}
+     */
     public function __construct($column, $label = '')
     {
         parent::__construct($column, $label);

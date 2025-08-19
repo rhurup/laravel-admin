@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace OpenAdmin\Admin\Widgets;
 
 use Illuminate\Support\Fluent;
 
@@ -11,6 +11,9 @@ abstract class Widget extends Fluent
      */
     protected $view;
 
+    /**
+     * @return mixed
+     */
     abstract public function render();
 
     /**
@@ -59,6 +62,9 @@ abstract class Widget extends Fluent
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->render();

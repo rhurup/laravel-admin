@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter\Layout;
+namespace OpenAdmin\Admin\Grid\Filter\Layout;
 
-use Encore\Admin\Grid\Filter\AbstractFilter;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Grid\Filter\AbstractFilter;
 
 class Column
 {
@@ -30,6 +30,8 @@ class Column
 
     /**
      * Add a filter to this column.
+     *
+     * @param AbstractFilter $filter
      */
     public function addFilter(AbstractFilter $filter)
     {
@@ -72,7 +74,7 @@ class Column
     public function removeFilterByID($id)
     {
         $this->filters = $this->filters->reject(function (AbstractFilter $filter) use ($id) {
-            return $filter->getId() === $id;
+            return $filter->getId() == $id;
         });
     }
 }

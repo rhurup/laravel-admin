@@ -1,28 +1,21 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\Field;
 use Illuminate\Contracts\Support\Arrayable;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field\Traits\CanCascadeFields;
 
 class Radio extends Field
 {
     use CanCascadeFields;
 
-    protected $inline = true;
-
-    protected static $css = [
-        '/vendor/laravel-admin/AdminLTE/plugins/iCheck/all.css',
-    ];
-
-    protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js',
-    ];
+    protected $stacked = false;
 
     /**
      * @var string
      */
-    protected $cascadeEvent = 'ifChecked';
+    protected $cascadeEvent = 'change';
 
     /**
      * Set options.
@@ -68,7 +61,7 @@ class Radio extends Field
      */
     public function inline()
     {
-        $this->inline = true;
+        $this->stacked = false;
 
         return $this;
     }
@@ -80,7 +73,7 @@ class Radio extends Field
      */
     public function stacked()
     {
-        $this->inline = false;
+        $this->stacked = true;
 
         return $this;
     }
@@ -97,13 +90,16 @@ class Radio extends Field
         return $this->options($values);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
-        $this->script = "$('{$this->getElementClassSelector()}').iCheck({radioClass:'iradio_minimal-blue'});";
+        //$this->script = "$('{$this->getElementClassSelector()}').iCheck({radioClass:'iradio_minimal-blue'});";
 
         $this->addCascadeScript();
 
-        $this->addVariables(['options' => $this->options, 'checked' => $this->checked, 'inline' => $this->inline]);
+        $this->addVariables(['options' => $this->options, 'checked' => $this->checked, 'stacked' => $this->stacked]);
 
         return parent::render();
     }

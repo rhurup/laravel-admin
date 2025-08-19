@@ -1,13 +1,13 @@
 <?php
 
-namespace Encore\Admin\Auth\Database;
+namespace OpenAdmin\Admin\Auth\Database;
 
-use Encore\Admin\Traits\DefaultDatetimeFormat;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
+use OpenAdmin\Admin\Traits\DefaultDatetimeFormat;
 
 /**
  * Class Administrator.
@@ -24,6 +24,8 @@ class Administrator extends Model implements AuthenticatableContract
 
     /**
      * Create a new Eloquent model instance.
+     *
+     * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -45,7 +47,7 @@ class Administrator extends Model implements AuthenticatableContract
      */
     public function getAvatarAttribute($avatar)
     {
-        if ($avatar && url()->isValidUrl($avatar)) {
+        if (url()->isValidUrl($avatar)) {
             return $avatar;
         }
 
@@ -55,13 +57,15 @@ class Administrator extends Model implements AuthenticatableContract
             return Storage::disk(config('admin.upload.disk'))->url($avatar);
         }
 
-        $default = config('admin.default_avatar') ?: '/vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg';
+        $default = config('admin.default_avatar') ?: '/vendor/open-admin/open-admin/gfx/user.svg';
 
         return admin_asset($default);
     }
 
     /**
      * A user has and belongs to many roles.
+     *
+     * @return BelongsToMany
      */
     public function roles(): BelongsToMany
     {
@@ -74,6 +78,8 @@ class Administrator extends Model implements AuthenticatableContract
 
     /**
      * A User has and belongs to many permissions.
+     *
+     * @return BelongsToMany
      */
     public function permissions(): BelongsToMany
     {

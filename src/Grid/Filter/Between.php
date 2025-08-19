@@ -1,12 +1,15 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
-use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Admin;
 
 class Between extends AbstractFilter
 {
+    /**
+     * {@inheritdoc}
+     */
     protected $view = 'admin::filter.between';
 
     /**
@@ -34,7 +37,7 @@ class Between extends AbstractFilter
     {
         $columns = explode('.', $column);
 
-        if (1 === count($columns)) {
+        if (count($columns) == 1) {
             $name = $columns[0];
         } else {
             $name = array_shift($columns);
@@ -51,6 +54,8 @@ class Between extends AbstractFilter
      * Get condition of this filter.
      *
      * @param array $inputs
+     *
+     * @return mixed
      */
     public function condition($inputs)
     {
@@ -65,7 +70,7 @@ class Between extends AbstractFilter
         $this->value = Arr::get($inputs, $this->column);
 
         $value = array_filter($this->value, function ($val) {
-            return '' !== $val;
+            return $val !== '';
         });
 
         if (empty($value)) {
@@ -106,20 +111,24 @@ class Between extends AbstractFilter
     {
         $options['format'] = Arr::get($options, 'format', 'YYYY-MM-DD HH:mm:ss');
         $options['locale'] = Arr::get($options, 'locale', config('app.locale'));
+        $options['allowInput'] = Arr::get($options, 'allowInput', true);
 
         $startOptions = json_encode($options);
         $endOptions = json_encode($options + ['useCurrent' => false]);
 
-        $script = <<<EOT
-            $('#{$this->id['start']}').datetimepicker($startOptions);
-            $('#{$this->id['end']}').datetimepicker($endOptions);
-            $("#{$this->id['start']}").on("dp.change", function (e) {
-                $('#{$this->id['end']}').data("DateTimePicker").minDate(e.date);
-            });
-            $("#{$this->id['end']}").on("dp.change", function (e) {
-                $('#{$this->id['start']}').data("DateTimePicker").maxDate(e.date);
-            });
-EOT;
+        $script = <<<SCRIPT
+        let inst_{$this->id['start']} = flatpickr('#{$this->id['start']}',$startOptions);
+        let inst_{$this->id['end']} = flatpickr('#{$this->id['end']}',$endOptions);
+
+        inst_{$this->id['start']}.config.onChange.push(function(selectedDates, dateStr, instance) {
+            inst_{$this->id['end']}.set("minDate",dateStr);
+        });
+
+        inst_{$this->id['end']}.config.onChange.push(function(selectedDates, dateStr, instance) {
+            inst_{$this->id['start']}.set("maxDate",dateStr);
+        });
+
+SCRIPT;
 
         Admin::script($script);
     }

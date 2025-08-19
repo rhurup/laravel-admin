@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Column;
+namespace OpenAdmin\Admin\Grid\Column;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Grid\Model;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Grid\Model;
 
 class CheckFilter extends Filter
 {
@@ -14,6 +14,8 @@ class CheckFilter extends Filter
 
     /**
      * CheckFilter constructor.
+     *
+     * @param array $options
      */
     public function __construct(array $options)
     {
@@ -29,6 +31,7 @@ class CheckFilter extends Filter
      * Add a binding to the query.
      *
      * @param array $value
+     * @param Model $model
      */
     public function addBinding($value, Model $model)
     {
@@ -47,18 +50,16 @@ class CheckFilter extends Filter
     protected function addScript()
     {
         $script = <<<SCRIPT
-$('.{$this->class['all']}').on('ifChanged', function () {
-    if (this.checked) {
-        $('.{$this->class['item']}').iCheck('check');
-    } else {
-        $('.{$this->class['item']}').iCheck('uncheck');
-    }
+
+document.querySelector('.{$this->class['all']}').addEventListener("change",function(e) {
+    var setTo = (this.checked) ? true : false;
+    document.querySelectorAll('.{$this->class['item']}').forEach(el=>{
+        el.checked = setTo;
+    })
     return false;
 });
 
-$('.{$this->class['item']},.{$this->class['all']}').iCheck({
-    checkboxClass:'icheckbox_minimal-blue'
-});
+
 SCRIPT;
 
         Admin::script($script);
@@ -77,7 +78,7 @@ SCRIPT;
             $checked = in_array($key, $value) ? 'checked' : '';
 
             return <<<HTML
-<li class="checkbox icheck" style="margin: 0;">
+<li class="" style="margin: 0;">
     <label style="width: 100%;padding: 3px;">
         <input type="checkbox" class="{$this->class['item']}" name="{$this->getColumnName()}[]" value="{$key}" {$checked}/>&nbsp;&nbsp;&nbsp;{$label}
     </label>
@@ -87,32 +88,32 @@ HTML;
 
         $this->addScript();
 
-        $allCheck = (count($value) === count($this->options)) ? 'checked' : '';
+        $allCheck = (count($value) == count($this->options)) ? 'checked' : '';
         $active = empty($value) ? '' : 'text-yellow';
 
         return <<<EOT
 <span class="dropdown">
-<form action="{$this->getFormAction()}" pjax-container style="display: inline-block;">
-    <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-toggle="dropdown">
-        <i class="fa fa-filter"></i>
+<form action="{$this->getFormAction()}" pjax-container method="get" style="display: inline-block;">
+    <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-bs-toggle="dropdown">
+        <i class="icon-filter"></i>
     </a>
-    <ul class="dropdown-menu" role="menu" style="padding: 10px;box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);left: -70px;border-radius: 0;">
+    <ul class="dropdown-menu" role="menu" style="padding: 10px;box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);left: -70px;">
 
         <li>
             <ul style='padding: 0;'>
-            <li class="checkbox icheck" style="margin: 0;">
+            <li class="" style="margin: 0;">
                 <label style="width: 100%;padding: 3px;">
                     <input type="checkbox" class="{$this->class['all']}" {$allCheck}/>&nbsp;&nbsp;&nbsp;{$this->trans('all')}
                 </label>
             </li>
-                <li class="divider"></li>
+                <li><hr class="dropdown-divider" /></li>
                 {$lists}
             </ul>
         </li>
-        <li class="divider"></li>
+        <li><hr class="dropdown-divider" /></li>
         <li class="text-right">
-            <button class="btn btn-sm btn-flat btn-primary pull-left" data-loading-text="{$this->trans('search')}..."><i class="fa fa-search"></i>&nbsp;&nbsp;{$this->trans('search')}</button>
-            <span><a href="{$this->getFormAction()}" class="btn btn-sm btn-flat btn-default"><i class="fa fa-undo"></i></a></span>
+            <button class="btn btn-sm btn-flat btn-primary pull-left" data-loading-text="{$this->trans('search')}..."><i class="icon-search"></i>&nbsp;&nbsp;{$this->trans('search')}</button>
+            <span><a href="{$this->getFormAction()}" class="btn btn-sm btn-light btn-default"><i class="icon-undo"></i></a></span>
         </li>
     </ul>
 </form>

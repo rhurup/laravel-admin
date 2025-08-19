@@ -1,8 +1,7 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
-use Encore\Admin\Auth\Database\Permission;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
@@ -10,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use OpenAdmin\Admin\Auth\Database\Permission;
 
 abstract class Extension
 {
@@ -196,7 +196,7 @@ abstract class Extension
      */
     public function enabled()
     {
-        return false !== static::config('enable');
+        return static::config('enable') !== false;
     }
 
     /**
@@ -231,7 +231,7 @@ abstract class Extension
     }
 
     /**
-     * Import menu item and permission to laravel-admin.
+     * Import menu item and permission to open-admin.
      */
     public static function import()
     {
@@ -263,9 +263,11 @@ abstract class Extension
     /**
      * Validate menu fields.
      *
-     * @return bool
+     * @param array $menu
      *
+     * @return bool
      * @throws \Exception
+     *
      */
     public function validateMenu(array $menu)
     {
@@ -299,9 +301,11 @@ abstract class Extension
     /**
      * Validate permission fields.
      *
-     * @return bool
+     * @param array $permission
      *
+     * @return bool
      * @throws \Exception
+     *
      */
     public function validatePermission(array $permission)
     {
@@ -339,16 +343,17 @@ abstract class Extension
     }
 
     /**
-     * Create a item in laravel-admin left side menu.
+     * Create a item in open-admin left side menu.
      *
      * @param string $title
      * @param string $uri
      * @param string $icon
      * @param int    $parentId
+     * @param array $children
      *
      * @return Model
-     *
      * @throws \Exception
+     *
      */
     protected static function createMenu($title, $uri, $icon = 'fa-bars', $parentId = 0, array $children = [])
     {
@@ -384,6 +389,9 @@ abstract class Extension
     /**
      * Create a permission for this extension.
      *
+     * @param       $name
+     * @param       $slug
+     * @param       $path
      * @param array $methods
      */
     protected static function createPermission($name, $slug, $path, $methods = [])
@@ -393,13 +401,15 @@ abstract class Extension
         $permissionModel::create([
             'name' => $name,
             'slug' => $slug,
-            'http_path' => '/'.trim($path, '/'),
+            'http_path' => '/' . trim($path, '/'),
             'http_method' => $methods,
         ]);
     }
 
     /**
      * Set routes for this extension.
+     *
+     * @param $callback
      */
     public static function routes($callback)
     {

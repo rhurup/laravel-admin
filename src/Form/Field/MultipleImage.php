@@ -1,13 +1,17 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
+use OpenAdmin\Admin\Form\Field\Traits\ImageField;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MultipleImage extends MultipleFile
 {
     use ImageField;
 
+    /**
+     * {@inheritdoc}
+     */
     protected $view = 'admin::form.multiplefile';
 
     /**
@@ -20,9 +24,11 @@ class MultipleImage extends MultipleFile
     /**
      * Prepare for each file.
      *
+     * @param UploadedFile $image
+     *
      * @return mixed|string
      */
-    protected function prepareForeach(?UploadedFile $image = null)
+    protected function prepareForeach(UploadedFile $image = null)
     {
         $this->name = $this->getStoreName($image);
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
-use Encore\Admin\Auth\Database\Menu;
 use Illuminate\Console\Command;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Auth\Database\Menu;
 
 class GenerateMenuCommand extends Command
 {
@@ -31,6 +31,8 @@ class GenerateMenuCommand extends Command
 
     /**
      * Create a new command instance.
+     *
+     * @param Router $router
      */
     public function __construct(Router $router)
     {
@@ -41,22 +43,22 @@ class GenerateMenuCommand extends Command
 
     /**
      * Execute the console command.
+     *
+     * @return mixed
      */
     public function handle()
     {
-        $prefix = config('admin.route.prefix');
-        $routes = collect($this->router->getRoutes())->filter(function (Route $route) use ($prefix) {
+        $routes = collect($this->router->getRoutes())->filter(function (Route $route) {
             $uri = $route->uri();
             // built-in, parameterized and no-GET are ignored
-            return Str::startsWith($uri, "{$prefix}/")
-                && !Str::startsWith($uri, "{$prefix}/auth/")
+            return Str::startsWith($uri, 'admin/')
+                && !Str::startsWith($uri, 'admin/auth/')
                 && !Str::endsWith($uri, '/create')
                 && !Str::contains($uri, '{')
-                && in_array('GET', $route->methods())
-                && !in_array(substr($route->uri(), strlen("{$prefix}/")), config('admin.menu_exclude'));
+                && in_array('GET', $route->methods());
         })
-            ->map(function (Route $route) use ($prefix) {
-                $uri = substr($route->uri(), strlen("{$prefix}/"));
+            ->map(function (Route $route) {
+                $uri = substr($route->uri(), strlen('admin/'));
 
                 return [
                     'title' => Str::ucfirst(

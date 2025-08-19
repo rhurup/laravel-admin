@@ -1,26 +1,32 @@
 <?php
 
-namespace Encore\Admin\Middleware;
+namespace OpenAdmin\Admin\Middleware;
 
-use Encore\Admin\Auth\Database\OperationLog as OperationLogModel;
-use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Auth\Database\OperationLog as OperationLogModel;
+use OpenAdmin\Admin\Facades\Admin;
 
 class LogOperation
 {
     /**
      * Handle an incoming request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     *
+     * @return mixed
      */
     public function handle(Request $request, \Closure $next)
     {
         if ($this->shouldLogOperation($request)) {
+            $setProxy = $request->setTrustedProxies(request()->getClientIps(), \Illuminate\Http\Request::HEADER_X_FORWARDED_FOR);
             $log = [
                 'user_id' => Admin::user()->id,
                 'path' => substr($request->path(), 0, 255),
                 'method' => $request->method(),
                 'ip' => $request->getClientIp(),
-                'input' => json_encode($request->input()),
+                'input' => json_encode($this->filterInput((array)$request->input())),
             ];
 
             try {
@@ -33,7 +39,21 @@ class LogOperation
         return $next($request);
     }
 
+    protected function filterInput($input)
+    {
+        $filter = config('admin.operation_log.filter_input', []);
+        foreach ($filter as $key => $value) {
+            if (isset($input[$key])) {
+                $input[$key] = $value;
+            }
+        }
+
+        return $input;
+    }
+
     /**
+     * @param Request $request
+     *
      * @return bool
      */
     protected function shouldLogOperation(Request $request)
@@ -67,14 +87,14 @@ class LogOperation
     /**
      * Determine if the request has a URI that should pass through CSRF verification.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return bool
      */
     protected function inExceptArray($request)
     {
         foreach (config('admin.operation_log.except') as $except) {
-            if ('/' !== $except) {
+            if ($except !== '/') {
                 $except = trim($except, '/');
             }
 
@@ -87,8 +107,8 @@ class LogOperation
 
             $methods = array_map('strtoupper', $methods);
 
-            if ($request->is($except)
-                && (empty($methods) || in_array($request->method(), $methods))) {
+            if ($request->is($except) &&
+                (empty($methods) || in_array($request->method(), $methods))) {
                 return true;
             }
         }

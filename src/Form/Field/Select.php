@@ -1,31 +1,17 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form\Field;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field\Traits\CanCascadeFields;
 
 class Select extends Field
 {
     use CanCascadeFields;
-
-    /**
-     * @var array
-     */
-    protected static $css = [
-        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.min.css',
-    ];
-
-    /**
-     * @var array
-     */
-    protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min.js',
-    ];
 
     /**
      * @var array
@@ -41,6 +27,13 @@ class Select extends Field
      * @var string
      */
     protected $cascadeEvent = 'change';
+
+    /**
+     * @var bool
+     */
+    protected $native = false;
+
+    public $additional_script = '';
 
     /**
      * Set options.
@@ -75,6 +68,10 @@ class Select extends Field
     }
 
     /**
+     * @param array $groups
+     */
+
+    /**
      * Set option groups.
      *
      * eg: $group = [
@@ -87,6 +84,8 @@ class Select extends Field
      *        ],
      *        ...
      *     ]
+     *
+     * @param array $groups
      *
      * @return $this
      */
@@ -107,7 +106,7 @@ class Select extends Field
      *
      * @return $this
      */
-    public function load($field, $sourceUrl, $idField = 'id', $textField = 'text', bool $allowClear = true)
+    public function load($field, $url, $idField = 'id', $textField = 'text', bool $allowClear = true)
     {
         if (Str::contains($field, '.')) {
             $field = $this->formatName($field);
@@ -116,95 +115,28 @@ class Select extends Field
             $class = $field;
         }
 
-        $placeholder = json_encode([
-            'id' => '',
-            'text' => trans('admin.choose'),
-        ]);
+        $this->additional_script .= <<<JS
 
-        $strAllowClear = var_export($allowClear, true);
-
-        $script = <<<EOT
-$(document).off('change', "{$this->getElementClassSelector()}");
-$(document).on('change', "{$this->getElementClassSelector()}", function () {
-    var target = $(this).closest('.fields-group').find(".$class");
-    $.get("$sourceUrl",{q : this.value}, function (data) {
-        target.find("option").remove();
-        $(target).select2({
-            placeholder: $placeholder,
-            allowClear: $strAllowClear,
-            data: $.map(data, function (d) {
-                d.id = d.$idField;
-                d.text = d.$textField;
-                return d;
-            })
-        });
-        if (target.data('value')) {
-            $(target).val(target.data('value'));
-        }
-        $(target).trigger('change');
-    });
-});
-EOT;
-
-        Admin::script($script);
-
-        return $this;
-    }
-
-    /**
-     * Load options for other selects on change.
-     *
-     * @param array  $fields
-     * @param array  $sourceUrls
-     * @param string $idField
-     * @param string $textField
-     *
-     * @return $this
-     */
-    public function loads($fields = [], $sourceUrls = [], $idField = 'id', $textField = 'text', bool $allowClear = true)
-    {
-        $fieldsStr = implode('.', $fields);
-        $urlsStr = implode('^', $sourceUrls);
-
-        $placeholder = json_encode([
-            'id' => '',
-            'text' => trans('admin.choose'),
-        ]);
-
-        $strAllowClear = var_export($allowClear, true);
-
-        $script = <<<EOT
-var fields = '$fieldsStr'.split('.');
-var urls = '$urlsStr'.split('^');
-
-var refreshOptions = function(url, target) {
-    $.get(url).then(function(data) {
-        target.find("option").remove();
-        $(target).select2({
-            placeholder: $placeholder,
-            allowClear: $strAllowClear,
-            data: $.map(data, function (d) {
-                d.id = d.$idField;
-                d.text = d.$textField;
-                return d;
-            })
-        }).trigger('change');
-    });
-};
-
-$(document).off('change', "{$this->getElementClassSelector()}");
-$(document).on('change', "{$this->getElementClassSelector()}", function () {
-    var _this = this;
-    var promises = [];
-
-    fields.forEach(function(field, index){
-        var target = $(_this).closest('.fields-group').find('.' + fields[index]);
-        promises.push(refreshOptions(urls[index] + "?q="+ _this.value, target));
-    });
-});
-EOT;
-
-        Admin::script($script);
+            let elm = document.querySelector("{$this->getElementClassSelector()}");
+            var lookupTimeout;
+            elm.addEventListener('change', function(event) {
+                var query = {$this->choicesObjName()}.getValue().value;
+                var current_value = {$this->choicesObjName($field)}.getValue().value;
+                admin.ajax.post("{$url}",{query:query},function(data){
+                    let found = false;
+                    for (i in data.data){
+                        if (data.data[i].id == current_value){
+                            data.data[i].selected = true;
+                            found = true;
+                        }
+                    }
+                    if (!found){
+                        data.data.push({'{$idField}':'','{$textField}':'','selected':true});
+                    }
+                    {$this->choicesObjName($field)}.setChoices(data.data, '{$idField}', '{$textField}', true);
+                })
+            });
+JS;
 
         return $this;
     }
@@ -260,40 +192,19 @@ EOT;
      */
     protected function loadRemoteOptions($url, $parameters = [], $options = [])
     {
-        $ajaxOptions = [
-            'url' => $url.'?'.http_build_query($parameters),
-        ];
-        $configs = array_merge([
-            'allowClear' => true,
-            'placeholder' => [
-                'id' => '',
-                'text' => trans('admin.choose'),
-            ],
+        $this->config = array_merge([
+            'removeItems' => true,
+            'removeItemButton' => true,
+            'allowHTML' => true,
         ], $this->config);
 
-        $configs = json_encode($configs);
-        $configs = substr($configs, 1, strlen($configs) - 2);
+        $parameters_json = json_encode($parameters);
 
-        $ajaxOptions = json_encode(array_merge($ajaxOptions, $options));
-
-        $this->script = <<<EOT
-
-$.ajax($ajaxOptions).done(function(data) {
-
-  $("{$this->getElementClassSelector()}").each(function(index, element) {
-      $(element).select2({
-        data: data,
-        $configs
-      });
-      var value = $(element).data('value') + '';
-      if (value) {
-        value = value.split(',');
-        $(element).val(value).trigger("change");
-      }
-  });
-});
-
-EOT;
+        $this->additional_script .= <<<JS
+        admin.ajax.post("{$url}",{$parameters_json},function(data){
+            {$this->choicesObjName()}.setChoices(data.data, 'id', 'text', true);
+        });
+JS;
 
         return $this;
     }
@@ -302,66 +213,72 @@ EOT;
      * Load options from ajax results.
      *
      * @param string $url
+     * @param $idField
+     * @param $textField
      *
      * @return $this
      */
     public function ajax($url, $idField = 'id', $textField = 'text')
     {
-        $configs = array_merge([
-            'allowClear' => true,
+        $this->config = array_merge([
+            'removeItems' => true,
+            'removeItemButton' => true,
+            'allowHTML' => true,
             'placeholder' => $this->label,
-            'minimumInputLength' => 1,
         ], $this->config);
 
-        $configs = json_encode($configs);
-        $configs = substr($configs, 1, strlen($configs) - 2);
+        $this->additional_script = <<<JS
+            let elm = document.querySelector("{$this->getElementClassSelector()}");
+            var lookupTimeout;
+            elm.addEventListener('search', function(event) {
+                clearTimeout(lookupTimeout);
+                lookupTimeout = setTimeout(function(){
+                    var query = {$this->choicesObjName()}.input.value;
+                    admin.ajax.post("{$url}",{query:query},function(data){
+                        {$this->choicesObjName()}.setChoices(data.data, '{$idField}', '{$textField}', true);
+                    })
+                }, 250);
+            });
 
-        $this->script = <<<EOT
-
-$("{$this->getElementClassSelector()}").select2({
-  ajax: {
-    url: "$url",
-    dataType: 'json',
-    delay: 250,
-    data: function (params) {
-      return {
-        q: params.term,
-        page: params.page
-      };
-    },
-    processResults: function (data, params) {
-      params.page = params.page || 1;
-
-      return {
-        results: $.map(data.data, function (d) {
-                   d.id = d.$idField;
-                   d.text = d.$textField;
-                   return d;
-                }),
-        pagination: {
-          more: data.next_page_url
-        }
-      };
-    },
-    cache: true
-  },
-  $configs,
-  escapeMarkup: function (markup) {
-      return markup;
-  }
-});
-
-EOT;
+            elm.addEventListener('choice', function(event) {
+                {$this->choicesObjName()}.setChoices([], '{$idField}', '{$textField}', true);
+            });
+        JS;
 
         return $this;
     }
 
     /**
-     * Set config for select2.
+     * Set use browser native selectbox.
      *
-     * all configurations see https://select2.org/configuration/options-api
+     * @return $this
+     */
+    public function useNative()
+    {
+        $this->native = true;
+
+        return $this;
+    }
+
+    /**
+     * Set use browser native selectbox.
+     *
+     * @return $this
+     */
+    public function useChoicesjs()
+    {
+        $this->native = false;
+
+        return $this;
+    }
+
+    /**
+     * Set config for Choicesjs.
+     *
+     * all configurations see https://github.com/jshjohnson/Choices
      *
      * @param string $key
+     * @param mixed $val
      *
      * @return $this
      */
@@ -372,52 +289,73 @@ EOT;
         return $this;
     }
 
-    public function readOnly()
+    /**
+     * Set as readonly (actual dissable with backup hidden field).
+     */
+    public function readonly($set = true): self
     {
-        // 移除特定字段名称,增加MultipleSelect的修订
-        // 没有特定字段名可以使多个readonly的JS代码片段被Admin::script的array_unique精简代码
-        $script = <<<'EOT'
-$("form select").on("select2:opening", function (e) {
-    if($(this).attr('readonly') || $(this).is(':hidden')){
-    e.preventDefault();
+        $this->useNative();
+        $this->config('readonly', $set);
+        $this->disabled($set);
+
+        return parent::readonly($set);
     }
-});
-$(document).ready(function(){
-    $('select').each(function(){
-        if($(this).is('[readonly]')){
-            $(this).closest('.form-group').find('span.select2-selection__choice__remove').remove();
-            $(this).closest('.form-group').find('li.select2-search').first().remove();
-            $(this).closest('.form-group').find('span.select2-selection__clear').first().remove();
+
+    /**
+     * Returns variable name for ChoicesJS object.
+     */
+    public function choicesObjName($field = false)
+    {
+        if (empty($field)) {
+            $field = str_replace([' ', '-'], ['_', '_'], $this->getElementClassString());
         }
-    });
-});
-EOT;
-        Admin::script($script);
 
-        return parent::readOnly();
+        return 'choices_' . $field;
     }
 
+    /**
+     * Check if field should be rendered as Choises JS (not the case if fields are embed in popup).
+     */
+    public function allowedChoicesJs()
+    {
+        $class = get_class($this);
+
+        return in_array($class, [
+            'OpenAdmin\Admin\Form\Field\Select',
+            'OpenAdmin\Admin\Form\Field\Tags',
+            'OpenAdmin\Admin\Form\Field\MultipleSelect',
+            'OpenAdmin\Admin\Form\Field\Timezone',
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
         $configs = array_merge([
-            'allowClear' => true,
+            'removeItems' => true,
+            'removeItemButton' => true,
+            'allowHTML' => true,
             'placeholder' => [
                 'id' => '',
                 'text' => $this->label,
             ],
+            'classNames' => [
+                'containerOuter' => 'choices ' . $this->getElementClassString(),
+            ],
         ], $this->config);
-
         $configs = json_encode($configs);
 
-        if (empty($this->script)) {
-            $this->script = "$(\"{$this->getElementClassSelector()}\").select2($configs);";
+        if (!$this->native && $this->allowedChoicesJs()) {
+            $this->script .= 'var ' . $this->choicesObjName() . " = new Choices('{$this->getElementClassSelector()}',{$configs});";
+            $this->script .= $this->additional_script;
         }
 
         if ($this->options instanceof \Closure) {
             if ($this->form) {
                 $this->options = $this->options->bindTo($this->form->model());
             }
-
             $this->options(call_user_func($this->options, $this->value, $this));
         }
 

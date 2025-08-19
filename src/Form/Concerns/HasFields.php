@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Form\Concerns;
+namespace OpenAdmin\Admin\Form\Concerns;
 
-use Encore\Admin\Form\Field;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Form\Field;
 
 /**
  * @method Field\Text           text($column, $label = '')
@@ -22,7 +22,7 @@ use Illuminate\Support\Arr;
  * @method Field\Url            url($column, $label = '')
  * @method Field\Color          color($column, $label = '')
  * @method Field\Email          email($column, $label = '')
- * @method Field\Mobile         mobile($column, $label = '')
+ * @method Field\PhoneNumber    phonenumber($column, $label = '')
  * @method Field\Slider         slider($column, $label = '')
  * @method Field\File           file($column, $label = '')
  * @method Field\Image          image($column, $label = '')
@@ -90,9 +90,10 @@ trait HasFields
         'id' => Field\Id::class,
         'image' => Field\Image::class,
         'ip' => Field\Ip::class,
-        'mobile' => Field\Mobile::class,
+        'phonenumber' => Field\PhoneNumber::class,
         'month' => Field\Month::class,
         'multipleSelect' => Field\MultipleSelect::class,
+        'map' => Field\Map::class,
         'number' => Field\Number::class,
         'password' => Field\Password::class,
         'radio' => Field\Radio::class,
@@ -193,6 +194,8 @@ trait HasFields
 
     /**
      * Collect assets required by registered field.
+     *
+     * @return array
      */
     public static function collectFieldAssets(): array
     {

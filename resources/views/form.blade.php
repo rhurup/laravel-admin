@@ -1,8 +1,8 @@
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">{{ $form->title() }}</h3>
+<div class="card box-info">
+    <div class="card-header with-border">
+        <h3 class="card-title">{{ $form->title() }}</h3>
 
-        <div class="box-tools">
+        <div class="card-tools">
             {!! $form->renderTools() !!}
         </div>
     </div>
@@ -10,12 +10,12 @@
     <!-- form start -->
     {!! $form->open() !!}
 
-    <div class="box-body">
+    <div class="card-body p-0">
 
         @if(!$tabObj->isEmpty())
             @include('admin::form.tab', compact('tabObj'))
         @else
-            <div class="fields-group">
+            <div class="row fields-group">
 
                 @if($form->hasRows())
                     @foreach($form->getRows() as $row)
@@ -44,5 +44,5 @@
 
 <!-- /.box-footer -->
     {!! $form->close() !!}
-</div>
 
+</div>

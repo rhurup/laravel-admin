@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
+use OpenAdmin\Admin\Admin;
 
 class Input extends AbstractDisplayer
 {
@@ -10,12 +10,13 @@ class Input extends AbstractDisplayer
     {
         return Admin::component('admin::grid.inline-edit.input', [
             'key' => $this->getKey(),
+            'type' => 'text',
             'value' => $this->getValue(),
             'display' => $this->getValue(),
             'name' => $this->getPayloadName(),
             'resource' => $this->getResource(),
-            'trigger' => "ie-trigger-{$this->getClassName()}",
-            'target' => "ie-template-{$this->getClassName()}",
+            'trigger' => "ie-trigger-{$this->getClassName()}-{$this->getKey()}",
+            'target' => "ie-content-{$this->getClassName()}-{$this->getKey()}",
             'mask' => $mask,
         ]);
     }

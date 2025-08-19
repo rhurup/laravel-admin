@@ -1,11 +1,14 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace OpenAdmin\Admin\Grid\Tools;
 
-use Encore\Admin\Admin;
+use OpenAdmin\Admin\Admin;
 
 class FilterButton extends AbstractTool
 {
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
         $label = '';

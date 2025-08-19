@@ -1,9 +1,7 @@
 <?php
 
-namespace Encore\Admin\Show;
+namespace OpenAdmin\Admin\Show;
 
-use Encore\Admin\Show;
-use Encore\Admin\Widgets\Carousel;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
@@ -13,12 +11,16 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
+use OpenAdmin\Admin\Form\Field\Traits\UploadField;
+use OpenAdmin\Admin\Show;
+use OpenAdmin\Admin\Widgets\Carousel;
 
 class Field implements Renderable
 {
     use Macroable {
         __call as macroCall;
     }
+    use UploadField;
 
     /**
      * @var string
@@ -58,6 +60,8 @@ class Field implements Renderable
 
     /**
      * Field value.
+     *
+     * @var mixed
      */
     protected $value;
 
@@ -85,23 +89,25 @@ class Field implements Renderable
      *
      * @var bool
      */
-    public $border = true;
+    public $border = false;
 
     /**
      * @var array
      */
+    /*
     protected $fileTypes = [
-        'image' => 'png|jpg|jpeg|tmp|gif',
-        'word' => 'doc|docx',
-        'excel' => 'xls|xlsx|csv',
+        'image'      => 'png|jpg|jpeg|tmp|gif',
+        'word'       => 'doc|docx',
+        'excel'      => 'xls|xlsx|csv',
         'powerpoint' => 'ppt|pptx',
-        'pdf' => 'pdf',
-        'code' => 'php|js|java|python|ruby|go|c|cpp|sql|m|h|json|html|aspx',
-        'archive' => 'zip|tar\.gz|rar|rpm',
-        'txt' => 'txt|pac|log|md',
-        'audio' => 'mp3|wav|flac|3pg|aa|aac|ape|au|m4a|mpc|ogg',
-        'video' => 'mkv|rmvb|flv|mp4|avi|wmv|rm|asf|mpeg',
+        'pdf'        => 'pdf',
+        'code'       => 'php|js|java|python|ruby|go|c|cpp|sql|m|h|json|html|aspx',
+        'archive'    => 'zip|tar\.gz|rar|rpm',
+        'txt'        => 'txt|pac|log|md',
+        'audio'      => 'mp3|wav|flac|3pg|aa|aac|ape|au|m4a|mpc|ogg',
+        'video'      => 'mkv|rmvb|flv|mp4|avi|wmv|rm|asf|mpeg',
     ];
+    */
 
     /**
      * Field constructor.
@@ -121,6 +127,8 @@ class Field implements Renderable
     /**
      * Set parent show instance.
      *
+     * @param Show $show
+     *
      * @return $this
      */
     public function setParent(Show $show)
@@ -132,6 +140,8 @@ class Field implements Renderable
 
     /**
      * Get name of this column.
+     *
+     * @return mixed
      */
     public function getName()
     {
@@ -140,6 +150,10 @@ class Field implements Renderable
 
     /**
      * Format label.
+     *
+     * @param $label
+     *
+     * @return mixed
      */
     protected function formatLabel($label)
     {
@@ -150,6 +164,8 @@ class Field implements Renderable
 
     /**
      * Get label of the column.
+     *
+     * @return mixed
      */
     public function getLabel()
     {
@@ -158,6 +174,8 @@ class Field implements Renderable
 
     /**
      * Field display callback.
+     *
+     * @param callable $callable
      *
      * @return $this
      */
@@ -171,6 +189,7 @@ class Field implements Renderable
     /**
      * Display field using array value map.
      *
+     * @param array $values
      * @param null $default
      *
      * @return $this
@@ -300,20 +319,18 @@ class Field implements Renderable
             $download = $download ? "download='$name'" : '';
 
             return <<<HTML
-<ul class="mailbox-attachments clearfix">
-    <li style="margin-bottom: 0;">
-      <span class="mailbox-attachment-icon"><i class="fa {$field->getFileIcon($name)}"></i></span>
-      <div class="mailbox-attachment-info">
+<div class="card mailbox-arttachment clearfix">
+      <span class="mailbox-attachment-icon"><i class="{$field->getFileIcon($name)}"></i></span>
+      <div class="card-body">
         <div class="mailbox-attachment-name">
-            <i class="fa fa-paperclip"></i> {$name}
+            <i class="icon-paperclip"></i> {$name}
             </div>
             <span class="mailbox-attachment-size">
               {$size}&nbsp;
-              <a href="{$url}" class="btn btn-default btn-xs pull-right" target="_blank" $download><i class="fa fa-cloud-download"></i></a>
+              <a href="{$url}" class="btn btn-light btn-xs float-end" target="_blank" $download><i class="icon-download"></i></a>
             </span>
       </div>
-    </li>
-  </ul>
+</div>
 HTML;
         });
     }
@@ -350,7 +367,7 @@ HTML;
             }
 
             return collect((array) $value)->map(function ($name) use ($style) {
-                return "<span class='label label-{$style}'>$name</span>";
+                return "<span class='badge bg-{$style}'>$name</span>";
             })->implode('&nbsp;');
         });
     }
@@ -362,7 +379,7 @@ HTML;
      *
      * @return Field
      */
-    public function badge($style = 'blue')
+    public function badge($style = 'primary')
     {
         return $this->unescape()->as(function ($value) use ($style) {
             if ($value instanceof Arrayable) {
@@ -372,22 +389,6 @@ HTML;
             return collect((array) $value)->map(function ($name) use ($style) {
                 return "<span class='badge bg-{$style}'>$name</span>";
             })->implode('&nbsp;');
-        });
-    }
-
-    /**
-     * Show field as number.
-     *
-     * @param int    $decimals
-     * @param string $decimal_seperator
-     * @param string $thousands_seperator
-     *
-     * @return Field
-     */
-    public function number($decimals = 0, $decimal_seperator = '.', $thousands_seperator = ',')
-    {
-        return $this->unescape()->as(function ($value) use ($decimals, $decimal_seperator, $thousands_seperator) {
-            return number_format($value, $decimals, $decimal_seperator, $thousands_seperator);
         });
     }
 
@@ -407,10 +408,10 @@ HTML;
                 $content = $value;
             }
 
-            if (0 === json_last_error()) {
+            if (json_last_error() == 0) {
                 $field->border = false;
 
-                return '<pre><code>'.json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE).'</code></pre>';
+                return '<pre><code>' . json_encode($content, JSON_PRETTY_PRINT) . '</code></pre>';
             }
 
             return $value;
@@ -438,15 +439,17 @@ HTML;
      */
     public function getFileIcon($file = '')
     {
-        $extension = File::extension($file);
+        $ext = File::extension($file);
 
-        foreach ($this->fileTypes as $type => $regex) {
-            if (0 !== preg_match("/^($regex)$/i", $extension)) {
-                return "fa-file-{$type}-o";
+        $filetype = 'file';
+        foreach ($this->fileTypes as $type => $pattern) {
+            if (preg_match($pattern, $ext) === 1) {
+                $filetype = $type;
+                break;
             }
         }
 
-        return 'fa-file-o';
+        return $this->fileTypesIcons[$filetype];
     }
 
     /**
@@ -475,6 +478,8 @@ HTML;
 
     /**
      * Set value for this field.
+     *
+     * @param Model $model
      *
      * @return $this
      */
@@ -514,6 +519,8 @@ HTML;
     /**
      * @param Model  $model
      * @param string $name
+     *
+     * @return mixed
      */
     protected function getRelationValue($model, $name)
     {

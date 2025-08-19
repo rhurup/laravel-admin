@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
 class ControllerCommand extends MakeCommand
 {
@@ -11,6 +11,7 @@ class ControllerCommand extends MakeCommand
      */
     protected $signature = 'admin:controller {model}
         {--title=}
+        {--name=}
         {--stub= : Path to the custom stub file. }
         {--namespace=}
         {--O|output}';
@@ -20,25 +21,5 @@ class ControllerCommand extends MakeCommand
      *
      * @var string
      */
-    protected $description = 'Make admin controller from giving model';
-
-    /**
-     * @return array|string|null
-     */
-    protected function getModelName()
-    {
-        return $this->argument('model');
-    }
-
-    /**
-     * @return string
-     *
-     * @throws \ReflectionException
-     */
-    protected function getControllerName()
-    {
-        $name = (new \ReflectionClass($this->modelName))->getShortName();
-
-        return $name.'Controller';
-    }
+    protected $description = 'Make admin controller (simular to admin:make)';
 }

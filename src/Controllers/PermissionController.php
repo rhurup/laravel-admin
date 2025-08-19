@@ -1,14 +1,17 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace OpenAdmin\Admin\Controllers;
 
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Show;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Show;
 
 class PermissionController extends AdminController
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function title()
     {
         return trans('admin.permissions');
@@ -41,7 +44,7 @@ class PermissionController extends AdminController
                 $method = collect($method)->map(function ($name) {
                     return strtoupper($name);
                 })->map(function ($name) {
-                    return "<span class='label label-primary'>{$name}</span>";
+                    return "<span class='badge bg-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
                 if (!empty(config('admin.route.prefix'))) {
@@ -67,6 +70,8 @@ class PermissionController extends AdminController
     /**
      * Make a show builder.
      *
+     * @param mixed $id
+     *
      * @return Show
      */
     protected function detail($id)
@@ -91,7 +96,7 @@ class PermissionController extends AdminController
                 $method = collect($method)->map(function ($name) {
                     return strtoupper($name);
                 })->map(function ($name) {
-                    return "<span class='label label-primary'>{$name}</span>";
+                    return "<span class='badge bg-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
                 if (!empty(config('admin.route.prefix'))) {

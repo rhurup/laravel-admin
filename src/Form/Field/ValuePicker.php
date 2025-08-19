@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form\Field;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Form\Field;
 
 class ValuePicker
 {
@@ -46,7 +46,7 @@ class ValuePicker
      * @param bool   $multiple
      * @param string $separator
      */
-    public function __construct($selecteable, $column = '', $multiple = false, $separator = ';')
+    public function __construct($selecteable, $column = '', $multiple = false, $separator = ',')
     {
         $this->selecteable = $selecteable;
         $this->column = $column;
@@ -55,6 +55,8 @@ class ValuePicker
     }
 
     /**
+     * @param int $multiple
+     *
      * @return string
      */
     protected function getLoadUrl()
@@ -63,17 +65,21 @@ class ValuePicker
 
         $args = [$this->multiple, $this->column];
 
-        return route(admin_get_route('handle-selectable'), compact('selectable', 'args'));
+        return route('admin.handle-selectable', compact('selectable', 'args'));
     }
 
-    public function mount(Field $field, ?\Closure $callback = null)
+    /**
+     * @param Field $field
+     * @param \Closure|null $callback
+     */
+    public function mount(Field $field, \Closure $callback = null)
     {
         $this->field = $field;
         $this->modal = sprintf('picker-modal-%s', $field->getElementClassString());
 
         $this->addPickBtn($callback);
 
-        Admin::component('admin::components.filepicker', [
+        Admin::component('admin::components.valuepicker', [
             'url' => $this->getLoadUrl(),
             'modal' => $this->modal,
             'selector' => $this->field->getElementClassSelector(),
@@ -85,13 +91,16 @@ class ValuePicker
         ]);
     }
 
-    protected function addPickBtn(?\Closure $callback = null)
+    /**
+     * @param \Closure|null $callback
+     */
+    protected function addPickBtn(\Closure $callback = null)
     {
-        $text = admin_trans('admin.browse');
+        $text = admin_trans('admin.choose');
 
         $btn = <<<HTML
-<a class="btn btn-primary" data-toggle="modal" data-target="#{$this->modal}">
-    <i class="fa fa-folder-open"></i>  {$text}
+<a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{$this->modal}">
+    <i class="icon-folder-open"></i>  {$text}
 </a>
 HTML;
 
@@ -103,6 +112,8 @@ HTML;
     }
 
     /**
+     * @param string $field
+     *
      * @return array|\Illuminate\Support\Collection
      */
     public function getPreview(string $field)
@@ -119,7 +130,7 @@ HTML;
             return [
                 'url' => $this->field->objectUrl($item),
                 'value' => $item,
-                'is_file' => File::class === $field,
+                'is_file' => $field == File::class,
             ];
         });
     }

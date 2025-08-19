@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid\Column;
+namespace OpenAdmin\Admin\Grid\Column;
 
 use Illuminate\Contracts\Support\Renderable;
 
@@ -57,7 +57,7 @@ class Sorter implements Renderable
             return false;
         }
 
-        return isset($this->sort['column']) && $this->sort['column'] === $this->columnName;
+        return isset($this->sort['column']) && $this->sort['column'] == $this->columnName;
     }
 
     /**
@@ -65,12 +65,13 @@ class Sorter implements Renderable
      */
     public function render()
     {
-        $icon = 'fa-sort';
+        $icon = 'icon-sort';
         $type = 'desc';
 
         if ($this->isSorted()) {
-            $type = 'desc' === $this->sort['type'] ? 'asc' : 'desc';
-            $icon .= "-amount-{$this->sort['type']}";
+            $type = $this->sort['type'] == 'desc' ? 'asc' : 'desc';
+            $icon_type = $this->sort['type'] == 'desc' ? 'down' : 'up';
+            $icon .= "-amount-{$icon_type}";
         }
 
         // set sort value
@@ -85,6 +86,6 @@ class Sorter implements Renderable
 
         $url = url()->current().'?'.http_build_query($query);
 
-        return "<a class=\"fa fa-fw $icon\" href=\"$url\"></a>";
+        return "<a class=\"icon-fw $icon\" href=\"$url\"></a>";
     }
 }

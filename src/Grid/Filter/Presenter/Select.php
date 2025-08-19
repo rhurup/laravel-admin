@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter\Presenter;
+namespace OpenAdmin\Admin\Grid\Filter\Presenter;
 
-use Encore\Admin\Facades\Admin;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Facades\Admin;
 
 class Select extends Presenter
 {
@@ -27,7 +27,14 @@ class Select extends Presenter
     protected $script = '';
 
     /**
+     * @var string
+     */
+    protected $additional_script = '';
+
+    /**
      * Select constructor.
+     *
+     * @param mixed $options
      */
     public function __construct($options)
     {
@@ -35,11 +42,12 @@ class Select extends Presenter
     }
 
     /**
-     * Set config for select2.
+     * Set config for se.
      *
-     * all configurations see https://select2.org/configuration/options-api
+     * all configurations see https://github.com/jshjohnson/Choices
      *
      * @param string $key
+     * @param mixed $val
      *
      * @return $this
      */
@@ -51,7 +59,21 @@ class Select extends Presenter
     }
 
     /**
+     * Returns variable name for ChoicesJS object.
+     */
+    public function choicesObjName($field = false)
+    {
+        if (empty($field)) {
+            $field = $this->getElementClass();
+        }
+
+        return 'choices_' . $field;
+    }
+
+    /**
      * Build options.
+     *
+     * @return array
      */
     protected function buildOptions(): array
     {
@@ -67,31 +89,18 @@ class Select extends Presenter
             $this->options = $this->options->toArray();
         }
 
-        if (empty($this->script)) {
-            $placeholder = json_encode([
-                'id' => '',
-                'text' => trans('admin.choose'),
-            ]);
+        $configs = array_merge([
+            'removeItems' => true,
+            'removeItemButton' => true,
+            'allowHTML' => true,
+            'classNames' => [
+                'containerOuter' => 'choices ' . $this->getElementClass(),
+            ],
+        ], $this->config);
+        $configs = json_encode($configs);
 
-            $configs = array_merge([
-                'allowClear' => true,
-            ], $this->config);
-
-            $configs = json_encode($configs);
-            $configs = substr($configs, 1, strlen($configs) - 2);
-
-            $this->script = <<<SCRIPT
-(function ($){
-    $(".{$this->getElementClass()}").select2({
-      placeholder: $placeholder,
-      $configs
-    });
-})(jQuery);
-
-SCRIPT;
-        }
-
-        Admin::script($this->script);
+        $script = 'var ' . $this->choicesObjName() . " = new Choices('.{$this->getElementClass()}',{$configs});";
+        Admin::script($script . $this->additional_script);
 
         return is_array($this->options) ? $this->options : [];
     }
@@ -147,94 +156,61 @@ SCRIPT;
      */
     protected function loadRemoteOptions($url, $parameters = [], $options = [])
     {
-        $ajaxOptions = [
-            'url' => $url,
-            'data' => $parameters,
-        ];
-        $configs = array_merge([
-            'allowClear' => true,
-            'placeholder' => [
-                'id' => '',
-                'text' => trans('admin.choose'),
-            ],
+        $this->config = array_merge([
+            'removeItems' => true,
+            'removeItemButton' => true,
         ], $this->config);
 
-        $configs = json_encode($configs);
-        $configs = substr($configs, 1, strlen($configs) - 2);
+        $parameters_json = json_encode($parameters);
 
-        $ajaxOptions = json_encode(array_merge($ajaxOptions, $options), JSON_UNESCAPED_UNICODE);
+        $this->additional_script .= <<<JS
+        admin.ajax.post("{$url}",{$parameters_json},function(data){
+            {$this->choicesObjName()}.setChoices(data.data, 'id', 'text', true);
+        });
+JS;
 
-        $values = (array) $this->filter->getValue();
-        $values = array_filter($values);
-        $values = json_encode($values);
-
-        $this->script = <<<EOT
-
-$.ajax($ajaxOptions).done(function(data) {
-  $(".{$this->getElementClass()}").select2({
-    data: data,
-    $configs
-  }).val($values).trigger("change");
-  
-});
-
-EOT;
+        return $this;
     }
 
     /**
      * Load options from ajax.
      *
      * @param string $resourceUrl
+     * @param $idField
+     * @param $textField
      */
-    public function ajax($resourceUrl, $idField = 'id', $textField = 'text')
+    public function ajax($url, $idField = 'id', $textField = 'text')
     {
-        $configs = array_merge([
-            'allowClear' => true,
-            'placeholder' => trans('admin.choose'),
-            'minimumInputLength' => 1,
+        $this->config = array_merge([
+            'removeItems' => true,
+            'removeItemButton' => true,
+            'placeholder' => $this->label,
         ], $this->config);
 
-        $configs = json_encode($configs);
-        $configs = substr($configs, 1, strlen($configs) - 2);
+        $this->additional_script = <<<JS
+            let elm = document.querySelector(".{$this->getElementClass()}");
+            var lookupTimeout;
+            elm.addEventListener('search', function(event) {
+                clearTimeout(lookupTimeout);
+                lookupTimeout = setTimeout(function(){
+                    var query = {$this->choicesObjName()}.input.value;
+                    admin.ajax.post("{$url}",{query:query},function(data){
+                        {$this->choicesObjName()}.setChoices(data.data, '{$idField}', '{$textField}', true);
+                    })
+                }, 250);
+            });
 
-        $this->script = <<<EOT
+            elm.addEventListener('choice', function(event) {
+                {$this->choicesObjName()}.setChoices([], '{$idField}', '{$textField}', true);
+            });
+        JS;
 
-$(".{$this->getElementClass()}").select2({
-  ajax: {
-    url: "$resourceUrl",
-    dataType: 'json',
-    delay: 250,
-    data: function (params) {
-      return {
-        q: params.term,
-        page: params.page
-      };
-    },
-    processResults: function (data, params) {
-      params.page = params.page || 1;
-
-      return {
-        results: $.map(data.data, function (d) {
-                   d.id = d.$idField;
-                   d.text = d.$textField;
-                   return d;
-                }),
-        pagination: {
-          more: data.next_page_url
-        }
-      };
-    },
-    cache: true
-  },
-  $configs,
-  escapeMarkup: function (markup) {
-      return markup;
-  }
-});
-
-EOT;
+        return $this;
     }
 
+    /**
+     * @return array
+     */
     public function variables(): array
     {
         return [
@@ -243,46 +219,12 @@ EOT;
         ];
     }
 
+    /**
+     * @return string
+     */
     protected function getElementClass(): string
     {
         return str_replace('.', '_', $this->filter->getColumn());
-    }
-
-    /**
-     * Load options for other select when change.
-     *
-     * @param string $target
-     * @param string $resourceUrl
-     * @param string $idField
-     * @param string $textField
-     *
-     * @return $this
-     */
-    public function load($target, $resourceUrl, $idField = 'id', $textField = 'text'): self
-    {
-        $column = $this->filter->getColumn();
-
-        $script = <<<EOT
-$(document).off('change', ".{$this->getClass($column)}");
-$(document).on('change', ".{$this->getClass($column)}", function () {
-    var target = $(this).closest('form').find(".{$this->getClass($target)}");
-    $.get("$resourceUrl",{q : this.value}, function (data) {
-        target.find("option").remove();
-        $.each(data, function (i, item) {
-            $(target).append($('<option>', {
-                value: item.$idField,
-                text : item.$textField
-            }));
-        });
-        
-        $(target).val(null).trigger('change');
-    }, 'json');
-});
-EOT;
-
-        Admin::script($script);
-
-        return $this;
     }
 
     /**

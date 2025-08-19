@@ -1,34 +1,28 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\Field;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field\Traits\HasMediaPicker;
+use OpenAdmin\Admin\Form\Field\Traits\UploadField;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class File extends Field
 {
     use UploadField;
-    use HasValuePicker;
+    use HasMediaPicker;
 
-    /**
-     * Css.
-     *
-     * @var array
-     */
     protected static $css = [
-        '/vendor/laravel-admin/bootstrap-fileinput/css/fileinput.min.css?v=4.5.2',
+        '/vendor/open-admin/fields/file-upload/file-upload.css',
     ];
 
-    /**
-     * Js.
-     *
-     * @var array
-     */
     protected static $js = [
-        '/vendor/laravel-admin/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js',
-        '/vendor/laravel-admin/bootstrap-fileinput/js/fileinput.min.js?v=4.5.2',
+        '/vendor/open-admin/fields/file-upload/file-upload.js',
     ];
+
+    public $type = 'file';
+    public $readonly = false;
 
     /**
      * Create a new File instance.
@@ -45,12 +39,17 @@ class File extends Field
 
     /**
      * Default directory for file to upload.
+     *
+     * @return mixed
      */
     public function defaultDirectory()
     {
         return config('admin.upload.directory.file');
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getValidator(array $input)
     {
         if (request()->has(static::FILE_DELETE_FLAG)) {
@@ -97,21 +96,31 @@ class File extends Field
      */
     public function prepare($file)
     {
-        if ($this->picker) {
-            return parent::prepare($file);
+        if (request()->has($this->column . Field::FILE_DELETE_FLAG)) {
+            $this->destroy();
+
+            return '';
         }
 
-        if (request()->has(static::FILE_DELETE_FLAG)) {
-            return $this->destroy();
+        if (!empty($this->picker) && request()->has($this->column . Field::FILE_ADD_FLAG)) {
+            return request($this->column . Field::FILE_ADD_FLAG);
         }
 
-        $this->name = $this->getStoreName($file);
+        if (!empty($file)) {
+            $this->name = $this->getStoreName($file);
 
-        return $this->uploadAndDeleteOriginal($file);
+            return $this->uploadAndDeleteOriginal($file);
+        }
+
+        return false;
     }
 
     /**
      * Upload file and delete original file.
+     *
+     * @param UploadedFile $file
+     *
+     * @return mixed
      */
     protected function uploadAndDeleteOriginal(UploadedFile $file)
     {
@@ -176,47 +185,39 @@ class File extends Field
         return [$config];
     }
 
-    /**
-     * @param string $options
-     */
-    protected function setupScripts($options)
+    protected function setType($type = 'file')
     {
-        $this->script = <<<EOT
-$("input{$this->getElementClassSelector()}").fileinput({$options});
-EOT;
+        $this->options['type'] = $type;
+    }
 
-        if ($this->fileActionSettings['showRemove']) {
-            $text = [
-                'title' => trans('admin.delete_confirm'),
-                'confirm' => trans('admin.confirm'),
-                'cancel' => trans('admin.cancel'),
-            ];
-
-            $this->script .= <<<EOT
-$("input{$this->getElementClassSelector()}").on('filebeforedelete', function() {
-
-    return new Promise(function(resolve, reject) {
-
-        var remove = resolve;
-
-        swal({
-            title: "{$text['title']}",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "{$text['confirm']}",
-            showLoaderOnConfirm: true,
-            cancelButtonText: "{$text['cancel']}",
-            preConfirm: function() {
-                return new Promise(function(resolve) {
-                    resolve(remove());
-                });
-            }
-        });
-    });
-});
-EOT;
+    protected function getFieldId()
+    {
+        if (!empty($this->elementName)) {
+            $id = $this->elementName;
+        } else {
+            $id = $this->id;
         }
+        $id = str_replace(']', '_', $id);
+        $id = str_replace('[', '_', $id);
+
+        return $id;
+    }
+
+    /**
+     * Setupscript.
+     *
+     * @return nothing
+     */
+    protected function setupScripts()
+    {
+        $id = $this->getFieldId();
+        $this->setType();
+        $this->attribute('id', $id);
+        $this->options['storageUrl'] = $this->storageUrl();
+        $json_options = json_encode($this->options);
+        $this->script = <<<JS
+        var FileUpload_{$id} = new FileUpload(document.querySelector('#{$id}'),{$json_options});
+        JS;
     }
 
     /**
@@ -227,7 +228,7 @@ EOT;
     public function render()
     {
         if ($this->picker) {
-            return $this->renderFilePicker();
+            $this->renderMediaPicker();
         }
 
         $this->options(['overwriteInitial' => true, 'msgPlaceholder' => trans('admin.choose_file')]);
@@ -235,8 +236,8 @@ EOT;
         $this->setupDefaultOptions();
 
         if (!empty($this->value)) {
-            $this->attribute('data-initial-preview', $this->preview());
-            $this->attribute('data-initial-caption', $this->initialCaption($this->value));
+            $this->attribute('data-files', $this->value);
+            $this->attribute('data-file-captions', $this->initialCaption($this->value));
 
             $this->setupPreviewOptions();
             /*
@@ -246,9 +247,7 @@ EOT;
             unset($this->attributes['required']);
         }
 
-        $options = json_encode_options($this->options);
-
-        $this->setupScripts($options);
+        $this->setupScripts();
 
         return parent::render();
     }

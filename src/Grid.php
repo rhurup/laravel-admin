@@ -1,21 +1,21 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
-use Encore\Admin\Exception\Handler;
-use Encore\Admin\Grid\Column;
-use Encore\Admin\Grid\Concerns;
-use Encore\Admin\Grid\Displayers;
-use Encore\Admin\Grid\Model;
-use Encore\Admin\Grid\Row;
-use Encore\Admin\Grid\Tools;
-use Encore\Admin\Traits\ShouldSnakeAttributes;
+use Closure;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
-use Jenssegers\Mongodb\Eloquent\Model as MongodbModel;
+use OpenAdmin\Admin\Exception\Handler;
+use OpenAdmin\Admin\Grid\Column;
+use OpenAdmin\Admin\Grid\Concerns;
+use OpenAdmin\Admin\Grid\Displayers;
+use OpenAdmin\Admin\Grid\Model;
+use OpenAdmin\Admin\Grid\Row;
+use OpenAdmin\Admin\Grid\Tools;
+use OpenAdmin\Admin\Traits\ShouldSnakeAttributes;
 
 class Grid
 {
@@ -42,21 +42,21 @@ class Grid
     /**
      * The grid data model instance.
      *
-     * @var Model|\Illuminate\Database\Eloquent\Builder
+     * @var \OpenAdmin\Admin\Grid\Model|\Illuminate\Database\Eloquent\Builder
      */
     protected $model;
 
     /**
      * Collection of all grid columns.
      *
-     * @var Collection
+     * @var \Illuminate\Support\Collection
      */
     protected $columns;
 
     /**
      * Collection of all data rows.
      *
-     * @var Collection
+     * @var \Illuminate\Support\Collection
      */
     protected $rows;
 
@@ -89,6 +89,13 @@ class Grid
     protected $builded = false;
 
     /**
+     * Show footer fixed or not.
+     *
+     * @var bool
+     */
+    public $fixedFooter = true;
+
+    /**
      * All variables in grid view.
      *
      * @var array
@@ -97,6 +104,8 @@ class Grid
 
     /**
      * Resource path of the grid.
+     *
+     * @var
      */
     protected $resourcePath;
 
@@ -165,8 +174,11 @@ class Grid
 
     /**
      * Create a new grid instance.
+     *
+     * @param Eloquent $model
+     * @param Closure $builder
      */
-    public function __construct(Eloquent $model, ?\Closure $builder = null)
+    public function __construct(Eloquent $model, Closure $builder = null)
     {
         $this->model = new Model($model, $this);
         $this->keyName = $model->getKeyName();
@@ -193,8 +205,10 @@ class Grid
 
     /**
      * Initialize with user pre-defined default disables and exporter, etc.
+     *
+     * @param Closure $callback
      */
-    public static function init(?\Closure $callback = null)
+    public static function init(Closure $callback = null)
     {
         static::$initCallbacks[] = $callback;
     }
@@ -217,6 +231,7 @@ class Grid
      * Get or set option for grid.
      *
      * @param string $key
+     * @param mixed $value
      *
      * @return $this|mixed
      */
@@ -275,11 +290,11 @@ class Grid
      */
     public function columns($columns = [])
     {
-        if (0 === func_num_args()) {
+        if (func_num_args() == 0) {
             return $this->columns;
         }
 
-        if (1 === func_num_args() && is_array($columns)) {
+        if (func_num_args() == 1 && is_array($columns)) {
             foreach ($columns as $column => $label) {
                 $this->column($column, $label);
             }
@@ -318,6 +333,18 @@ class Grid
     public function getColumns()
     {
         return $this->columns;
+    }
+
+    /**
+     * Set FixedFooter.
+     *
+     * @return $this
+     */
+    public function fixedFooter($set = true)
+    {
+        $this->fixedFooter = $set;
+
+        return $this;
     }
 
     /**
@@ -412,6 +439,8 @@ class Grid
 
     /**
      * Get the grid paginator.
+     *
+     * @return mixed
      */
     public function paginator()
     {
@@ -442,6 +471,8 @@ class Grid
 
     /**
      * Set per-page options.
+     *
+     * @param array $perPages
      */
     public function perPages(array $perPages)
     {
@@ -449,6 +480,8 @@ class Grid
     }
 
     /**
+     * @param bool $disable
+     *
      * @return $this
      */
     public function disablePerPageSelector(bool $disable = true)
@@ -477,7 +510,7 @@ class Grid
             return;
         }
 
-        $checkAllBox = "<input type=\"checkbox\" class=\"{$this->getSelectAllName()}\" />&nbsp;";
+        $checkAllBox = '<input type="checkbox" class="' . $this->getSelectAllName() . ' form-check-input" onchange="admin.grid.select_all(event,this)" id="grid-select-all" />&nbsp;';
 
         $this->prependColumn(Column::SELECT_COLUMN_NAME, ' ')
             ->displayUsing(Displayers\RowSelector::class)
@@ -565,6 +598,9 @@ class Grid
     /**
      * Build the grid rows.
      *
+     * @param array $data
+     * @param Collection $collection
+     *
      * @return void
      */
     protected function buildRows(array $data, Collection $collection)
@@ -581,9 +617,11 @@ class Grid
     /**
      * Set grid row callback function.
      *
+     * @param Closure $callable
+     *
      * @return Collection|null
      */
-    public function rows(?\Closure $callable = null)
+    public function rows(Closure $callable = null)
     {
         if (is_null($callable)) {
             return $this->rows;
@@ -733,9 +771,9 @@ class Grid
             return false;
         }
 
-        if ($relation instanceof Relations\HasOne
-            || $relation instanceof Relations\BelongsTo
-            || $relation instanceof Relations\MorphOne
+        if ($relation instanceof Relations\HasOne ||
+            $relation instanceof Relations\BelongsTo ||
+            $relation instanceof Relations\MorphOne
         ) {
             $this->model()->with($method);
 
@@ -760,6 +798,9 @@ class Grid
     /**
      * Dynamically add columns to the grid view.
      *
+     * @param $method
+     * @param $arguments
+     *
      * @return Column
      */
     public function __call($method, $arguments)
@@ -769,10 +810,6 @@ class Grid
         }
 
         $label = $arguments[0] ?? null;
-
-        if ($this->model()->eloquent() instanceof MongodbModel) {
-            return $this->addColumn($method, $label);
-        }
 
         if ($column = $this->handleGetMutatorColumn($method, $label)) {
             return $column;
@@ -843,6 +880,8 @@ class Grid
     /**
      * Set relation for grid.
      *
+     * @param Relations\Relation $relation
+     *
      * @return $this
      */
     public function setRelation(Relations\Relation $relation)
@@ -868,6 +907,8 @@ class Grid
 
     /**
      * Set rendering callback.
+     *
+     * @param callable $callback
      *
      * @return $this
      */

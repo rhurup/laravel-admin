@@ -1,11 +1,14 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
 use Illuminate\Support\Arr;
 
 class NotEqual extends AbstractFilter
 {
+    /**
+     * {@inheritdoc}
+     */
     public function condition($inputs)
     {
         $value = Arr::get($inputs, $this->column);

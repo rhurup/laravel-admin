@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Selectable;
+namespace OpenAdmin\Admin\Grid\Selectable;
 
-use Encore\Admin\Grid\Displayers\AbstractDisplayer;
+use OpenAdmin\Admin\Grid\Displayers\AbstractDisplayer;
 
 class Checkbox extends AbstractDisplayer
 {
@@ -10,8 +10,8 @@ class Checkbox extends AbstractDisplayer
     {
         $value = $this->getAttribute($key);
 
-        return <<<EOT
-<input type="checkbox" name="item" class="select" value="{$value}"/>
-EOT;
+        return <<<HTML
+<input type="checkbox" name="item" class="form-check-input" value="{$value}"/>
+HTML;
     }
 }

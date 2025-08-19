@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace OpenAdmin\Admin\Controllers;
 
 /**
  * Trait ModelForm.
  *
- * @deprecated use `HasResourceActions` instead
+ * @deprecated Use `HasResourceActions` instead.
  */
 trait ModelForm
 {

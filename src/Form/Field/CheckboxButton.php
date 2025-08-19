@@ -1,8 +1,6 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
-
-use Encore\Admin\Admin;
+namespace OpenAdmin\Admin\Form\Field;
 
 class CheckboxButton extends Checkbox
 {
@@ -11,32 +9,11 @@ class CheckboxButton extends Checkbox
      */
     protected $cascadeEvent = 'change';
 
-    protected function addScript()
-    {
-        $script = <<<'SCRIPT'
-$('.checkbox-group-toggle label').click(function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    if ($(this).hasClass('active')) {
-        $(this).removeClass('active');
-        $(this).find('input').prop('checked', false);
-    } else {
-        $(this).addClass('active');
-        $(this).find('input').prop('checked', true);
-    }
-
-    $(this).find('input').trigger('change');
-});
-SCRIPT;
-
-        Admin::script($script);
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
-        $this->addScript();
-
         $this->addCascadeScript();
 
         $this->addVariables([

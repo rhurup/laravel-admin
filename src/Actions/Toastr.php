@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Actions;
+namespace OpenAdmin\Admin\Actions;
 
 use Illuminate\Support\Arr;
 
@@ -36,6 +36,9 @@ class Toastr
     }
 
     /**
+     * @param $option
+     * @param $value
+     *
      * @return $this
      */
     protected function options($option, $value)
@@ -46,11 +49,33 @@ class Toastr
     }
 
     /**
+     * @param $position
+     *
      * @return Toastr
      */
     protected function position($position)
     {
-        return $this->options('positionClass', $position);
+        return $this->options('position', $position);
+    }
+
+    /**
+     * @param $position
+     *
+     * @return Toastr
+     */
+    protected function gravity($position)
+    {
+        return $this->options('gravity', $position);
+    }
+
+    /**
+     * @param $style
+     *
+     * @return Toastr
+     */
+    protected function style($style)
+    {
+        return $this->options('style', $style);
     }
 
     /**
@@ -58,7 +83,7 @@ class Toastr
      */
     public function topCenter()
     {
-        return $this->position('toast-top-center');
+        return $this->position('center')->gravity('top');
     }
 
     /**
@@ -66,7 +91,7 @@ class Toastr
      */
     public function topLeft()
     {
-        return $this->position('toast-top-left');
+        return $this->position('left')->gravity('top');
     }
 
     /**
@@ -74,7 +99,7 @@ class Toastr
      */
     public function topRight()
     {
-        return $this->position('toast-top-right');
+        return $this->position('right')->gravity('top');
     }
 
     /**
@@ -82,7 +107,7 @@ class Toastr
      */
     public function bottomLeft()
     {
-        return $this->position('toast-bottom-left');
+        return $this->position('left')->gravity('bottom');
     }
 
     /**
@@ -90,7 +115,7 @@ class Toastr
      */
     public function bottomCenter()
     {
-        return $this->position('toast-bottom-center');
+        return $this->position('center')->gravity('bottom');
     }
 
     /**
@@ -98,7 +123,7 @@ class Toastr
      */
     public function bottomRight()
     {
-        return $this->position('toast-bottom-right');
+        return $this->position('right')->gravity('bottom');
     }
 
     /**
@@ -106,7 +131,7 @@ class Toastr
      */
     public function topFullWidth()
     {
-        return $this->position('toast-top-full-width');
+        return $this->position('full')->gravity('top');
     }
 
     /**
@@ -114,7 +139,7 @@ class Toastr
      */
     public function bottomFullWidth()
     {
-        return $this->position('toast-bottom-full-width');
+        return $this->position('full')->gravity('bottom');
     }
 
     /**
@@ -122,7 +147,7 @@ class Toastr
      */
     public function timeout($timeout = 5000)
     {
-        return $this->options('timeOut', $timeout);
+        return $this->options('duration', $timeout);
     }
 
     /**
@@ -130,7 +155,7 @@ class Toastr
      */
     public function getOptions()
     {
-        if (!isset($this->options['positionClass'])) {
+        if (!isset($this->options['position'])) {
             $this->topCenter();
         }
 

@@ -1,10 +1,11 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
-use Encore\Admin\Tree\Tools;
+use Closure;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
+use OpenAdmin\Admin\Tree\Tools;
 
 class Tree implements Renderable
 {
@@ -46,7 +47,7 @@ class Tree implements Renderable
     /**
      * @var null
      */
-    protected $branchCallback;
+    protected $branchCallback = null;
 
     /**
      * @var bool
@@ -77,8 +78,10 @@ class Tree implements Renderable
 
     /**
      * Menu constructor.
+     *
+     * @param Model|null $model
      */
-    public function __construct(?Model $model = null, ?\Closure $callback = null)
+    public function __construct(Model $model = null, \Closure $callback = null)
     {
         $this->model = $model;
 
@@ -121,6 +124,8 @@ class Tree implements Renderable
 
     /**
      * Set branch callback.
+     *
+     * @param \Closure $branchCallback
      *
      * @return $this
      */
@@ -198,7 +203,7 @@ class Tree implements Renderable
     {
         $tree = json_decode($serialize, true);
 
-        if (JSON_ERROR_NONE !== json_last_error()) {
+        if (json_last_error() != JSON_ERROR_NONE) {
             throw new \InvalidArgumentException(json_last_error_msg());
         }
 
@@ -214,91 +219,12 @@ class Tree implements Renderable
      */
     protected function script()
     {
-        $trans = [
-            'delete_confirm' => str_replace("'", "\'", trans('admin.delete_confirm')),
-            'save_succeeded' => str_replace("'", "\'", trans('admin.save_succeeded')),
-            'refresh_succeeded' => str_replace("'", "\'", trans('admin.refresh_succeeded')),
-            'delete_succeeded' => str_replace("'", "\'", trans('admin.delete_succeeded')),
-            'confirm' => str_replace("'", "\'", trans('admin.confirm')),
-            'cancel' => str_replace("'", "\'", trans('admin.cancel')),
-        ];
-
         $nestableOptions = json_encode($this->nestableOptions);
 
         $url = url($this->path);
 
         return <<<SCRIPT
-
-        $('#{$this->elementId}').nestable($nestableOptions);
-
-        $('.tree_branch_delete').click(function() {
-            var id = $(this).data('id');
-            swal({
-                title: "{$trans['delete_confirm']}",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "{$trans['confirm']}",
-                showLoaderOnConfirm: true,
-                cancelButtonText: "{$trans['cancel']}",
-                preConfirm: function() {
-                    return new Promise(function(resolve) {
-                        $.ajax({
-                            method: 'post',
-                            url: '{$url}/' + id,
-                            data: {
-                                _method:'delete',
-                                _token:LA.token,
-                            },
-                            success: function (data) {
-                                $.pjax.reload('#pjax-container');
-                                toastr.success('{$trans['delete_succeeded']}');
-                                resolve(data);
-                            }
-                        });
-                    });
-                }
-            }).then(function(result) {
-                var data = result.value;
-                if (typeof data === 'object') {
-                    if (data.status) {
-                        swal(data.message, '', 'success');
-                    } else {
-                        swal(data.message, '', 'error');
-                    }
-                }
-            });
-        });
-
-        $('.{$this->elementId}-save').click(function () {
-            var serialize = $('#{$this->elementId}').nestable('serialize');
-
-            $.post('{$url}', {
-                _token: LA.token,
-                _order: JSON.stringify(serialize)
-            },
-            function(data){
-                $.pjax.reload('#pjax-container');
-                toastr.success('{$trans['save_succeeded']}');
-            });
-        });
-
-        $('.{$this->elementId}-refresh').click(function () {
-            $.pjax.reload('#pjax-container');
-            toastr.success('{$trans['refresh_succeeded']}');
-        });
-
-        $('.{$this->elementId}-tree-tools').on('click', function(e){
-            var action = $(this).data('action');
-            if (action === 'expand') {
-                $('.dd').nestable('expandAll');
-            }
-            if (action === 'collapse') {
-                $('.dd').nestable('collapseAll');
-            }
-        });
-
-
+            admin.tree.init('{$this->elementId}','{$nestableOptions}','{$url}');
 SCRIPT;
     }
 
@@ -342,9 +268,11 @@ SCRIPT;
     /**
      * Setup grid tools.
      *
+     * @param Closure $callback
+     *
      * @return void
      */
-    public function tools(\Closure $callback)
+    public function tools(Closure $callback)
     {
         call_user_func($callback, $this->tools);
     }

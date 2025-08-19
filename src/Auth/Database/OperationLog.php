@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Auth\Database;
+namespace OpenAdmin\Admin\Auth\Database;
 
-use Encore\Admin\Traits\DefaultDatetimeFormat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use OpenAdmin\Admin\Traits\DefaultDatetimeFormat;
 
 class OperationLog extends Model
 {
@@ -13,10 +13,10 @@ class OperationLog extends Model
     protected $fillable = ['user_id', 'path', 'method', 'ip', 'input'];
 
     public static $methodColors = [
-        'GET' => 'green',
-        'POST' => 'yellow',
-        'PUT' => 'blue',
-        'DELETE' => 'red',
+        'GET' => 'success',
+        'POST' => 'primary',
+        'PUT' => 'info',
+        'DELETE' => 'danger',
     ];
 
     public static $methods = [
@@ -26,6 +26,8 @@ class OperationLog extends Model
 
     /**
      * Create a new Eloquent model instance.
+     *
+     * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -40,6 +42,8 @@ class OperationLog extends Model
 
     /**
      * Log belongs to users.
+     *
+     * @return BelongsTo
      */
     public function user(): BelongsTo
     {

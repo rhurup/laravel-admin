@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Middleware;
+namespace OpenAdmin\Admin\Middleware;
 
-use Encore\Admin\Auth\Permission as Checker;
-use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Auth\Permission as Checker;
+use OpenAdmin\Admin\Facades\Admin;
 
 class Permission
 {
@@ -17,11 +17,15 @@ class Permission
     /**
      * Handle an incoming request.
      *
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @param array $args
+     *
+     * @return mixed
      */
     public function handle(Request $request, \Closure $next, ...$args)
     {
-        if (false === config('admin.check_route_permission')) {
+        if (config('admin.check_route_permission') === false) {
             return $next($request);
         }
 
@@ -45,6 +49,8 @@ class Permission
     /**
      * If the route of current request contains a middleware prefixed with 'admin.permission:',
      * then it has a manually set permission middleware, we need to handle it first.
+     *
+     * @param Request $request
      *
      * @return bool
      */
@@ -72,7 +78,7 @@ class Permission
     /**
      * Determine if the request has a URI that should pass through verification.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return bool
      */
@@ -91,7 +97,7 @@ class Permission
         return collect($excepts)
             ->map('admin_base_path')
             ->contains(function ($except) use ($request) {
-                if ('/' !== $except) {
+                if ($except !== '/') {
                     $except = trim($except, '/');
                 }
 

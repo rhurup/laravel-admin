@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace OpenAdmin\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Tools\ColumnSelector;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Grid\Tools\ColumnSelector;
 
 trait CanHidesColumns
 {
@@ -17,6 +17,8 @@ trait CanHidesColumns
 
     /**
      * Remove column selector on grid.
+     *
+     * @param bool $disable
      *
      * @return Grid|mixed
      */
@@ -68,9 +70,7 @@ trait CanHidesColumns
      */
     protected function getVisibleColumnsFromQuery()
     {
-        $requestColumn = request(ColumnSelector::SELECT_COLUMN_NAME);
-
-        $columns = $requestColumn ? explode(',', $requestColumn) : [];
+        $columns = explode(',', request(ColumnSelector::SELECT_COLUMN_NAME) ?? '');
 
         return array_filter($columns) ?:
             array_values(array_diff($this->columnNames, $this->hiddenColumns));

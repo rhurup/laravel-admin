@@ -1,16 +1,17 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace OpenAdmin\Admin\Controllers;
 
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use OpenAdmin\Admin\Facades\Admin;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Layout\Content;
 
 class AuthController extends Controller
 {
@@ -35,16 +36,29 @@ class AuthController extends Controller
 
     /**
      * Handle a login request.
+     *
+     * @param Request $request
+     *
+     * @return mixed
      */
     public function postLogin(Request $request)
     {
+        $rate_limit_key = 'login-tries-' . Admin::guardName();
+
         $this->loginValidator($request->all())->validate();
 
         $credentials = $request->only([$this->username(), 'password']);
         $remember = $request->get('remember', false);
 
         if ($this->guard()->attempt($credentials, $remember)) {
+            RateLimiter::clear($rate_limit_key);
+
             return $this->sendLoginResponse($request);
+        }
+
+        if (config('admin.auth.throttle_logins')) {
+            $throttle_timeout = config('admin.auth.throttle_timeout', 600);
+            RateLimiter::hit($rate_limit_key, $throttle_timeout);
         }
 
         return back()->withInput()->withErrors([
@@ -54,6 +68,8 @@ class AuthController extends Controller
 
     /**
      * Get a validator for an incoming login request.
+     *
+     * @param array $data
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
@@ -81,6 +97,8 @@ class AuthController extends Controller
 
     /**
      * User setting page.
+     *
+     * @param Content $content
      *
      * @return Content
      */
@@ -135,7 +153,7 @@ class AuthController extends Controller
         $form->ignore(['password_confirmation']);
 
         $form->saving(function (Form $form) {
-            if ($form->password && $form->model()->password !== $form->password) {
+            if ($form->password && $form->model()->password != $form->password) {
                 $form->password = Hash::make($form->password);
             }
         });
@@ -176,7 +194,9 @@ class AuthController extends Controller
     /**
      * Send the response after the user was authenticated.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
      */
     protected function sendLoginResponse(Request $request)
     {

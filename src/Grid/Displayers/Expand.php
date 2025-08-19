@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Grid\Simple;
 use Illuminate\Contracts\Support\Renderable;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Grid\Simple;
 
 class Expand extends AbstractDisplayer
 {
@@ -27,7 +27,7 @@ class Expand extends AbstractDisplayer
         return Admin::component('admin::components.column-expand', [
             'key' => $this->getKey(),
             'url' => $this->getLoadUrl(),
-            'name' => str_replace('.', '-', $this->getName()).'-'.$this->getKey(),
+            'name' => str_replace('.', '-', $this->getName()) . '-' . $this->getKey(),
             'html' => $html,
             'value' => $this->value,
             'async' => $async,
@@ -38,6 +38,8 @@ class Expand extends AbstractDisplayer
     }
 
     /**
+     * @param int $multiple
+     *
      * @return string
      */
     protected function getLoadUrl()

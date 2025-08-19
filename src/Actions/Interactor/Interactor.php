@@ -1,34 +1,39 @@
 <?php
 
-namespace Encore\Admin\Actions\Interactor;
+namespace OpenAdmin\Admin\Actions\Interactor;
 
-use Encore\Admin\Actions\Action;
+use OpenAdmin\Admin\Actions\Action;
 
 abstract class Interactor
 {
     /**
      * @var Action
      */
-    protected $action;
+    public $action;
 
     /**
      * @var array
      */
     public static $elements = [
-        'success', 'error', 'warning', 'info', 'question', 'confirm',
-        'text', 'email', 'integer', 'ip', 'url', 'password', 'mobile',
-        'textarea', 'select', 'multipleSelect', 'checkbox', 'radio',
+        'addValues', 'getRow', 'success', 'error', 'warning', 'info', 'question', 'confirm',
+        'text', 'email', 'integer', 'ip', 'url', 'password', 'phonenumber',
+        'textarea', 'map', 'select', 'multipleSelect', 'checkbox', 'radio',
         'file', 'image', 'date', 'datetime', 'time', 'hidden', 'multipleImage',
         'multipleFile', 'modalLarge', 'modalSmall',
     ];
 
     /**
      * Dialog constructor.
+     *
+     * @param Action $action
      */
     public function __construct(Action $action)
     {
         $this->action = $action;
     }
 
+    /**
+     * @return mixed
+     */
     abstract public function addScript();
 }

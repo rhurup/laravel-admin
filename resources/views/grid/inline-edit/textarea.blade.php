@@ -1,19 +1,23 @@
 @extends('admin::grid.inline-edit.comm')
+@php
+    $type = "textarea";
+@endphp
 
 @section('field')
-    <textarea class="form-control ie-input" rows="{{ $rows }}"></textarea>
+    <textarea class="form-control ie-input" rows="{{ $rows }}">{{$value}}</textarea>
 @endsection
 
 @section('assert')
     <script>
-        @component('admin::grid.inline-edit.partials.popover', compact('trigger'))
-            @slot('content')
-                $template.find('textarea').text($trigger.data('value'));
-            @endslot
-            @slot('shown')
-                $popover.find('.ie-input').focus();
-            @endslot
-        @endcomponent
+        admin.grid.inline_edit.functions['{{ $trigger }}'] = {
+            content: function (trigger, content) {
+                //content.querySelector('select').value = trigger.dataset.value;
+            },
+            shown: function (trigger, content) {
+            },
+            returnValue: function (trigger, content) {
+            }
+        }
     </script>
 
     {{--after submit--}}

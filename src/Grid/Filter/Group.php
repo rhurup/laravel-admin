@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
-use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Admin;
 
 class Group extends AbstractFilter
 {
@@ -20,6 +20,8 @@ class Group extends AbstractFilter
 
     /**
      * Input value from presenter.
+     *
+     * @var mixed
      */
     public $input;
 
@@ -28,8 +30,9 @@ class Group extends AbstractFilter
      *
      * @param string $column
      * @param string $label
+     * @param \Closure|null $builder
      */
-    public function __construct($column, $label = '', ?\Closure $builder = null)
+    public function __construct($column, $label = '', \Closure $builder = null)
     {
         $this->column = $column;
 
@@ -60,6 +63,7 @@ class Group extends AbstractFilter
      * Join a query to group.
      *
      * @param string $label
+     * @param array $condition
      *
      * @return $this
      */
@@ -167,6 +171,7 @@ class Group extends AbstractFilter
      * Specify a where query.
      *
      * @param string $label
+     * @param \Closure $builder
      *
      * @return Group
      */
@@ -252,6 +257,9 @@ class Group extends AbstractFilter
         return $this->joinGroup($label, $condition);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function condition($inputs)
     {
         $value = Arr::get($inputs, $this->column);
@@ -276,16 +284,26 @@ class Group extends AbstractFilter
      */
     protected function injectScript()
     {
-        $script = <<<SCRIPT
-$(".{$this->name} li a").click(function(){
-    $(".{$this->name}-label").text($(this).text());
-    $(".{$this->name}-operation").val($(this).data('index'));
+        $script = <<<JS
+document.querySelectorAll(".{$this->name} li a").forEach(el=>{
+    el.addEventListener("click",function(e){
+
+        document.querySelector(".{$this->name}-label").innerText = el.innerText;
+        document.querySelector(".{$this->name}-operation").value = el.dataset.index;
+
+        e.preventDefault();
+        return false;
+    });
+
 });
-SCRIPT;
+JS;
 
         Admin::script($script);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function variables()
     {
         $select = request("{$this->id}_group");
@@ -298,6 +316,9 @@ SCRIPT;
         ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
         $this->injectScript();

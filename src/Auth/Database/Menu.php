@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\Admin\Auth\Database;
+namespace OpenAdmin\Admin\Auth\Database;
 
-use Encore\Admin\Traits\DefaultDatetimeFormat;
-use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
+use OpenAdmin\Admin\Traits\DefaultDatetimeFormat;
+use OpenAdmin\Admin\Traits\ModelTree;
 
 /**
  * Class Menu.
@@ -31,6 +31,8 @@ class Menu extends Model
 
     /**
      * Create a new Eloquent model instance.
+     *
+     * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -45,6 +47,8 @@ class Menu extends Model
 
     /**
      * A Menu belongs to many roles.
+     *
+     * @return BelongsToMany
      */
     public function roles(): BelongsToMany
     {
@@ -55,6 +59,9 @@ class Menu extends Model
         return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'role_id');
     }
 
+    /**
+     * @return array
+     */
     public function allNodes(): array
     {
         $connection = config('admin.database.connection') ?: config('database.default');
@@ -64,7 +71,7 @@ class Menu extends Model
 
         $query = static::query();
 
-        if (false !== config('admin.check_menu_roles')) {
+        if (config('admin.check_menu_roles') !== false) {
             $query->with('roles');
         }
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace OpenAdmin\Admin\Form;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Form\Field\Hidden;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Form\Field\Hidden;
 
 /**
  * Class Builder.
@@ -20,6 +20,9 @@ class Builder
      */
     public const PREVIOUS_URL_KEY = '_previous_';
 
+    /**
+     * @var mixed
+     */
     protected $id;
 
     /**
@@ -27,6 +30,9 @@ class Builder
      */
     protected $form;
 
+    /**
+     * @var
+     */
     protected $action;
 
     /**
@@ -99,7 +105,7 @@ class Builder
     /**
      * Builder constructor.
      *
-     * @return void
+     * @param Form $form
      */
     public function __construct(Form $form)
     {
@@ -112,8 +118,6 @@ class Builder
 
     /**
      * Do initialize.
-     *
-     * @return void
      */
     public function init()
     {
@@ -155,6 +159,9 @@ class Builder
         $this->mode = $mode;
     }
 
+    /**
+     * @return string
+     */
     public function getMode(): string
     {
         return $this->mode;
@@ -163,7 +170,9 @@ class Builder
     /**
      * Returns builder is $mode.
      *
-     * @param string $mode
+     * @param $mode
+     *
+     * @return bool
      */
     public function isMode($mode): bool
     {
@@ -172,6 +181,8 @@ class Builder
 
     /**
      * Check if is creating resource.
+     *
+     * @return bool
      */
     public function isCreating(): bool
     {
@@ -180,6 +191,8 @@ class Builder
 
     /**
      * Check if is editing resource.
+     *
+     * @return bool
      */
     public function isEditing(): bool
     {
@@ -188,6 +201,8 @@ class Builder
 
     /**
      * Set resource Id.
+     *
+     * @param $id
      *
      * @return void
      */
@@ -198,18 +213,25 @@ class Builder
 
     /**
      * Get Resource id.
+     *
+     * @return mixed
      */
     public function getResourceId()
     {
         return $this->id;
     }
 
-    public function getResource(?int $slice = null): string
+    /**
+     * @param int|null $slice
+     *
+     * @return string
+     */
+    public function getResource(int $slice = null): string
     {
-        if (self::MODE_CREATE === $this->mode) {
+        if ($this->mode === self::MODE_CREATE) {
             return $this->form->resource(-1);
         }
-        if (null !== $slice) {
+        if ($slice !== null) {
             return $this->form->resource($slice);
         }
 
@@ -234,6 +256,8 @@ class Builder
 
     /**
      * Get label and field width.
+     *
+     * @return array
      */
     public function getWidth(): array
     {
@@ -244,8 +268,6 @@ class Builder
      * Set form action.
      *
      * @param string $action
-     *
-     * @return void
      */
     public function setAction($action)
     {
@@ -254,6 +276,8 @@ class Builder
 
     /**
      * Get Form action.
+     *
+     * @return string
      */
     public function getAction(): string
     {
@@ -302,6 +326,8 @@ class Builder
 
     /**
      * Get fields of this builder.
+     *
+     * @return Collection
      */
     public function fields(): Collection
     {
@@ -312,6 +338,8 @@ class Builder
      * Get specify field.
      *
      * @param string $name
+     *
+     * @return mixed
      */
     public function field($name)
     {
@@ -322,6 +350,8 @@ class Builder
 
     /**
      * If the parant form has rows.
+     *
+     * @return bool
      */
     public function hasRows(): bool
     {
@@ -330,18 +360,25 @@ class Builder
 
     /**
      * Get field rows of form.
+     *
+     * @return array
      */
     public function getRows(): array
     {
         return $this->form->rows;
     }
 
+    /**
+     * @return array
+     */
     public function getHiddenFields(): array
     {
         return $this->hiddenFields;
     }
 
     /**
+     * @param Field $field
+     *
      * @return void
      */
     public function addHiddenField(Field $field)
@@ -369,12 +406,13 @@ class Builder
      * Get or set option.
      *
      * @param string $option
+     * @param mixed $value
      *
      * @return $this
      */
     public function option($option, $value = null)
     {
-        if (1 === func_num_args()) {
+        if (func_num_args() === 1) {
             return Arr::get($this->options, $option);
         }
 
@@ -383,6 +421,9 @@ class Builder
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function title(): string
     {
         if ($this->title) {
@@ -402,6 +443,8 @@ class Builder
 
     /**
      * Determine if form fields has files.
+     *
+     * @return bool
      */
     public function hasFile(): bool
     {
@@ -422,13 +465,21 @@ class Builder
     protected function addRedirectUrlField()
     {
         $previous = URL::previous();
+        $current = URL::current();
+        $full = URL::full();
 
-        if (!$previous || $previous === URL::current()) {
+        if (!$previous || $previous === $current || $previous === $full) {
             return;
         }
 
+        $set_previous = $previous;
+        $ids = request('ids');
+        if (!empty($ids)) {
+            $set_previous = $current . '?ids[]=' . implode('&ids[]=', $ids);
+        }
+
         if (Str::contains($previous, url($this->getResource()))) {
-            $this->addHiddenField((new Hidden(static::PREVIOUS_URL_KEY))->value($previous));
+            $this->addHiddenField((new Hidden(static::PREVIOUS_URL_KEY))->value($set_previous));
         }
     }
 
@@ -436,36 +487,33 @@ class Builder
      * Open up a new HTML form.
      *
      * @param array $options
+     *
+     * @return string
      */
     public function open($options = []): string
     {
-        $attributes = [];
-
         if ($this->isMode(self::MODE_EDIT)) {
             $this->addHiddenField((new Hidden('_method'))->value('PUT'));
         }
-
         $this->addRedirectUrlField();
 
+        $attributes = [];
         $attributes['action'] = $this->getAction();
         $attributes['method'] = Arr::get($options, 'method', 'post');
-        $attributes['class'] = implode(' ', ['form-horizontal', $this->formClass]);
-        $attributes['accept-charset'] = 'UTF-8';
-
+        $attributes['class'] = $this->formClass;
         if ($this->hasFile()) {
             $attributes['enctype'] = 'multipart/form-data';
         }
 
-        $html = [];
-        foreach ($attributes as $name => $value) {
-            $html[] = "$name=\"$value\"";
-        }
+        $attributes_str = $this->form->formatAttribute($attributes);
 
-        return '<form '.implode(' ', $html).' pjax-container>';
+        return '<form ' . $attributes_str . '>';
     }
 
     /**
      * Close the current form.
+     *
+     * @return string
      */
     public function close(): string
     {
@@ -476,7 +524,7 @@ class Builder
     }
 
     /**
-     * @return void
+     * @param string $message
      */
     public function confirm(string $message)
     {
@@ -485,11 +533,11 @@ class Builder
             'cancel' => trans('admin.cancel'),
         ];
 
-        $script = <<<SCRIPT
-$('form.{$this->formClass} button[type=submit]').click(function (e) {
+        $script = <<<JS
+document.querySelector('form.{$this->formClass} button[type=submit]').addEventListener("click",function (e) {
     e.preventDefault();
-    var form = $(this).parents('form');
-    swal({
+    var form = e.target.closest('form');
+    Swal.fire({
         title: "$message",
         type: "warning",
         showCancelButton: true,
@@ -497,12 +545,15 @@ $('form.{$this->formClass} button[type=submit]').click(function (e) {
         confirmButtonText: "{$trans['confirm']}",
         cancelButtonText: "{$trans['cancel']}",
     }).then(function (result) {
-        if (result.value) {
-          form.submit();
+        if (result.value == true) {
+            if (admin.form.validate(form)){
+                form.dispatchEvent(new Event('submit', { cancelable: true }));
+            }
         }
     });
+
 });
-SCRIPT;
+JS;
 
         Admin::script($script);
     }
@@ -536,6 +587,8 @@ SCRIPT;
 
     /**
      * Render form header tools.
+     *
+     * @return string
      */
     public function renderTools(): string
     {
@@ -544,76 +597,33 @@ SCRIPT;
 
     /**
      * Render form footer.
+     *
+     * @return string
      */
     public function renderFooter(): string
     {
         return $this->footer->render();
     }
 
-    /**
-     * Add script for tab form.
-     *
-     * @return void
-     */
-    protected function addTabformScript()
-    {
-        $script = <<<'SCRIPT'
-
-var hash = document.location.hash;
-if (hash) {
-    $('.nav-tabs a[href="' + hash + '"]').tab('show');
-}
-
-// Change hash for page-reload
-$('.nav-tabs a').on('shown.bs.tab', function (e) {
-    history.pushState(null,null, e.target.hash);
-});
-
-if ($('.has-error').length) {
-    $('.has-error').each(function () {
-        var tabId = '#'+$(this).closest('.tab-pane').attr('id');
-        $('li a[href="'+tabId+'"] i').removeClass('hide');
-    });
-
-    var first = $('.has-error:first').closest('.tab-pane').attr('id');
-    $('li a[href="#'+first+'"]').tab('show');
-}
-
-SCRIPT;
-        Admin::script($script);
-    }
-
-    /**
-     * Add script for cascade.
-     *
-     * @return void
-     */
     protected function addCascadeScript()
     {
-        $script = <<<SCRIPT
-;(function () {
-    $('form.{$this->formClass}').submit(function (e) {
-        e.preventDefault();
-        $(this).find('div.cascade-group.hide :input').attr('disabled', true);
-    });
-})();
-SCRIPT;
+        $script = <<<JS
+        admin.form.disable_cascaded_forms("form.{$this->formClass}");
+JS;
 
         Admin::script($script);
     }
 
     /**
      * Render form.
+     *
+     * @return string
      */
     public function render(): string
     {
         $this->removeReservedFields();
 
         $tabObj = $this->form->setTab();
-
-        if (!$tabObj->isEmpty()) {
-            $this->addTabformScript();
-        }
 
         $this->addCascadeScript();
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Exporters;
+namespace OpenAdmin\Admin\Grid\Exporters;
 
-use Encore\Admin\Grid\Column;
+use OpenAdmin\Admin\Grid\Column;
 
 class CsvExporter extends AbstractExporter
 {
@@ -47,6 +47,8 @@ class CsvExporter extends AbstractExporter
     protected $columnUseOriginalValue;
 
     /**
+     * @param string $filename
+     *
      * @return $this
      */
     public function filename(string $filename = ''): self
@@ -56,6 +58,9 @@ class CsvExporter extends AbstractExporter
         return $this;
     }
 
+    /**
+     * @param \Closure $closure
+     */
     public function setCallback(\Closure $closure): self
     {
         $this->callback = $closure;
@@ -64,6 +69,8 @@ class CsvExporter extends AbstractExporter
     }
 
     /**
+     * @param array $columns
+     *
      * @return $this
      */
     public function except(array $columns = []): self
@@ -74,6 +81,8 @@ class CsvExporter extends AbstractExporter
     }
 
     /**
+     * @param array $columns
+     *
      * @return $this
      */
     public function only(array $columns = []): self
@@ -96,6 +105,9 @@ class CsvExporter extends AbstractExporter
     }
 
     /**
+     * @param string $name
+     * @param \Closure $callback
+     *
      * @return $this
      */
     public function column(string $name, \Closure $callback): self
@@ -106,6 +118,9 @@ class CsvExporter extends AbstractExporter
     }
 
     /**
+     * @param string $name
+     * @param \Closure $callback
+     *
      * @return $this
      */
     public function title(string $name, \Closure $callback): self
@@ -133,6 +148,9 @@ class CsvExporter extends AbstractExporter
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function export()
     {
         if ($this->callback) {
@@ -142,7 +160,7 @@ class CsvExporter extends AbstractExporter
         $response = function () {
             $handle = fopen('php://output', 'w');
             $titles = [];
-            fwrite($handle, chr(0xEF).chr(0xBB).chr(0xBF)); // 导出的CSV文件是无BOM编码UTF-8，而我们通常使用UTF-8编码格式都是有BOM的。所以添加BOM于CSV中
+
             $this->chunk(function ($collection) use ($handle, &$titles) {
                 Column::setOriginalGridModels($collection);
 
@@ -200,6 +218,12 @@ class CsvExporter extends AbstractExporter
         return $titles->values()->toArray();
     }
 
+    /**
+     * @param array $value
+     * @param array $original
+     *
+     * @return array
+     */
     public function getVisiableFields(array $value, array $original): array
     {
         $fields = [];
@@ -215,6 +239,13 @@ class CsvExporter extends AbstractExporter
         return $fields;
     }
 
+    /**
+     * @param string $column
+     * @param mixed $value
+     * @param mixed $original
+     *
+     * @return mixed
+     */
     protected function getColumnValue(string $column, $value, $original)
     {
         if (!empty($this->columnUseOriginalValue)

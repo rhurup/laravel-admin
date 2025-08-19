@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace OpenAdmin\Admin\Form;
 
-use Encore\Admin\Form;
-use Encore\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Widgets\Form as WidgetForm;
 
 /**
  * Class EmbeddedForm.
@@ -22,7 +22,7 @@ use Illuminate\Support\Collection;
  * @method Field\Url            url($column, $label = '')
  * @method Field\Color          color($column, $label = '')
  * @method Field\Email          email($column, $label = '')
- * @method Field\Mobile         mobile($column, $label = '')
+ * @method Field\PhoneNumber    phonenumber($column, $label = '')
  * @method Field\Slider         slider($column, $label = '')
  * @method Field\Map            map($latitude, $longitude, $label = '')
  * @method Field\Editor         editor($column, $label = '')
@@ -55,7 +55,7 @@ class EmbeddedForm
     /**
      * @var Form|WidgetForm
      */
-    protected $parent;
+    protected $parent = null;
 
     /**
      * Fields in form.
@@ -103,6 +103,8 @@ class EmbeddedForm
     /**
      * Set parent form for this form.
      *
+     * @param Form $parent
+     *
      * @return $this
      */
     public function setParent(Form $parent)
@@ -114,6 +116,8 @@ class EmbeddedForm
 
     /**
      * Set parent form for this form.
+     *
+     * @param WidgetForm $parent
      *
      * @return $this
      */
@@ -150,6 +154,8 @@ class EmbeddedForm
      * Prepare for insert or update.
      *
      * @param array $input
+     *
+     * @return mixed
      */
     public function prepare($input)
     {
@@ -166,6 +172,8 @@ class EmbeddedForm
      *
      * @param string $key
      * @param string $record
+     *
+     * @return mixed
      */
     protected function prepareValue($key, $record)
     {
@@ -201,6 +209,8 @@ class EmbeddedForm
     /**
      * Fill data to all fields in form.
      *
+     * @param array $data
+     *
      * @return $this
      */
     public function fill(array $data)
@@ -214,6 +224,8 @@ class EmbeddedForm
 
     /**
      * Format form, set `element name` `error key` and `element class`.
+     *
+     * @param Field $field
      *
      * @return Field
      */
@@ -244,6 +256,8 @@ class EmbeddedForm
 
     /**
      * Add a field to form.
+     *
+     * @param Field $field
      *
      * @return $this
      */

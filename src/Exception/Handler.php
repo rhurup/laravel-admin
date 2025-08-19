@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Exception;
+namespace OpenAdmin\Admin\Exception;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
@@ -9,6 +9,8 @@ class Handler
 {
     /**
      * Render exception.
+     *
+     * @param \Exception $exception
      *
      * @return string
      */
@@ -33,6 +35,8 @@ class Handler
      *
      * @param string $title
      * @param string $message
+     *
+     * @return mixed
      */
     public static function error($title = '', $message = '')
     {

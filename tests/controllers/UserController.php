@@ -2,9 +2,9 @@
 
 namespace Tests\Controllers;
 
-use Encore\Admin\Controllers\AdminController;
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
+use OpenAdmin\Admin\Controllers\AdminController;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Grid;
 use Tests\Models\Tag;
 use Tests\Models\User;
 
@@ -66,7 +66,7 @@ class UserController extends AdminController
         });
 
         $grid->actions(function ($actions) {
-            if (0 === $actions->getKey() % 2) {
+            if ($actions->getKey() % 2 == 0) {
                 $actions->append('<a href="/" class="btn btn-xs btn-danger">detail</a>');
             }
         });
@@ -106,7 +106,7 @@ class UserController extends AdminController
         $form->datetime('profile.start_at');
         $form->datetime('profile.end_at');
 
-        $form->multipleSelect('tags', 'Tags')->options(Tag::all()->pluck('name', 'id')); // ->rules('max:10|min:3');
+        $form->multipleSelect('tags', 'Tags')->options(Tag::all()->pluck('name', 'id')); //->rules('max:10|min:3');
 
         $form->display('created_at', 'Created At');
         $form->display('updated_at', 'Updated At');

@@ -1,21 +1,24 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace OpenAdmin\Admin\Controllers;
 
-use Encore\Admin\Actions\Action;
-use Encore\Admin\Actions\GridAction;
-use Encore\Admin\Actions\Response;
-use Encore\Admin\Actions\RowAction;
-use Encore\Admin\Widgets\Form;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Actions\Action;
+use OpenAdmin\Admin\Actions\GridAction;
+use OpenAdmin\Admin\Actions\Response;
+use OpenAdmin\Admin\Actions\RowAction;
+use OpenAdmin\Admin\Widgets\Form;
 
 class HandleController extends Controller
 {
     /**
+     * @param Request $request
+     *
      * @return $this|mixed
      */
     public function handleForm(Request $request)
@@ -30,33 +33,37 @@ class HandleController extends Controller
     }
 
     /**
-     * @return Form
+     * @param Request $request
      *
-     * @throws \Exception
+     * @return Form
+     * @throws Exception
+     *
      */
     protected function resolveForm(Request $request)
     {
         if (!$request->has('_form_')) {
-            throw new \Exception('Invalid form request.');
+            throw new Exception('Invalid form request.');
         }
 
         $formClass = $request->get('_form_');
 
         if (!class_exists($formClass)) {
-            throw new \Exception("Form [{$formClass}] does not exist.");
+            throw new Exception("Form [{$formClass}] does not exist.");
         }
 
         /** @var Form $form */
         $form = app($formClass);
 
         if (!method_exists($form, 'handle')) {
-            throw new \Exception("Form method {$formClass}::handle() does not exist.");
+            throw new Exception("Form method {$formClass}::handle() does not exist.");
         }
 
         return $form;
     }
 
     /**
+     * @param Request $request
+     *
      * @return $this|\Illuminate\Http\JsonResponse
      */
     public function handleAction(Request $request)
@@ -83,7 +90,7 @@ class HandleController extends Controller
             $response = $action->validate($request)->handle(
                 ...$this->resolveActionArgs($request, ...$arguments)
             );
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return Response::withException($exception)->send();
         }
 
@@ -93,33 +100,36 @@ class HandleController extends Controller
     }
 
     /**
-     * @return Action
+     * @param Request $request
      *
-     * @throws \Exception
+     * @return Action
+     * @throws Exception
+     *
      */
     protected function resolveActionInstance(Request $request)
     {
         if (!$request->has('_action')) {
-            throw new \Exception('Invalid action request.');
+            throw new Exception('Invalid action request.');
         }
 
         $actionClass = str_replace('_', '\\', $request->get('_action'));
 
         if (!class_exists($actionClass)) {
-            throw new \Exception("Form [{$actionClass}] does not exist.");
+            throw new Exception("Form [{$actionClass}] does not exist.");
         }
 
         /** @var GridAction $form */
         $action = app($actionClass);
 
         if (!method_exists($action, 'handle')) {
-            throw new \Exception("Action method {$actionClass}::handle() does not exist.");
+            throw new Exception("Action method {$actionClass}::handle() does not exist.");
         }
 
         return $action;
     }
 
     /**
+     * @param Request $request
      * @param Model|Collection|bool $model
      *
      * @return array
@@ -136,6 +146,8 @@ class HandleController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
      * @return mixed|string|string[]
      */
     public function handleSelectable(Request $request)
@@ -146,7 +158,7 @@ class HandleController extends Controller
         $class = str_replace('_', '\\', $class);
 
         if (class_exists($class)) {
-            /** @var \Encore\Admin\Grid\Selectable $selectable */
+            /** @var \OpenAdmin\Admin\Grid\Selectable $selectable */
             $selectable = new $class(...array_values($args));
 
             return $selectable->render();
@@ -156,6 +168,8 @@ class HandleController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
      * @return mixed|string|string[]
      */
     public function handleRenderable(Request $request)

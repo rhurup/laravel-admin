@@ -1,17 +1,17 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
-use Encore\Admin\Grid\Filter;
-use Encore\Admin\Grid\Filter\Presenter\Checkbox;
-use Encore\Admin\Grid\Filter\Presenter\DateTime;
-use Encore\Admin\Grid\Filter\Presenter\MultipleSelect;
-use Encore\Admin\Grid\Filter\Presenter\Presenter;
-use Encore\Admin\Grid\Filter\Presenter\Radio;
-use Encore\Admin\Grid\Filter\Presenter\Select;
-use Encore\Admin\Grid\Filter\Presenter\Text;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Grid\Filter;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Checkbox;
+use OpenAdmin\Admin\Grid\Filter\Presenter\DateTime;
+use OpenAdmin\Admin\Grid\Filter\Presenter\MultipleSelect;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Presenter;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Radio;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Select;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Text;
 
 /**
  * Class AbstractFilter.
@@ -24,7 +24,7 @@ use Illuminate\Support\Collection;
  * @method Text percentage($options = [])
  * @method Text ip()
  * @method Text mac()
- * @method Text mobile($mask = '19999999999')
+ * @method Text phonenumber($mask = '19999999999')
  * @method Text inputmask($options = [], $icon = '')
  * @method Text placeholder($placeholder = '')
  */
@@ -96,6 +96,7 @@ abstract class AbstractFilter
     /**
      * AbstractFilter constructor.
      *
+     * @param $column
      * @param string $label
      */
     public function __construct($column, $label = '')
@@ -142,7 +143,7 @@ abstract class AbstractFilter
     {
         $columns = explode('.', $column);
 
-        if (1 === count($columns)) {
+        if (count($columns) == 1) {
             $name = $columns[0];
         } else {
             $name = array_shift($columns);
@@ -159,6 +160,8 @@ abstract class AbstractFilter
     /**
      * Format id.
      *
+     * @param $columns
+     *
      * @return array|string
      */
     protected function formatId($columns)
@@ -166,6 +169,9 @@ abstract class AbstractFilter
         return str_replace('.', '_', $columns);
     }
 
+    /**
+     * @param Filter $filter
+     */
     public function setParent(Filter $filter)
     {
         $this->parent = $filter;
@@ -254,7 +260,7 @@ abstract class AbstractFilter
     /**
      * Select filter.
      *
-     * @param array|Collection $options
+     * @param array|\Illuminate\Support\Collection $options
      *
      * @return Select
      */
@@ -264,7 +270,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array|Collection $options
+     * @param array|\Illuminate\Support\Collection $options
      *
      * @return MultipleSelect
      */
@@ -274,7 +280,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array|Collection $options
+     * @param array|\Illuminate\Support\Collection $options
      *
      * @return Radio
      */
@@ -284,7 +290,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array|Collection $options
+     * @param array|\Illuminate\Support\Collection $options
      *
      * @return Checkbox
      */
@@ -296,7 +302,7 @@ abstract class AbstractFilter
     /**
      * Datetime filter.
      *
-     * @param array|Collection $options
+     * @param array|\Illuminate\Support\Collection $options
      *
      * @return DateTime
      */
@@ -310,9 +316,11 @@ abstract class AbstractFilter
      *
      * @return DateTime
      */
-    public function date()
+    public function date($options = [])
     {
-        return $this->datetime(['format' => 'YYYY-MM-DD']);
+        $options = array_merge(['format' => 'YYYY-MM-DD'], $options);
+
+        return $this->datetime($options);
     }
 
     /**
@@ -320,9 +328,11 @@ abstract class AbstractFilter
      *
      * @return DateTime
      */
-    public function time()
+    public function time($options = [])
     {
-        return $this->datetime(['format' => 'HH:mm:ss']);
+        $options = array_merge(['format' => 'HH:mm:ss', 'noCalendar' => true], $options);
+
+        return $this->datetime($options);
     }
 
     /**
@@ -330,9 +340,11 @@ abstract class AbstractFilter
      *
      * @return DateTime
      */
-    public function day()
+    public function day($options = [])
     {
-        return $this->datetime(['format' => 'DD']);
+        $options = array_merge(['mask' => '99', 'rightAlign' => false], $options);
+
+        return $this->inputmask($options, 'calendar');
     }
 
     /**
@@ -340,9 +352,11 @@ abstract class AbstractFilter
      *
      * @return DateTime
      */
-    public function month()
+    public function month($options = [])
     {
-        return $this->datetime(['format' => 'MM']);
+        $options = array_merge(['mask' => '99', 'rightAlign' => false], $options);
+
+        return $this->inputmask($options, 'calendar');
     }
 
     /**
@@ -350,13 +364,19 @@ abstract class AbstractFilter
      *
      * @return DateTime
      */
-    public function year()
+    public function year($options = [])
     {
-        return $this->datetime(['format' => 'YYYY']);
+        $options = array_merge(['mask' => '9999', 'rightAlign' => false], $options);
+
+        return $this->inputmask($options, 'calendar');
     }
 
     /**
      * Set presenter object of filter.
+     *
+     * @param Presenter $presenter
+     *
+     * @return mixed
      */
     protected function setPresenter(Presenter $presenter)
     {
@@ -444,12 +464,14 @@ abstract class AbstractFilter
 
     /**
      * Build conditions of filter.
+     *
+     * @return mixed
      */
     protected function buildCondition()
     {
         $column = explode('.', $this->column);
 
-        if (1 === count($column)) {
+        if (count($column) == 1) {
             return [$this->query => func_get_args()];
         }
 
@@ -511,7 +533,12 @@ abstract class AbstractFilter
     }
 
     /**
+     * @param $method
+     * @param $params
+     *
+     * @return mixed
      * @throws \Exception
+     *
      */
     public function __call($method, $params)
     {

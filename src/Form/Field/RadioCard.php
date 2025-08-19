@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Admin;
+use OpenAdmin\Admin\Admin;
 
 class RadioCard extends RadioButton
 {
@@ -31,6 +31,9 @@ STYLE;
         Admin::style($style);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
         $this->addStyle();

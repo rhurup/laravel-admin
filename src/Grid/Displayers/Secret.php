@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Facades\Admin;
+use OpenAdmin\Admin\Facades\Admin;
 
 class Secret extends AbstractDisplayer
 {
@@ -14,21 +14,26 @@ class Secret extends AbstractDisplayer
 
         return <<<HTML
 <span class="secret-wrapper">
-    <i class="fa fa-eye" style="cursor: pointer;"></i>
+    <i class="icon-eye" style="cursor: pointer;"></i>
     &nbsp;
     <span class="secret-placeholder" style="vertical-align: middle;">{$dots}</span>
-    <span class="secret-content" style="display: none;">{$this->getValue()}</span>
+    <span class="secret-content d-none">{$this->getValue()}</span>
 </span>
 HTML;
     }
 
     protected function addScript()
     {
-        $script = <<<'SCRIPT'
-$('.secret-wrapper i').click(function () {
-    $(this).toggleClass('fa-eye fa-eye-slash').parent().find('.secret-placeholder,.secret-content').toggle();
+        $script = <<<'JS'
+document.querySelectorAll('.secret-wrapper i').forEach(el=>{
+    el.addEventListener("click",function (e) {
+        e.target.classList.toggle("icon-eye");
+        e.target.classList.toggle("icon-eye-slash");
+        e.target.parentNode.querySelector(".secret-placeholder").classList.toggle("d-none");
+        e.target.parentNode.querySelector(".secret-content").classList.toggle("d-none");
+    });
 });
-SCRIPT;
+JS;
 
         Admin::script($script);
     }

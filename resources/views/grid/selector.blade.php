@@ -13,6 +13,10 @@
         border-bottom: none;
     }
 
+    .grid-selector .wrap:first-child {
+        border-top: 1px solid #eee;
+    }
+
     .grid-selector .select-label {
         float: left;
         width: 100px;
@@ -40,7 +44,7 @@
     }
 
     .grid-selector .select-options a.active {
-        color: #dd4b39;
+        color: var(--primary-color);
         font-weight: 600;
     }
 
@@ -57,7 +61,7 @@
     }
 
     .grid-selector ul:hover .clear {
-        color: #3c8dbc;
+
         visibility: visible;
     }
 </style>
@@ -73,25 +77,24 @@
                             $active = in_array($value, \Illuminate\Support\Arr::get($selected, $column, []));
                         @endphp
                         <li>
-                            <a href="{{ \Encore\Admin\Grid\Tools\Selector::url($column, $value, true) }}"
+                            <a href="{{ \OpenAdmin\Admin\Grid\Tools\Selector::url($column, $value, true) }}"
                                class="{{$active ? 'active' : ''}}">{{ $option }}</a>
                             @if(!$active && $selector['type'] == 'many')
                                 &nbsp;
-                                <a href="{{ \Encore\Admin\Grid\Tools\Selector::url($column, $value) }}" class="add"><i
-                                            class="fa fa-plus-square-o"></i></a>
+                                <a href="{{ \OpenAdmin\Admin\Grid\Tools\Selector::url($column, $value) }}"
+                                   class="add"><i
+                                            class="icon-plus-square"></i></a>
                             @else
-                                <a style="visibility: hidden;"><i class="fa fa-plus-square-o"></i></a>
+                                <a style="visibility: hidden;"><i class="icon-plus-square"></i></a>
                             @endif
                         </li>
                     @endforeach
                     <li>
-                        <a href="{{ \Encore\Admin\Grid\Tools\Selector::url($column) }}" class="clear"><i
-                                    class="fa fa-trash"></i></a>
+                        <a href="{{ \OpenAdmin\Admin\Grid\Tools\Selector::url($column) }}" class="clear"><i
+                                    class="icon-trash"></i></a>
                     </li>
                 </ul>
             </div>
         </div>
     @endforeach
 </div>
-
-

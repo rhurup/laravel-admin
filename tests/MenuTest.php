@@ -1,7 +1,7 @@
 <?php
 
-use Encore\Admin\Auth\Database\Administrator;
-use Encore\Admin\Auth\Database\Menu;
+use OpenAdmin\Admin\Auth\Database\Administrator;
+use OpenAdmin\Admin\Auth\Database\Menu;
 
 class MenuTest extends TestCase
 {
@@ -36,11 +36,11 @@ class MenuTest extends TestCase
             ->seeInDatabase(config('admin.database.menu_table'), $item)
             ->assertEquals(8, Menu::count());
 
-        //        $this->expectException(\Laravel\BrowserKitTesting\HttpException::class);
-        //
-        //        $this->visit('admin')
-        //            ->see('Test')
-        //            ->click('Test');
+//        $this->expectException(\Laravel\BrowserKitTesting\HttpException::class);
+//
+//        $this->visit('admin')
+//            ->see('Test')
+//            ->click('Test');
     }
 
     public function testDeleteMenu()
@@ -67,7 +67,7 @@ class MenuTest extends TestCase
 
     public function testEditMenuParent()
     {
-        $this->expectException(Laravel\BrowserKitTesting\HttpException::class);
+        $this->expectException(\Laravel\BrowserKitTesting\HttpException::class);
 
         $this->visit('admin/auth/menu/5/edit')
             ->see('Menu')

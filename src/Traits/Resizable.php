@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Traits;
+namespace OpenAdmin\Admin\Traits;
 
 use Illuminate\Support\Str;
 
@@ -31,6 +31,9 @@ trait Resizable
 
     /**
      * Generate thumbnail URL.
+     *
+     * @param $image
+     * @param $type
      *
      * @return string
      */

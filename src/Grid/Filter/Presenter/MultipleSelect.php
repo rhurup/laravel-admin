@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter\Presenter;
+namespace OpenAdmin\Admin\Grid\Filter\Presenter;
 
-use Encore\Admin\Facades\Admin;
+use OpenAdmin\Admin\Facades\Admin;
 
 class MultipleSelect extends Select
 {
@@ -20,8 +20,9 @@ class MultipleSelect extends Select
     {
         $column = $this->filter->getColumn();
 
-        $script = <<<EOT
-
+        $script = <<<JS
+console.log("LoadMore not ported yet");
+/*
 $(document).on('change', ".{$this->getClass($column)}", function () {
     var target = $(this).closest('form').find(".{$this->getClass($target)}");
      var ids = $(this).find("option:selected").map(function(index,elem) {
@@ -35,11 +36,12 @@ $(document).on('change', ".{$this->getClass($column)}", function () {
                 text : item.$textField
             }));
         });
-        
+
         $(target).trigger('change');
     });
 });
-EOT;
+*/
+JS;
 
         Admin::script($script);
 

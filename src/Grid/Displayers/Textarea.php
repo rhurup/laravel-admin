@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
+use OpenAdmin\Admin\Admin;
 
 class Textarea extends AbstractDisplayer
 {
@@ -14,8 +14,8 @@ class Textarea extends AbstractDisplayer
             'display' => $this->getValue(),
             'name' => $this->getPayloadName(),
             'resource' => $this->getResource(),
-            'trigger' => "ie-trigger-{$this->getClassName()}",
-            'target' => "ie-template-{$this->getClassName()}",
+            'trigger' => "ie-trigger-{$this->getClassName()}-{$this->getKey()}",
+            'target' => "ie-content-{$this->getClassName()}-{$this->getKey()}",
             'rows' => $rows,
         ]);
     }

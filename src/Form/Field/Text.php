@@ -1,8 +1,10 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field\Traits\HasValuePicker;
+use OpenAdmin\Admin\Form\Field\Traits\PlainInput;
 
 class Text extends Field
 {
@@ -12,7 +14,7 @@ class Text extends Field
     /**
      * @var string
      */
-    protected $icon = 'fa-pencil';
+    protected $icon = 'icon-pencil-alt';
 
     /**
      * @var bool
@@ -43,7 +45,7 @@ class Text extends Field
         $this->initPlainInput();
 
         if (!$this->withoutIcon) {
-            $this->prepend('<i class="fa '.$this->icon.' fa-fw"></i>');
+            $this->prepend('<i class="' . $this->icon . '"></i>');
         }
         $this->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id)
@@ -71,7 +73,8 @@ class Text extends Field
     {
         $options = json_encode_options($options);
 
-        $this->script = "$('{$this->getElementClassSelector()}').inputmask($options);";
+        //$this->script = "$('{$this->getElementClassSelector()}').inputmask($options);";
+        $this->script = "Inputmask({$options}).mask(document.querySelector(\"{$this->getElementClassSelector()}\"));";
 
         return $this;
     }

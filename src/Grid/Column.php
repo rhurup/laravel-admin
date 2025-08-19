@@ -1,15 +1,16 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace OpenAdmin\Admin\Grid;
 
-use Encore\Admin\Actions\RowAction;
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Displayers\AbstractDisplayer;
+use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Actions\RowAction;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Grid\Displayers\AbstractDisplayer;
 
 class Column
 {
@@ -42,6 +43,8 @@ class Column
 
     /**
      * Original value of column.
+     *
+     * @var mixed
      */
     protected $original;
 
@@ -107,7 +110,6 @@ class Column
     public function __construct($name, $label)
     {
         $this->name = $name;
-
         $this->label = $this->formatLabel($label);
 
         $this->initAttributes();
@@ -127,6 +129,7 @@ class Column
      * Define a column globally.
      *
      * @param string $name
+     * @param mixed $definition
      */
     public static function define($name, $definition)
     {
@@ -135,6 +138,8 @@ class Column
 
     /**
      * Set grid instance for column.
+     *
+     * @param Grid $grid
      */
     public function setGrid(Grid $grid)
     {
@@ -145,6 +150,8 @@ class Column
 
     /**
      * Set model for column.
+     *
+     * @param $model
      */
     public function setModel($model)
     {
@@ -155,6 +162,8 @@ class Column
 
     /**
      * Set original data for column.
+     *
+     * @param Collection $collection
      */
     public static function setOriginalGridModels(Collection $collection)
     {
@@ -191,6 +200,8 @@ class Column
      * Get column attributes.
      *
      * @param string $name
+     *
+     * @return mixed
      */
     public static function getAttributes($name, $key = null)
     {
@@ -235,6 +246,8 @@ class Column
     /**
      * Set the width of column.
      *
+     * @param int $width
+     *
      * @return $this
      */
     public function width(int $width)
@@ -256,6 +269,8 @@ class Column
 
     /**
      * Get original column value.
+     *
+     * @return mixed
      */
     public function getOriginal()
     {
@@ -264,6 +279,8 @@ class Column
 
     /**
      * Get name of this column.
+     *
+     * @return mixed
      */
     public function getName()
     {
@@ -282,6 +299,10 @@ class Column
 
     /**
      * Format label.
+     *
+     * @param $label
+     *
+     * @return mixed
      */
     protected function formatLabel($label)
     {
@@ -296,6 +317,8 @@ class Column
 
     /**
      * Get label of the column.
+     *
+     * @return mixed
      */
     public function getLabel()
     {
@@ -331,7 +354,7 @@ class Column
     /**
      * Mark this column as sortable.
      *
-     * @param string|null $cast
+     * @param null|string $cast
      *
      * @return Column|string
      */
@@ -345,7 +368,7 @@ class Column
      *
      * @return $this
      *
-     * @deprecated use `$column->sortable($cast)` instead
+     * @deprecated Use `$column->sortable($cast)` instead.
      */
     public function cast($cast)
     {
@@ -381,9 +404,11 @@ class Column
     /**
      * Add a display callback.
      *
+     * @param Closure $callback
+     *
      * @return $this
      */
-    public function display(\Closure $callback)
+    public function display(Closure $callback)
     {
         $this->displayCallbacks[] = $callback;
 
@@ -448,7 +473,7 @@ class Column
     public function action($action)
     {
         if (!is_subclass_of($action, RowAction::class)) {
-            throw new \InvalidArgumentException("Action class [$action] must be sub-class of [Encore\Admin\Actions\GridAction]");
+            throw new \InvalidArgumentException("Action class [$action] must be sub-class of [OpenAdmin\Admin\Actions\GridAction]");
         }
 
         $grid = $this->grid;
@@ -478,7 +503,10 @@ class Column
     /**
      * Call all of the "display" callbacks column.
      *
+     * @param mixed $value
      * @param int $key
+     *
+     * @return mixed
      */
     protected function callDisplayCallbacks($value, $key)
     {
@@ -488,8 +516,8 @@ class Column
             $callback = $this->bindOriginalRowModel($callback, $key);
             $value = call_user_func_array($callback, [$value, $this]);
 
-            if (($value instanceof static)
-                && ($last = array_pop($this->displayCallbacks))
+            if (($value instanceof static) &&
+                ($last = array_pop($this->displayCallbacks))
             ) {
                 $last = $this->bindOriginalRowModel($last, $key);
                 $value = call_user_func_array($last, [$previous, $this]);
@@ -502,11 +530,12 @@ class Column
     /**
      * Set original grid data to column.
      *
+     * @param Closure $callback
      * @param int $key
      *
-     * @return \Closure
+     * @return Closure
      */
-    protected function bindOriginalRowModel(\Closure $callback, $key)
+    protected function bindOriginalRowModel(Closure $callback, $key)
     {
         $rowModel = static::$originalGridModels[$key];
 
@@ -515,6 +544,10 @@ class Column
 
     /**
      * Fill all data to every column.
+     *
+     * @param array $data
+     *
+     * @return mixed
      */
     public function fill(array $data)
     {
@@ -560,7 +593,7 @@ class Column
 
         $class = static::$defined[$this->name];
 
-        if ($class instanceof \Closure) {
+        if ($class instanceof Closure) {
             $this->display($class);
 
             return;
@@ -585,6 +618,8 @@ class Column
      * Convert characters to HTML entities recursively.
      *
      * @param array|string|null $item
+     *
+     * @return mixed
      */
     protected function htmlEntityEncode($item)
     {
@@ -649,7 +684,7 @@ class Column
      */
     protected function callBuiltinDisplayer($abstract, $arguments)
     {
-        if ($abstract instanceof \Closure) {
+        if ($abstract instanceof Closure) {
             return $this->display(function ($value) use ($abstract, $arguments) {
                 return $abstract->call($this, ...array_merge([$value], $arguments));
             });

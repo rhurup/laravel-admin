@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -20,7 +20,7 @@ class ExtendCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Build a Laravel-admin extension';
+    protected $description = 'Build a Open-admin extension';
 
     /**
      * @var string
@@ -140,10 +140,10 @@ TREE;
 
         // copy files
         $this->copy([
-            __DIR__.'/stubs/extension/view.stub' => 'resources/views/index.blade.php',
+            __DIR__ . '/stubs/extension/view.stub' => 'resources/views/index.blade.php',
             __DIR__.'/stubs/extension/.gitignore.stub' => '.gitignore',
-            __DIR__.'/stubs/extension/README.md.stub' => 'README.md',
-            __DIR__.'/stubs/extension/LICENSE.stub' => 'LICENSE',
+            __DIR__ . '/stubs/extension/README.md.stub' => 'README.md',
+            __DIR__ . '/stubs/extension/LICENSE.stub' => 'LICENSE',
         ]);
 
         // make composer.json
@@ -190,7 +190,7 @@ TREE;
     /**
      * Get root namespace for this package.
      *
-     * @return array|string|null
+     * @return array|null|string
      */
     protected function getRootNameSpace()
     {

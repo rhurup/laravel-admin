@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
 use Illuminate\Support\Arr;
 
@@ -15,12 +15,15 @@ class Where extends AbstractFilter
 
     /**
      * Input value from presenter.
+     *
+     * @var mixed
      */
     public $input;
 
     /**
      * Where constructor.
      *
+     * @param \Closure $query
      * @param string $label
      * @param string $column
      */
@@ -38,6 +41,7 @@ class Where extends AbstractFilter
     /**
      * Get the hash string of query closure.
      *
+     * @param \Closure $closure
      * @param string $label
      *
      * @return string

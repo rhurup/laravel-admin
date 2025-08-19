@@ -1,7 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace OpenAdmin\Admin\Grid;
 
+use Closure;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
@@ -11,11 +12,15 @@ class Row
 {
     /**
      * Row number.
+     *
+     * @var
      */
     public $number;
 
     /**
      * Row data.
+     *
+     * @var
      */
     protected $data;
 
@@ -34,7 +39,9 @@ class Row
     /**
      * Row constructor.
      *
+     * @param mixed $number
      * @param array $data
+     * @param mixed $key
      */
     public function __construct($number, $data, $key)
     {
@@ -44,11 +51,14 @@ class Row
 
         $this->attributes = [
             'data-key' => $key,
+            'class' => 'row-' . $key,
         ];
     }
 
     /**
      * Get the value of the model's primary key.
+     *
+     * @return mixed
      */
     public function getKey()
     {
@@ -100,6 +110,8 @@ class Row
 
     /**
      * Set attributes.
+     *
+     * @param array $attributes
      */
     public function setAttributes(array $attributes)
     {
@@ -126,6 +138,8 @@ class Row
 
     /**
      * Get data of this row.
+     *
+     * @return mixed
      */
     public function model()
     {
@@ -134,6 +148,10 @@ class Row
 
     /**
      * Getter.
+     *
+     * @param mixed $attr
+     *
+     * @return mixed
      */
     public function __get($attr)
     {
@@ -144,6 +162,7 @@ class Row
      * Get or set value of column in this row.
      *
      * @param string $name
+     * @param mixed $value
      *
      * @return $this|mixed
      */
@@ -155,7 +174,7 @@ class Row
             return $this->output($column);
         }
 
-        if ($value instanceof \Closure) {
+        if ($value instanceof Closure) {
             $value = $value->call($this, $this->column($name));
         }
 
@@ -166,6 +185,8 @@ class Row
 
     /**
      * Output column value.
+     *
+     * @param mixed $value
      *
      * @return mixed|string
      */

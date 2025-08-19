@@ -1,8 +1,7 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace OpenAdmin\Admin\Widgets;
 
-use Encore\Admin\Widgets\Navbar\RefreshButton;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -25,6 +24,8 @@ class Navbar implements Renderable
     }
 
     /**
+     * @param $element
+     *
      * @return $this
      */
     public function left($element)
@@ -35,6 +36,8 @@ class Navbar implements Renderable
     }
 
     /**
+     * @param $element
+     *
      * @return $this
      */
     public function right($element)
@@ -45,6 +48,8 @@ class Navbar implements Renderable
     }
 
     /**
+     * @param $element
+     *
      * @return Navbar
      *
      * @deprecated
@@ -56,11 +61,13 @@ class Navbar implements Renderable
 
     /**
      * @param string $part
+     *
+     * @return mixed
      */
     public function render($part = 'right')
     {
-        if ('right' === $part) {
-            $this->right(new RefreshButton());
+        if ($part == 'right') {
+            //$this->right(new RefreshButton());
         }
 
         if (!isset($this->elements[$part]) || $this->elements[$part]->isEmpty()) {

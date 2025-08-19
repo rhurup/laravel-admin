@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Actions;
+namespace OpenAdmin\Admin\Actions;
 
-use Encore\Admin\Grid\Column;
 use Illuminate\Http\Request;
+use OpenAdmin\Admin\Grid\Column;
 
 abstract class RowAction extends GridAction
 {
@@ -29,6 +29,8 @@ abstract class RowAction extends GridAction
 
     /**
      * Get primary key value of current row.
+     *
+     * @return mixed
      */
     protected function getKey()
     {
@@ -38,11 +40,13 @@ abstract class RowAction extends GridAction
     /**
      * Set row model.
      *
+     * @param mixed $key
+     *
      * @return \Illuminate\Database\Eloquent\Model|mixed
      */
     public function row($key = null)
     {
-        if (0 === func_num_args()) {
+        if (func_num_args() == 0) {
             return $this->row;
         }
 
@@ -69,6 +73,8 @@ abstract class RowAction extends GridAction
     }
 
     /**
+     * @param Column $column
+     *
      * @return $this
      */
     public function setColumn(Column $column)
@@ -97,6 +103,11 @@ abstract class RowAction extends GridAction
     {
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function retrieveModel(Request $request)
     {
         if (!$key = $request->get('_key')) {
@@ -123,8 +134,11 @@ abstract class RowAction extends GridAction
      */
     public function render()
     {
+        $linkClass = ($this->parent->getActionClass() != "OpenAdmin\Admin\Grid\Displayers\Actions\Actions") ? 'dropdown-item' : '';
+        $icon = $this->getIcon();
+
         if ($href = $this->href()) {
-            return "<a href='{$href}'>{$this->name()}</a>";
+            return "<a href='{$href}' class='{$linkClass}'>{$icon}<span class='label'>{$this->name()}</span></a>";
         }
 
         $this->addScript();
@@ -132,7 +146,7 @@ abstract class RowAction extends GridAction
         $attributes = $this->formatAttributes();
 
         return sprintf(
-            "<a data-_key='%s' href='javascript:void(0);' class='%s' {$attributes}>%s</a>",
+            "<a data-_key='%s' href='javascript:void(0);' class='%s {$linkClass}' {$attributes}>{$icon}<span class='label'>%s</span></a>",
             $this->getKey(),
             $this->getElementClass(),
             $this->asColumn ? $this->display($this->row($this->column->getName())) : $this->name()

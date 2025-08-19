@@ -21,13 +21,14 @@ if (!function_exists('admin_url')) {
      * Get admin url.
      *
      * @param string $path
+     * @param mixed $parameters
      * @param bool   $secure
      *
      * @return string
      */
     function admin_url($path = '', $parameters = [], $secure = null)
     {
-        if (Illuminate\Support\Facades\URL::isValidUrl($path)) {
+        if (\Illuminate\Support\Facades\URL::isValidUrl($path)) {
             return $path;
         }
 
@@ -49,11 +50,11 @@ if (!function_exists('admin_base_path')) {
     {
         $prefix = '/'.trim(config('admin.route.prefix'), '/');
 
-        $prefix = ('/' === $prefix) ? '' : $prefix;
+        $prefix = ($prefix == '/') ? '' : $prefix;
 
         $path = trim($path, '/');
 
-        if (is_null($path) || 0 === strlen($path)) {
+        if (is_null($path) || strlen($path) == 0) {
             return $prefix ?: '/';
         }
 
@@ -128,12 +129,14 @@ if (!function_exists('admin_info')) {
     {
         $message = new MessageBag(get_defined_vars());
 
-        session()->flash($type, $message);
+        session()->now($type, $message);
     }
 }
 
 if (!function_exists('admin_asset')) {
     /**
+     * @param $path
+     *
      * @return string
      */
     function admin_asset($path)
@@ -150,7 +153,7 @@ if (!function_exists('admin_trans')) {
      * @param array  $replace
      * @param string $locale
      *
-     * @return Illuminate\Contracts\Translation\Translator|string|array|null
+     * @return \Illuminate\Contracts\Translation\Translator|string|array|null
      */
     function admin_trans($key = null, $replace = [], $locale = null)
     {
@@ -169,10 +172,11 @@ if (!function_exists('array_delete')) {
      * Delete from array by value.
      *
      * @param array $array
+     * @param mixed $value
      */
     function array_delete(&$array, $value)
     {
-        $value = Illuminate\Support\Arr::wrap($value);
+        $value = \Illuminate\Support\Arr::wrap($value);
 
         foreach ($array as $index => $item) {
             if (in_array($item, $value)) {
@@ -186,6 +190,7 @@ if (!function_exists('class_uses_deep')) {
     /**
      * To get ALL traits including those used by parent classes and other traits.
      *
+     * @param $class
      * @param bool $autoload
      *
      * @return array
@@ -208,6 +213,8 @@ if (!function_exists('class_uses_deep')) {
 
 if (!function_exists('admin_dump')) {
     /**
+     * @param $var
+     *
      * @return string
      */
     function admin_dump($var)
@@ -244,7 +251,7 @@ if (!function_exists('file_size')) {
             $bytes = number_format($bytes / 1024, 2).' KB';
         } elseif ($bytes > 1) {
             $bytes = $bytes.' bytes';
-        } elseif (1 === $bytes) {
+        } elseif ($bytes == 1) {
             $bytes = $bytes.' byte';
         } else {
             $bytes = '0 bytes';
@@ -256,6 +263,8 @@ if (!function_exists('file_size')) {
 
 if (!function_exists('prepare_options')) {
     /**
+     * @param array $options
+     *
      * @return array
      */
     function prepare_options(array $options)
@@ -269,7 +278,7 @@ if (!function_exists('prepare_options')) {
                 $value = $subArray['options'];
                 $original = array_merge($original, $subArray['original']);
                 $toReplace = array_merge($toReplace, $subArray['toReplace']);
-            } elseif (0 === strpos($value, 'function(')) {
+            } elseif (strpos($value, 'function(') === 0) {
                 $original[] = $value;
                 $value = "%{$key}%";
                 $toReplace[] = "\"{$value}\"";
@@ -282,6 +291,8 @@ if (!function_exists('prepare_options')) {
 
 if (!function_exists('json_encode_options')) {
     /**
+     * @param array $options
+     *
      * @return string
      *
      * @see http://web.archive.org/web/20080828165256/http://solutoire.com/2008/06/12/sending-javascript-functions-over-json/

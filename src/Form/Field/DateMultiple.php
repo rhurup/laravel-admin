@@ -1,20 +1,9 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
 class DateMultiple extends Text
 {
-    protected static $css = [
-        '/vendor/laravel-admin/flatpickr/dist/flatpickr.min.css',
-        '/vendor/laravel-admin/flatpickr/dist/shortcut-buttons-flatpickr/themes/light.min.css',
-    ];
-
-    protected static $js = [
-        '/vendor/laravel-admin/flatpickr/dist/flatpickr.js',
-        '/vendor/laravel-admin/flatpickr/dist/shortcut-buttons-flatpickr/shortcut-buttons-flatpickr.min.js',
-        '/vendor/laravel-admin/flatpickr/dist/l10n/zh.js',
-    ];
-
     protected $format = 'YYYY-MM-DD';
 
     public function format($format)
@@ -26,7 +15,8 @@ class DateMultiple extends Text
 
     public function prepare($value)
     {
-        if ('' === $value) {
+        $value = parent::prepare($value);
+        if ($value === '') {
             $value = null;
         }
 
@@ -38,8 +28,9 @@ class DateMultiple extends Text
         $this->options['format'] = $this->format;
         $this->options['locale'] = array_key_exists('locale', $this->options) ? $this->options['locale'] : config('app.locale');
         $this->options['allowInputToggle'] = true;
-
-        $this->script = "$('{$this->getElementClassSelector()}').flatpickr({mode: 'multiple',dateFormat: 'Y-m-d', locale: 'zh', plugins: [
+        $this->options['dateFormat'] = 'Y-m-d';
+        $this->options['mode'] = 'multiple';
+        $this->options['plugins'] = "[
             ShortcutButtonsPlugin({
               button: {
                 label: 'Clear',
@@ -49,9 +40,11 @@ class DateMultiple extends Text
                 fp.close();
               }
             })
-          ]});";
+          ]";
 
-        $this->prepend('<i class="fa fa-calendar fa-fw"></i>')
+        $this->script = "flatpickr('{$this->getElementClassSelector()}'," . json_encode($this->options) . ');';
+
+        $this->prepend('<i class="icon-calendar"></i>')
             ->defaultAttribute('style', 'width: 100%');
 
         return parent::render();

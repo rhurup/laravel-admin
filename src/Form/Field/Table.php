@@ -1,9 +1,10 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\NestedForm;
-use Encore\Admin\Widgets\Form as WidgetForm;
+use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Form\NestedForm;
+use OpenAdmin\Admin\Widgets\Form as WidgetForm;
 
 class Table extends HasMany
 {
@@ -11,6 +12,8 @@ class Table extends HasMany
      * @var string
      */
     protected $viewMode = 'table';
+
+    public $save_null_values = true;
 
     /**
      * Table constructor.
@@ -22,14 +25,28 @@ class Table extends HasMany
     {
         $this->column = $column;
 
-        if (1 === count($arguments)) {
+        if (count($arguments) == 1) {
             $this->label = $this->formatLabel();
             $this->builder = $arguments[0];
         }
 
-        if (2 === count($arguments)) {
+        if (count($arguments) == 2) {
             list($this->label, $this->builder) = $arguments;
         }
+    }
+
+    /**
+     * Save null values or not.
+     *
+     * @param bool $set
+     *
+     * @return $this
+     */
+    public function saveNullValues($set = true)
+    {
+        $this->save_null_values = $set;
+
+        return $this;
     }
 
     /**
@@ -37,17 +54,14 @@ class Table extends HasMany
      */
     protected function buildRelatedForms()
     {
-        //        if (is_null($this->form)) {
-        //            return [];
-        //        }
-
         $forms = [];
 
         if ($values = old($this->column)) {
             foreach ($values as $key => $data) {
-                if (1 === $data[NestedForm::REMOVE_FLAG_NAME]) {
+                if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
                     continue;
                 }
+                $data = empty($data) ? [] : $data;
 
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
             }
@@ -56,9 +70,9 @@ class Table extends HasMany
                 if (isset($data['pivot'])) {
                     $data = array_merge($data, $data['pivot']);
                 }
-                if (is_array($data)) {
-                    $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
-                }
+                $data = empty($data) ? [] : $data;
+
+                $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
             }
         }
 
@@ -72,7 +86,7 @@ class Table extends HasMany
         $prepare = $form->prepare($input);
 
         return collect($prepare)->reject(function ($item) {
-            return 1 === $item[NestedForm::REMOVE_FLAG_NAME];
+            return Arr::get($item, NestedForm::REMOVE_FLAG_NAME) == 1;
         })->map(function ($item) {
             unset($item[NestedForm::REMOVE_FLAG_NAME]);
 
@@ -92,6 +106,7 @@ class Table extends HasMany
     protected function buildNestedForm($column, \Closure $builder, $key = null)
     {
         $form = new NestedForm($column);
+        $form->saveNullValues($this->save_null_values);
 
         if ($this->form instanceof WidgetForm) {
             $form->setWidgetForm($this->form);

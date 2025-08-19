@@ -1,13 +1,15 @@
 <?php
 
-namespace Encore\Admin\Grid\Actions;
+namespace OpenAdmin\Admin\Grid\Actions;
 
-use Encore\Admin\Actions\RowAction;
+use OpenAdmin\Admin\Actions\RowAction;
 
 class Show extends RowAction
 {
+    public $icon = 'icon-eye';
+
     /**
-     * @return array|string|null
+     * @return array|null|string
      */
     public function name()
     {

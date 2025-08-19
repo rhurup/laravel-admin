@@ -1,14 +1,12 @@
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+@include("admin::form._header")
 
-    <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
-
-    <div class="{{$viewClass['field']}}">
-
-        @include('admin::form.error')
-
-        <input type="file" class="{{$class}}" name="{{$name}}" {!! $attributes !!} />
-
-        @include('admin::form.help-block')
-
-    </div>
+<div class="input-group">
+    <input type="file" class="form-control {{$class}}" name="{{$name}}" {!! $attributes !!} />
+    <span class="input-group-btn">
+              @isset($btn)
+            {!! $btn !!}
+        @endisset
+            </span>
 </div>
+
+@include("admin::form._footer")

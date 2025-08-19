@@ -1,13 +1,12 @@
 <?php
-
 /**
  * Copyright (c) 2019. Mallto.Co.Ltd.<mall-to.com> All rights reserved.
  */
 
-namespace Encore\Admin\Form\Layout;
+namespace OpenAdmin\Admin\Form\Layout;
 
-use Encore\Admin\Form\Field;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Form\Field;
 
 class Column
 {
@@ -34,6 +33,8 @@ class Column
 
     /**
      * Add a filter to this column.
+     *
+     * @param Field $field
      */
     public function add(Field $field)
     {
@@ -42,6 +43,8 @@ class Column
 
     /**
      * Remove fields from column.
+     *
+     * @param $fields
      */
     public function removeFields($fields)
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace OpenAdmin\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid\Column;
-use Encore\Admin\Grid\Model;
-use Encore\Admin\Grid\Tools;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Grid\Column;
+use OpenAdmin\Admin\Grid\Model;
+use OpenAdmin\Admin\Grid\Tools;
 
 /**
  * Trait HasQuickSearch.
@@ -82,6 +82,7 @@ trait HasQuickSearch
     /**
      * Add where bindings.
      *
+     * @param Builder $builder
      * @param string $query
      */
     protected function addWhereBindings(Builder $builder, $query)
@@ -89,32 +90,32 @@ trait HasQuickSearch
         $queries = preg_split('/\s(?=([^"]*"[^"]*")*[^"]*$)/', trim($query));
 
         foreach ($this->parseQueryBindings($queries) as list($column, $condition, $or)) {
-            if (0 !== preg_match('/(?<not>!?)\((?<values>.+)\)/', $condition, $match)) {
+            if (preg_match('/(?<not>!?)\((?<values>.+)\)/', $condition, $match) !== 0) {
                 $this->addWhereInBinding($builder, $column, $or, (bool) $match['not'], $match['values']);
                 continue;
             }
 
-            if (0 !== preg_match('/\[(?<start>.*?),(?<end>.*?)]/', $condition, $match)) {
+            if (preg_match('/\[(?<start>.*?),(?<end>.*?)]/', $condition, $match) !== 0) {
                 $this->addWhereBetweenBinding($builder, $column, $or, $match['start'], $match['end']);
                 continue;
             }
 
-            if (0 !== preg_match('/(?<function>date|time|day|month|year),(?<value>.*)/', $condition, $match)) {
+            if (preg_match('/(?<function>date|time|day|month|year),(?<value>.*)/', $condition, $match) !== 0) {
                 $this->addWhereDatetimeBinding($builder, $column, $or, $match['function'], $match['value']);
                 continue;
             }
 
-            if (0 !== preg_match('/(?<pattern>%[^%]+%)/', $condition, $match)) {
+            if (preg_match('/(?<pattern>%[^%]+%)/', $condition, $match) !== 0) {
                 $this->addWhereLikeBinding($builder, $column, $or, $match['pattern']);
                 continue;
             }
 
-            if (0 !== preg_match('/\/(?<value>.*)\//', $condition, $match)) {
+            if (preg_match('/\/(?<value>.*)\//', $condition, $match) !== 0) {
                 $this->addWhereBasicBinding($builder, $column, $or, 'REGEXP', $match['value']);
                 continue;
             }
 
-            if (0 !== preg_match('/(?<operator>>=?|<=?|!=|%){0,1}(?<value>.*)/', $condition, $match)) {
+            if (preg_match('/(?<operator>>=?|<=?|!=|%){0,1}(?<value>.*)/', $condition, $match) !== 0) {
                 $this->addWhereBasicBinding($builder, $column, $or, $match['operator'], $match['value']);
                 continue;
             }
@@ -123,6 +124,8 @@ trait HasQuickSearch
 
     /**
      * Parse quick query bindings.
+     *
+     * @param array $queries
      *
      * @return array
      */
@@ -138,7 +141,7 @@ trait HasQuickSearch
         return collect($queries)->map(function ($query) use ($columnMap) {
             $segments = explode(':', $query, 2);
 
-            if (2 !== count($segments)) {
+            if (count($segments) != 2) {
                 return;
             }
 
@@ -159,11 +162,16 @@ trait HasQuickSearch
 
     /**
      * Add where like binding to model query.
+     *
+     * @param Builder $builder
+     * @param string $column
+     * @param bool $or
+     * @param string $pattern
      */
     protected function addWhereLikeBinding(Builder $builder, string $column, bool $or, string $pattern)
     {
         $connectionType = $builder->getModel()->getConnection()->getDriverName();
-        $likeOperator = 'pgsql' === $connectionType ? 'ilike' : 'like';
+        $likeOperator = $connectionType == 'pgsql' ? 'ilike' : 'like';
 
         $method = $or ? 'orWhere' : 'where';
 
@@ -172,6 +180,12 @@ trait HasQuickSearch
 
     /**
      * Add where date time function binding to model query.
+     *
+     * @param Builder $builder
+     * @param string $column
+     * @param bool $or
+     * @param string $function
+     * @param string $value
      */
     protected function addWhereDatetimeBinding(Builder $builder, string $column, bool $or, string $function, string $value)
     {
@@ -182,13 +196,19 @@ trait HasQuickSearch
 
     /**
      * Add where in binding to the model query.
+     *
+     * @param Builder $builder
+     * @param string $column
+     * @param bool $or
+     * @param bool $not
+     * @param string $values
      */
     protected function addWhereInBinding(Builder $builder, string $column, bool $or, bool $not, string $values)
     {
         $values = explode(',', $values);
 
         foreach ($values as $key => $value) {
-            if ('NULL' === $value) {
+            if ($value === 'NULL') {
                 $values[$key] = null;
             }
         }
@@ -202,6 +222,12 @@ trait HasQuickSearch
 
     /**
      * Add where between binding to the model query.
+     *
+     * @param Builder $builder
+     * @param string $column
+     * @param bool $or
+     * @param string $start
+     * @param string $end
      */
     protected function addWhereBetweenBinding(Builder $builder, string $column, bool $or, string $start, string $end)
     {
@@ -212,6 +238,12 @@ trait HasQuickSearch
 
     /**
      * Add where basic binding to the model query.
+     *
+     * @param Builder $builder
+     * @param string $column
+     * @param bool $or
+     * @param string $operator
+     * @param string $value
      */
     protected function addWhereBasicBinding(Builder $builder, string $column, bool $or, string $operator, string $value)
     {
@@ -219,12 +251,12 @@ trait HasQuickSearch
 
         $operator = $operator ?: '=';
 
-        if ('%' === $operator) {
+        if ($operator == '%') {
             $operator = 'like';
             $value = "%{$value}%";
         }
 
-        if ('NULL' === $value) {
+        if ($value === 'NULL') {
             $value = null;
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-use Encore\Admin\Auth\Database\Administrator;
+use OpenAdmin\Admin\Auth\Database\Administrator;
 use Tests\Models\User as UserModel;
 
 class UserFormTest extends TestCase
@@ -45,7 +45,7 @@ class UserFormTest extends TestCase
             'mobile' => '13421234123',
             'password' => '123456',
             'password_confirmation' => '123456',
-            // "avatar"   => "test.jpg",
+            //"avatar"   => "test.jpg",
             'profile' => [
                 'first_name' => 'John',
                 'last_name' => 'Doe',
@@ -101,11 +101,11 @@ class UserFormTest extends TestCase
 
     protected function seedsTable($count = 100)
     {
-        factory(UserModel::class, $count)
+        factory(\Tests\Models\User::class, $count)
             ->create()
             ->each(function ($u) {
-                $u->profile()->save(factory(Tests\Models\Profile::class)->make());
-                $u->tags()->saveMany(factory(Tests\Models\Tag::class, 5)->make());
+                $u->profile()->save(factory(\Tests\Models\Profile::class)->make());
+                $u->tags()->saveMany(factory(\Tests\Models\Tag::class, 5)->make());
             });
     }
 

@@ -1,17 +1,19 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace OpenAdmin\Admin\Widgets;
 
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form as BaseForm;
-use Encore\Admin\Form\Field;
-use Encore\Admin\Layout\Content;
+use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\Validator;
+use OpenAdmin\Admin\Facades\Admin;
+use OpenAdmin\Admin\Form as BaseForm;
+use OpenAdmin\Admin\Form\Concerns\HasFormAttributes;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Layout\Content;
 
 /**
  * Class Form.
@@ -33,7 +35,7 @@ use Illuminate\Validation\Validator;
  * @method Field\Url            url($name, $label = '')
  * @method Field\Color          color($name, $label = '')
  * @method Field\Email          email($name, $label = '')
- * @method Field\Mobile         mobile($name, $label = '')
+ * @method Field\PhoneNumber    phonenumber($name, $label = '')
  * @method Field\Slider         slider($name, $label = '')
  * @method Field\File           file($name, $label = '')
  * @method Field\Image          image($name, $label = '')
@@ -66,6 +68,7 @@ use Illuminate\Validation\Validator;
 class Form implements Renderable
 {
     use BaseForm\Concerns\HandleCascadeFields;
+    use HasFormAttributes;
 
     /**
      * The title of form.
@@ -84,17 +87,12 @@ class Form implements Renderable
     /**
      * @var Field[]
      */
-    protected $fields = [];
+    public $fields = [];
 
     /**
      * @var array
      */
-    protected $data = [];
-
-    /**
-     * @var array
-     */
-    protected $attributes = [];
+    public $data = [];
 
     /**
      * Available buttons.
@@ -136,20 +134,26 @@ class Form implements Renderable
     public function __construct($data = [])
     {
         $this->fill($data);
-
         $this->initFormAttributes();
+        $this->form_classes[] = 'card';
     }
 
     /**
      * Get form title.
+     *
+     * @return mixed
      */
-    public function title()
+    public function title($title)
     {
-        return $this->title;
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
      * Get form description.
+     *
+     * @return mixed
      */
     public function description()
     {
@@ -202,107 +206,6 @@ class Form implements Renderable
         foreach (['_form_', '_token'] as $key) {
             request()->request->remove($key);
         }
-
-        return $this;
-    }
-
-    /**
-     * Initialize the form attributes.
-     */
-    protected function initFormAttributes()
-    {
-        $this->attributes = [
-            'id' => 'widget-form-'.uniqid(),
-            'method' => 'POST',
-            'action' => '',
-            'class' => 'form-horizontal',
-            'accept-charset' => 'UTF-8',
-            'pjax-container' => true,
-        ];
-    }
-
-    /**
-     * Add form attributes.
-     *
-     * @param string|array $attr
-     * @param string       $value
-     *
-     * @return $this
-     */
-    public function attribute($attr, $value = '')
-    {
-        if (is_array($attr)) {
-            foreach ($attr as $key => $value) {
-                $this->attribute($key, $value);
-            }
-        } else {
-            $this->attributes[$attr] = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Format form attributes form array to html.
-     *
-     * @param array $attributes
-     *
-     * @return string
-     */
-    public function formatAttribute($attributes = [])
-    {
-        $attributes = $attributes ?: $this->attributes;
-
-        if ($this->hasFile()) {
-            $attributes['enctype'] = 'multipart/form-data';
-        }
-
-        $html = [];
-        foreach ($attributes as $key => $val) {
-            $html[] = "$key=\"$val\"";
-        }
-
-        return implode(' ', $html) ?: '';
-    }
-
-    /**
-     * Action uri of the form.
-     *
-     * @param string $action
-     *
-     * @return $this
-     */
-    public function action($action)
-    {
-        return $this->attribute('action', $action);
-    }
-
-    /**
-     * Method of the form.
-     *
-     * @param string $method
-     *
-     * @return $this
-     */
-    public function method($method = 'POST')
-    {
-        if ('put' === strtolower($method)) {
-            $this->hidden('_method')->default($method);
-
-            return $this;
-        }
-
-        return $this->attribute('method', strtoupper($method));
-    }
-
-    /**
-     * Disable Pjax.
-     *
-     * @return $this
-     */
-    public function disablePjax()
-    {
-        Arr::forget($this->attributes, 'pjax-container');
 
         return $this;
     }
@@ -370,6 +273,8 @@ class Form implements Renderable
     /**
      * Add a form field to form.
      *
+     * @param Field $field
+     *
      * @return $this
      */
     public function pushField(Field $field)
@@ -401,6 +306,7 @@ class Form implements Renderable
         $this->fields()->each->fill($this->data());
 
         return [
+            'title' => $this->title,
             'fields' => $this->fields,
             'attributes' => $this->formatAttribute(),
             'method' => $this->attributes['method'],
@@ -427,6 +333,8 @@ class Form implements Renderable
 
     /**
      * Validate this form fields.
+     *
+     * @param Request $request
      *
      * @return bool|MessageBag
      */
@@ -457,7 +365,7 @@ class Form implements Renderable
     /**
      * Merge validation messages from input validators.
      *
-     * @param Validator[] $validators
+     * @param \Illuminate\Validation\Validator[] $validators
      *
      * @return MessageBag
      */
@@ -475,9 +383,12 @@ class Form implements Renderable
     /**
      * Add a fieldset to form.
      *
+     * @param string $title
+     * @param Closure $setCallback
+     *
      * @return Field\Fieldset
      */
-    public function fieldset(string $title, \Closure $setCallback)
+    public function fieldset(string $title, Closure $setCallback)
     {
         $fieldset = new Field\Fieldset();
 
@@ -520,19 +431,26 @@ class Form implements Renderable
 
         $settings = trim(json_encode($settings, JSON_PRETTY_PRINT));
 
-        $script = <<<SCRIPT
+        $script = <<<JS
 
-$('form#{$id}').off('submit').on('submit', function (e) {
-    e.preventDefault();
-    var form = this;
-    $.admin.swal($settings).then(function (result) {
-        if (result.value == true) {
-            form.submit();
-        }
-    });
-    return false;
-});
-SCRIPT;
+        var confirmSubmit = function(e) {
+            e.preventDefault();
+
+            var form = e.target.closest('form');
+            Swal.fire($settings).then(function (result) {
+                if (result.value == true) {
+                    if (admin.form.validate(form)){
+                        form.dispatchEvent(new Event('submit', { cancelable: true }));
+                    }
+                }
+            });
+            return false;
+
+        };
+        document.querySelector('form#{$id} button[type=submit]').removeEventListener("click", confirmSubmit);
+        document.querySelector('form#{$id} button[type=submit]').addEventListener("click", confirmSubmit);
+
+JS;
 
         Admin::script($script);
     }
@@ -542,12 +460,7 @@ SCRIPT;
         $id = $this->attributes['id'];
 
         $script = <<<SCRIPT
-;(function () {
-    $('form#{$id}').submit(function (e) {
-        e.preventDefault();
-        $(this).find('div.cascade-group.hide :input').attr('disabled', true);
-    });
-})();
+        admin.form.disable_cascaded_forms("form#{$id}");
 SCRIPT;
 
         Admin::script($script);
@@ -588,11 +501,11 @@ SCRIPT;
 
         $form = view('admin::widgets.form', $this->getVariables())->render();
 
-        if (!($title = $this->title()) || !$this->inbox) {
+        if (!$this->title || !$this->inbox) {
             return $form;
         }
 
-        return (new Box($title, $form))->render();
+        return (new Box($this->title, $form))->render();
     }
 
     /**
@@ -619,6 +532,8 @@ SCRIPT;
     }
 
     /**
+     * @param Content $content
+     *
      * @return Content
      */
     public function __invoke(Content $content)

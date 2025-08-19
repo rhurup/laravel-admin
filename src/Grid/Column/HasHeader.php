@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Grid\Column;
+namespace OpenAdmin\Admin\Grid\Column;
 
-use Encore\Admin\Grid\Column;
-use Encore\Admin\Grid\Model;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
+use OpenAdmin\Admin\Grid\Column;
+use OpenAdmin\Admin\Grid\Model;
 
 trait HasHeader
 {
@@ -85,7 +85,7 @@ trait HasHeader
             return $this->addHeader(new InputFilter($type));
         }
 
-        if ('range' === $type) {
+        if ($type === 'range') {
             if (is_null($formal)) {
                 $formal = 'equal';
             }
@@ -98,6 +98,8 @@ trait HasHeader
 
     /**
      * Add a binding based on filter to the model query.
+     *
+     * @param Model $model
      */
     public function bindFilterQuery(Model $model)
     {

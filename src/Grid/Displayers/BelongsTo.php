@@ -1,12 +1,25 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Grid\Selectable;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Grid\Selectable;
 
 class BelongsTo extends AbstractDisplayer
 {
+    /**
+     * BelongsToRelation constructor.
+     *
+     * @param string $column
+     * @param array $arguments
+     */
+    public function __construct($value, $grid, $column, $row)
+    {
+        //$this->setSelectable($arguments[0]);
+
+        parent::__construct($value, $grid, $column, $row);
+    }
+
     /**
      * @param int $multiple
      *
@@ -17,9 +30,12 @@ class BelongsTo extends AbstractDisplayer
         $selectable = str_replace('\\', '_', $selectable);
         $args = [$multiple];
 
-        return route(admin_get_route('handle-selectable'), compact('selectable', 'args'));
+        return route('admin.handle-selectable', compact('selectable', 'args'));
     }
 
+    /**
+     * @return mixed
+     */
     protected function getOriginalData()
     {
         return $this->getColumn()->getOriginal();
@@ -31,10 +47,12 @@ class BelongsTo extends AbstractDisplayer
      *
      * @return string
      */
-    public function display($selectable = null, $column = '')
+    public function display($selectable = null)
     {
         if (!class_exists($selectable) || !is_subclass_of($selectable, Selectable::class)) {
-            throw new \InvalidArgumentException("[Class [{$selectable}] must be a sub class of Encore\Admin\Grid\Selectable");
+            throw new \InvalidArgumentException(
+                "[Class [{$selectable}] must be a sub class of OpenAdmin\Admin\Grid\Selectable"
+            );
         }
 
         return Admin::component('admin::grid.inline-edit.belongsto', [
@@ -43,9 +61,12 @@ class BelongsTo extends AbstractDisplayer
             'original' => $this->getOriginalData(),
             'value' => $this->getValue(),
             'resource' => $this->getResource(),
-            'name' => $column ?: $this->getName(),
+            'name' => $this->getName(),
             'relation' => get_called_class(),
-            'url' => $this->getLoadUrl($selectable, BelongsToMany::class === get_called_class()),
+            'display_field' => $selectable::$display_field,
+            'labelClass' => $selectable::$labelClass,
+            'seperator' => $selectable::$seperator,
+            'url' => $this->getLoadUrl($selectable, get_called_class() == BelongsToMany::class),
         ]);
     }
 }

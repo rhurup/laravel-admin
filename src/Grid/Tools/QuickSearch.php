@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace OpenAdmin\Admin\Grid\Tools;
 
-use Encore\Admin\Grid\Concerns\HasQuickSearch;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Grid\Concerns\HasQuickSearch;
 
 class QuickSearch extends AbstractTool
 {
@@ -41,7 +41,7 @@ class QuickSearch extends AbstractTool
         Arr::forget($query, HasQuickSearch::$searchKey);
 
         $vars = [
-            'action' => request()->url().'?'.http_build_query($query),
+            'action' => request()->url() . '?' . http_build_query($query),
             'key' => HasQuickSearch::$searchKey,
             'value' => request(HasQuickSearch::$searchKey),
             'placeholder' => $this->placeholder,

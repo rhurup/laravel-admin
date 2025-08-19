@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace OpenAdmin\Admin\Form;
 
-use Encore\Admin\Form;
 use Illuminate\Contracts\Support\Renderable;
+use OpenAdmin\Admin\Form;
 
 class Row implements Renderable
 {
@@ -37,6 +37,9 @@ class Row implements Renderable
 
     /**
      * Row constructor.
+     *
+     * @param \Closure $callback
+     * @param Form $form
      */
     public function __construct(\Closure $callback, Form $form)
     {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Admin;
 
 class SwitchGroup extends SwitchDisplay
 {
@@ -29,12 +29,12 @@ class SwitchGroup extends SwitchDisplay
     protected function buildSwitch($name, $label = '')
     {
         return Admin::component('admin::grid.inline-edit.switch-group', [
-            'class' => 'grid-switch-'.str_replace('.', '-', $name),
+            'class' => 'grid-switch-' . str_replace('.', '-', $name),
             'key' => $this->getKey(),
             'resource' => $this->getResource(),
             'name' => $this->getPayloadName($name),
             'states' => $this->states,
-            'checked' => $this->states['on']['value'] === $this->getAttribute($name) ? 'checked' : '',
+            'checked' => $this->states['on']['value'] == $this->getAttribute($name) ? 'checked' : '',
             'label' => $label,
         ]);
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\Field;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Form\Field;
 
 class Html extends Field
 {
@@ -27,6 +27,7 @@ class Html extends Field
     /**
      * Create a new Html instance.
      *
+     * @param mixed $html
      * @param array $arguments
      */
     public function __construct($html, $arguments)
@@ -65,7 +66,7 @@ class Html extends Field
 
         return <<<EOT
 <div class="{$viewClass['form-group']}">
-    <label  class="{$viewClass['label']} control-label">{$this->label}</label>
+    <label class="{$viewClass['label']} form-label">{$this->label}</label>
     <div class="{$viewClass['field']}">
         {$this->html}
     </div>

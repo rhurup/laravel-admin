@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Column;
 use Illuminate\Database\Eloquent\Model;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Grid\Column;
 
 abstract class AbstractDisplayer
 {
@@ -23,11 +23,17 @@ abstract class AbstractDisplayer
      */
     public $row;
 
+    /**
+     * @var mixed
+     */
     protected $value;
 
     /**
      * Create a new displayer instance.
      *
+     * @param mixed $value
+     * @param Grid $grid
+     * @param Column $column
      * @param \stdClass $row
      */
     public function __construct($value, Grid $grid, Column $column, $row)
@@ -38,6 +44,9 @@ abstract class AbstractDisplayer
         $this->row = $row;
     }
 
+    /**
+     * @return mixed
+     */
     public function getValue()
     {
         return $this->value;
@@ -61,12 +70,19 @@ abstract class AbstractDisplayer
 
     /**
      * Get key of current row.
+     *
+     * @return mixed
      */
     public function getKey()
     {
         return $this->row->{$this->grid->getKeyName()};
     }
 
+    /**
+     * @param mixed $key
+     *
+     * @return mixed
+     */
     public function getAttribute($key)
     {
         return $this->row->getAttribute($key);
@@ -108,7 +124,7 @@ abstract class AbstractDisplayer
         $keys = collect(explode('.', $name ?: $this->getName()));
 
         return $keys->shift().$keys->reduce(function ($carry, $val) {
-                return $carry."[$val]";
+                return $carry . "[$val]";
             });
     }
 
@@ -126,6 +142,8 @@ abstract class AbstractDisplayer
 
     /**
      * Display method.
+     *
+     * @return mixed
      */
     abstract public function display();
 }

@@ -1,12 +1,7 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
-use Encore\Admin\Show\Divider;
-use Encore\Admin\Show\Field;
-use Encore\Admin\Show\Panel;
-use Encore\Admin\Show\Relation;
-use Encore\Admin\Traits\ShouldSnakeAttributes;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,6 +15,11 @@ use Illuminate\Database\Eloquent\Relations\Relation as EloquentRelation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Show\Divider;
+use OpenAdmin\Admin\Show\Field;
+use OpenAdmin\Admin\Show\Panel;
+use OpenAdmin\Admin\Show\Relation;
+use OpenAdmin\Admin\Traits\ShouldSnakeAttributes;
 
 class Show implements Renderable
 {
@@ -81,6 +81,7 @@ class Show implements Renderable
      * Show constructor.
      *
      * @param Model $model
+     * @param mixed $builder
      */
     public function __construct($model, $builder = null)
     {
@@ -97,8 +98,10 @@ class Show implements Renderable
 
     /**
      * Initialize with user pre-defined default disables, etc.
+     *
+     * @param \Closure $callback
      */
-    public static function init(?\Closure $callback = null)
+    public static function init(\Closure $callback = null)
     {
         static::$initCallback = $callback;
     }
@@ -159,6 +162,8 @@ class Show implements Renderable
     /**
      * Add multiple fields.
      *
+     * @param array $fields
+     *
      * @return $this
      */
     public function fields(array $fields = [])
@@ -191,7 +196,7 @@ class Show implements Renderable
      *
      * @param string          $name
      * @param string|\Closure $label
-     * @param \Closure|null   $builder
+     * @param null|\Closure $builder
      *
      * @return Relation
      */
@@ -261,7 +266,7 @@ class Show implements Renderable
 
         $this->fields = $this->fields->filter(
             function (Field $field) use ($name) {
-                return $field->getName() !== $name;
+                return $field->getName() != $name;
             }
         );
     }
@@ -279,7 +284,7 @@ class Show implements Renderable
 
         $this->relations = $this->relations->filter(
             function (Relation $relation) use ($name) {
-                return $relation->getName() !== $name;
+                return $relation->getName() != $name;
             }
         );
     }
@@ -434,11 +439,11 @@ class Show implements Renderable
         ) {
             $this->model->with($method);
 
-            if (1 === count($arguments) && $arguments[0] instanceof \Closure) {
+            if (count($arguments) == 1 && $arguments[0] instanceof \Closure) {
                 return $this->addRelation($method, $arguments[0]);
             }
 
-            if (2 === count($arguments) && $arguments[1] instanceof \Closure) {
+            if (count($arguments) == 2 && $arguments[1] instanceof \Closure) {
                 return $this->addRelation($method, $arguments[1], $arguments[0]);
             }
 
@@ -452,15 +457,15 @@ class Show implements Renderable
             || $relation instanceof BelongsToMany
             || $relation instanceof HasManyThrough
         ) {
-            if (empty($arguments) || (1 === count($arguments) && is_string($arguments[0]))) {
+            if (empty($arguments) || (count($arguments) == 1 && is_string($arguments[0]))) {
                 return $this->showRelationAsField($method, $arguments[0] ?? '');
             }
 
             $this->model->with($method);
 
-            if (1 === count($arguments) && is_callable($arguments[0])) {
+            if (count($arguments) == 1 && is_callable($arguments[0])) {
                 return $this->addRelation($method, $arguments[0]);
-            } elseif (2 === count($arguments) && is_callable($arguments[1])) {
+            } elseif (count($arguments) == 2 && is_callable($arguments[1])) {
                 return $this->addRelation($method, $arguments[1], $arguments[0]);
             }
 

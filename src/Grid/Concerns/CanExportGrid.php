@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace OpenAdmin\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Exporter;
-use Encore\Admin\Grid\Exporters\AbstractExporter;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Grid\Exporter;
+use OpenAdmin\Admin\Grid\Exporters\AbstractExporter;
 
 trait CanExportGrid
 {
@@ -50,6 +50,8 @@ trait CanExportGrid
 
     /**
      * Set exporter driver for Grid to export.
+     *
+     * @param $exporter
      *
      * @return $this
      */
@@ -109,6 +111,9 @@ trait CanExportGrid
         return (new Grid\Tools\ExportButton($this))->render();
     }
 
+    /**
+     * @param \Closure $callback
+     */
     public function export(\Closure $callback)
     {
         if (!$scope = request(Exporter::$queryName)) {

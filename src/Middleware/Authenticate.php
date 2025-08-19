@@ -1,8 +1,9 @@
 <?php
 
-namespace Encore\Admin\Middleware;
+namespace OpenAdmin\Admin\Middleware;
 
-use Encore\Admin\Facades\Admin;
+use Closure;
+use OpenAdmin\Admin\Facades\Admin;
 
 class Authenticate
 {
@@ -10,8 +11,11 @@ class Authenticate
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     *
+     * @return mixed
      */
-    public function handle($request, \Closure $next)
+    public function handle($request, Closure $next)
     {
         \config(['auth.defaults.guard' => 'admin']);
 
@@ -33,7 +37,7 @@ class Authenticate
      */
     protected function shouldPassThrough($request)
     {
-        // 下面的路由不验证登陆
+        // The following routes do not authenticate the login
         $excepts = config('admin.auth.excepts', []);
 
         array_delete($excepts, [
@@ -46,7 +50,7 @@ class Authenticate
         return collect($excepts)
             ->map('admin_base_path')
             ->contains(function ($except) use ($request) {
-                if ('/' !== $except) {
+                if ($except !== '/') {
                     $except = trim($except, '/');
                 }
 

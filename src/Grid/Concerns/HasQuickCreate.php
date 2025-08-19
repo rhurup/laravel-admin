@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace OpenAdmin\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid\Tools\QuickCreate;
+use OpenAdmin\Admin\Grid\Tools\QuickCreate;
 
 trait HasQuickCreate
 {
@@ -14,6 +14,8 @@ trait HasQuickCreate
     protected $quickCreate;
 
     /**
+     * @param \Closure $closure
+     *
      * @return $this
      */
     public function quickCreate(\Closure $closure)

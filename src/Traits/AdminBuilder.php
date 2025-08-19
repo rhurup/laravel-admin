@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Traits;
+namespace OpenAdmin\Admin\Traits;
 
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Tree;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Tree;
 
 /**
  * @deprecated
@@ -12,6 +12,8 @@ use Encore\Admin\Tree;
 trait AdminBuilder
 {
     /**
+     * @param \Closure $callback
+     *
      * @return Grid
      */
     public static function grid(\Closure $callback)
@@ -20,6 +22,8 @@ trait AdminBuilder
     }
 
     /**
+     * @param \Closure $callback
+     *
      * @return Form
      */
     public static function form(\Closure $callback)
@@ -28,9 +32,11 @@ trait AdminBuilder
     }
 
     /**
+     * @param \Closure $callback
+     *
      * @return Tree
      */
-    public static function tree(?\Closure $callback = null)
+    public static function tree(\Closure $callback = null)
     {
         return new Tree(new static(), $callback);
     }

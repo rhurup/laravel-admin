@@ -1,9 +1,7 @@
 <?php
 
-namespace Encore\Admin\Show;
+namespace OpenAdmin\Admin\Show;
 
-use Encore\Admin\Grid;
-use Encore\Admin\Show;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Show;
 
 class Relation extends Field
 {
@@ -61,6 +61,8 @@ class Relation extends Field
     /**
      * Set parent model for relation.
      *
+     * @param Model $model
+     *
      * @return $this
      */
     public function setModel(Model $model)
@@ -77,7 +79,7 @@ class Relation extends Field
      */
     protected function getNullRenderable()
     {
-        return new class implements Renderable {
+        return new class() implements Renderable {
             public function render()
             {
             }
@@ -119,7 +121,8 @@ class Relation extends Field
 
             $renderable->setName($this->name)
                 ->setTitle($this->title)
-                ->setRelation($relation);
+                ->setRelation($relation)
+                ->fixedFooter(false);
         }
 
         return $renderable->render();

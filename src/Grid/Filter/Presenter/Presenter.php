@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter\Presenter;
+namespace OpenAdmin\Admin\Grid\Filter\Presenter;
 
-use Encore\Admin\Grid\Filter\AbstractFilter;
+use OpenAdmin\Admin\Grid\Filter\AbstractFilter;
 
 abstract class Presenter
 {
@@ -13,6 +13,8 @@ abstract class Presenter
 
     /**
      * Set parent filter.
+     *
+     * @param AbstractFilter $filter
      */
     public function setParent(AbstractFilter $filter)
     {
@@ -21,6 +23,8 @@ abstract class Presenter
 
     /**
      * @see https://stackoverflow.com/questions/19901850/how-do-i-get-an-objects-unqualified-short-class-name
+     *
+     * @return string
      */
     public function view(): string
     {
@@ -31,6 +35,8 @@ abstract class Presenter
 
     /**
      * Set default value for filter.
+     *
+     * @param $default
      *
      * @return $this
      */
@@ -43,6 +49,8 @@ abstract class Presenter
 
     /**
      * Blade template variables for this presenter.
+     *
+     * @return array
      */
     public function variables(): array
     {

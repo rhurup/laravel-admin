@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Widgets\Navbar;
+namespace OpenAdmin\Admin\Widgets\Navbar;
 
-use Encore\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
+use OpenAdmin\Admin\Admin;
 
 class RefreshButton implements Renderable
 {

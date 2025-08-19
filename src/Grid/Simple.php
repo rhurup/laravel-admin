@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace OpenAdmin\Admin\Grid;
 
-use Encore\Admin\Grid;
 use Illuminate\Contracts\Support\Renderable;
+use OpenAdmin\Admin\Grid;
 
 /**
  * @mixin Grid
@@ -46,6 +46,8 @@ class Simple implements Renderable
     /**
      * @param string $name
      * @param array  $arguments
+     *
+     * @return mixed
      */
     public function __call($name, $arguments)
     {

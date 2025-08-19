@@ -1,16 +1,17 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace OpenAdmin\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid\Filter;
+use Closure;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Grid\Filter;
 
 trait HasFilter
 {
     /**
      * The grid Filter.
      *
-     * @var Filter
+     * @var \OpenAdmin\Admin\Grid\Filter
      */
     protected $filter;
 
@@ -66,8 +67,10 @@ trait HasFilter
 
     /**
      * Set the grid filter.
+     *
+     * @param Closure $callback
      */
-    public function filter(\Closure $callback)
+    public function filter(Closure $callback)
     {
         call_user_func($callback, $this->filter);
     }

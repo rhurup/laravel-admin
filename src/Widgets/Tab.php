@@ -1,8 +1,7 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace OpenAdmin\Admin\Widgets;
 
-use Encore\Admin\Facades\Admin;
 use Illuminate\Contracts\Support\Renderable;
 
 class Tab extends Widget implements Renderable
@@ -45,16 +44,17 @@ class Tab extends Widget implements Renderable
      */
     public function add($title, $content, $active = false, $id = null)
     {
+        if ($active) {
+            $this->data['active'] = count($this->data['tabs']);
+        }
+
         $this->data['tabs'][] = [
             'id' => $id ?: mt_rand(),
+            'ref' => is_numeric($title) ? '_' . $title : $title,
             'title' => $title,
             'content' => $content,
             'type' => static::TYPE_CONTENT,
         ];
-
-        if ($active) {
-            $this->data['active'] = count($this->data['tabs']) - 1;
-        }
 
         return $this;
     }
@@ -70,16 +70,15 @@ class Tab extends Widget implements Renderable
      */
     public function addLink($title, $href, $active = false)
     {
+        if ($active) {
+            $this->data['active'] = count($this->data['tabs']);
+        }
         $this->data['tabs'][] = [
             'id' => mt_rand(),
             'title' => $title,
             'href' => $href,
             'type' => static::TYPE_LINK,
         ];
-
-        if ($active) {
-            $this->data['active'] = count($this->data['tabs']) - 1;
-        }
 
         return $this;
     }
@@ -96,6 +95,8 @@ class Tab extends Widget implements Renderable
 
     /**
      * Set drop-down items.
+     *
+     * @param array $links
      *
      * @return $this
      */
@@ -129,27 +130,6 @@ class Tab extends Widget implements Renderable
             ['attributes' => $this->formatAttributes()]
         );
 
-        $this->setupScript();
-
         return view($this->view, $data)->render();
-    }
-
-    /**
-     * Setup script.
-     */
-    protected function setupScript()
-    {
-        $script = <<<'SCRIPT'
-var hash = document.location.hash;
-if (hash) {
-    $('.nav-tabs a[href="' + hash + '"]').tab('show');
-}
-
-// Change hash for page-reload
-$('.nav-tabs a').on('shown.bs.tab', function (e) {
-    history.pushState(null,null, e.target.hash);
-});
-SCRIPT;
-        Admin::script($script);
     }
 }

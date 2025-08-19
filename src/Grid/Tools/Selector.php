@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace OpenAdmin\Admin\Grid\Tools;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -31,7 +31,7 @@ class Selector implements Renderable
      * @param string         $column
      * @param string|array   $label
      * @param array|\Closure $options
-     * @param \Closure|null  $query
+     * @param null|\Closure $query
      *
      * @return $this
      */
@@ -44,7 +44,7 @@ class Selector implements Renderable
      * @param string        $column
      * @param string        $label
      * @param array         $options
-     * @param \Closure|null $query
+     * @param null|\Closure $query
      *
      * @return $this
      */
@@ -116,6 +116,7 @@ class Selector implements Renderable
 
     /**
      * @param string $column
+     * @param mixed $value
      * @param bool   $add
      *
      * @return string

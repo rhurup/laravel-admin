@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Tree;
+namespace OpenAdmin\Admin\Tree;
 
-use Encore\Admin\Tree;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Tree;
 
 class Tools implements Renderable
 {
@@ -25,6 +25,8 @@ class Tools implements Renderable
 
     /**
      * Create a new Tools instance.
+     *
+     * @param Builder $builder
      */
     public function __construct(Tree $tree)
     {

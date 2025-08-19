@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Facades\Admin as AdminFacade;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use MatthiasMullie\Minify;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Facades\Admin as AdminFacade;
 
 class MinifyCommand extends Command
 {
@@ -75,7 +75,7 @@ class MinifyCommand extends Command
     {
         $excepts = config('admin.minify_assets.excepts', []);
 
-        $this->excepts = array_merge($excepts, Admin::$minifyIgnores);
+        $this->excepts = array_merge($excepts, Admin::$minifyIgnoresCss, Admin::$minifyIgnoresJs);
     }
 
     protected function clearMinifiedFiles()

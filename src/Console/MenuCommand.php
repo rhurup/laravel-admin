@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
-use Encore\Admin\Facades\Admin;
 use Illuminate\Console\Command;
+use OpenAdmin\Admin\Facades\Admin;
 
 class MenuCommand extends Command
 {

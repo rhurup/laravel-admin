@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Layout;
+namespace OpenAdmin\Admin\Layout;
 
 use Illuminate\Contracts\Support\Renderable;
 
@@ -34,6 +34,7 @@ class Row implements Buildable, Renderable
      * Add a column.
      *
      * @param int $width
+     * @param $content
      */
     public function column($width, $content)
     {
@@ -60,6 +61,9 @@ class Row implements Buildable, Renderable
         return $this;
     }
 
+    /**
+     * @param Column $column
+     */
     protected function addColumn(Column $column)
     {
         $this->columns[] = $column;

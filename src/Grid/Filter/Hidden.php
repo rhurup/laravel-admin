@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
 class Hidden extends AbstractFilter
 {
@@ -27,10 +27,16 @@ class Hidden extends AbstractFilter
         $this->value = $value;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function condition($inputs)
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
         return "<input type='hidden' name='$this->name' value='$this->value'>";

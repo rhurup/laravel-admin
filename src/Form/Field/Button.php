@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field;
 
 class Button extends Field
 {
@@ -17,12 +17,10 @@ class Button extends Field
 
     public function on($event, $callback)
     {
-        $this->script = <<<EOT
-
-        $('{$this->getElementClassSelector()}').on('$event', function() {
+        $this->script = <<<JS
+        document.querySelector('{$this->getElementClassSelector()}').addEventListener('$event', function() {
             $callback
         });
-
-EOT;
+JS;
     }
 }

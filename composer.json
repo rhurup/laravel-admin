@@ -1,26 +1,38 @@
 {
-    "name": "rhurup/laravel-admin",
-    "description": "laravel admin",
+  "name": "rhurup/laravel-admin",
+  "description": "open-admin. Open-source Laravel Admin panel. No pro or paid package, free & open. Based on laravel-admin, with special thanks to z-song",
     "type": "library",
-    "keywords": ["laravel", "admin", "grid", "form"],
-    "homepage": "https://github.com/rhurup/laravel-admin",
+  "keywords": [
+    "laravel",
+    "admin",
+    "grid",
+    "form",
+    "open-admin",
+    "open",
+    "free"
+  ],
+  "homepage": "https://github.com/open-admin-org/open-admin",
     "license": "MIT",
     "authors": [
         {
-            "name": "Rasmus Hurup Hansen",
-            "email": "rasmus@huruphansen.dk"
+          "name": "Sjors Broersen | Open-Admin.org",
+          "email": "info@open-admin.org"
         }
     ],
     "require": {
-        "php": ">=8.3.0",
-        "laravel/framework": ">=11.41.3"
+      "php": ">=8.3",
+      "symfony/dom-crawler": ">=7.0",
+      "laravel/framework": ">=11.41.3",
+      "doctrine/dbal": ">=4.0"
     },
     "require-dev": {
-        "laravel/laravel": ">=11.41.3"
+      "laravel/laravel": ">=11.41.3",
+      "intervention/image": ">=3.0",
+      "laravel/browser-kit-testing": "^6.0"
     },
     "autoload": {
         "psr-4": {
-            "Encore\\Admin\\": "src/"
+          "OpenAdmin\\Admin\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -36,7 +48,8 @@
         ]
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit"
+      "sass": "sass --watch resources/assets/open-admin/scss/styles.scss:resources/assets/open-admin/css/styles.css resources/assets/open-admin/scss/pages:resources/assets/open-admin/css/pages --style compressed",
+      "test": "./vendor/bin/phpunit"
     },
     "suggest": {
         "intervention/image": "Required to handling and manipulation upload images (~2.3).",
@@ -45,11 +58,14 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Encore\\Admin\\AdminServiceProvider"
+              "OpenAdmin\\Admin\\AdminServiceProvider"
             ],
             "aliases": {
-                "Admin": "Encore\\Admin\\Facades\\Admin"
+              "Admin": "OpenAdmin\\Admin\\Facades\\Admin"
             }
         }
-    }
+    },
+  "config": {
+    "process-timeout": 0
+  }
 }

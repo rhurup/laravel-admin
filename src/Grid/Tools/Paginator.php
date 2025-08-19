@@ -1,16 +1,16 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace OpenAdmin\Admin\Grid\Tools;
 
-use Encore\Admin\Grid;
 use Illuminate\Pagination\LengthAwarePaginator;
+use OpenAdmin\Admin\Grid;
 
 class Paginator extends AbstractTool
 {
     /**
-     * @var LengthAwarePaginator
+     * @var \Illuminate\Pagination\LengthAwarePaginator
      */
-    protected $paginator;
+    protected $paginator = null;
 
     /**
      * @var bool
@@ -19,6 +19,8 @@ class Paginator extends AbstractTool
 
     /**
      * Create a new Paginator instance.
+     *
+     * @param Grid $grid
      */
     public function __construct(Grid $grid, $perPageSelector = true)
     {
@@ -97,8 +99,13 @@ class Paginator extends AbstractTool
             return '';
         }
 
-        return $this->paginationRanger().
-            $this->paginationLinks().
-            $this->perPageSelector();
+        $vars = [
+            'range' => $this->paginationRanger(),
+            'links' => $this->paginationLinks(),
+            'per_page' => $this->perPageSelector(),
+            'fixedFooter' => $this->grid->fixedFooter,
+        ];
+
+        return view('admin::grid.pagination', $vars)->render();
     }
 }

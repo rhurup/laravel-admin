@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Grid\Column;
+namespace OpenAdmin\Admin\Grid\Column;
 
 use Carbon\Carbon;
-use Encore\Admin\Grid\Displayers;
-use Encore\Admin\Grid\Model;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Grid\Displayers;
+use OpenAdmin\Admin\Grid\Model;
 
 /**
  * Trait ExtendDisplay.
@@ -23,6 +23,7 @@ use Illuminate\Support\Arr;
  * @method $this modal($title, $callback = null)
  * @method $this carousel(int $width = 300, int $height = 200, $server = '')
  * @method $this downloadable($server = '')
+ * @method $this DatetimeFormat($formt = 'Y-m-d')
  * @method $this copyable()
  * @method $this qrcode($formatter = null, $width = 150, $height = 150)
  * @method $this prefix($prefix, $delimiter = '&nbsp;')
@@ -52,6 +53,7 @@ trait ExtendDisplay
         'modal' => Displayers\Modal::class,
         'carousel' => Displayers\Carousel::class,
         'downloadable' => Displayers\Downloadable::class,
+        'dateFormat' => Displayers\DateFormat::class,
         'copyable' => Displayers\Copyable::class,
         'qrcode' => Displayers\QRCode::class,
         'prefix' => Displayers\Prefix::class,
@@ -67,6 +69,9 @@ trait ExtendDisplay
 
     /**
      * Extend column displayer.
+     *
+     * @param $name
+     * @param $displayer
      */
     public static function extend($name, $displayer)
     {
@@ -90,7 +95,7 @@ trait ExtendDisplay
 
             $url = request()->fullUrlWithQuery($query);
 
-            return "<a href=\"{$url}\"><i class=\"fa fa-search\"></i></a>";
+            return "<a href=\"{$url}\"><i class=\"icon-search\"></i></a>";
         }, '&nbsp;&nbsp;');
 
         return $this;
@@ -98,10 +103,12 @@ trait ExtendDisplay
 
     /**
      * Bind search query to grid model.
+     *
+     * @param Model $model
      */
     public function bindSearchQuery(Model $model)
     {
-        if ($this->searchable && ($value = request($this->getName())) !== '') {
+        if ($this->searchable && ($value = request($this->getName())) != '') {
             $model->where($this->getName(), $value);
         }
     }
@@ -109,6 +116,7 @@ trait ExtendDisplay
     /**
      * Display column using array value map.
      *
+     * @param array $values
      * @param null $default
      *
      * @return $this
@@ -126,6 +134,8 @@ trait ExtendDisplay
 
     /**
      * Replace output value with giving map.
+     *
+     * @param array $replacements
      *
      * @return $this
      */
@@ -225,7 +235,7 @@ trait ExtendDisplay
             $values = (array) $values;
 
             if (in_array($value, $values)) {
-                return '<i class="fa fa-refresh fa-spin text-primary"></i>';
+                return '<i class="icon-hourglass icon-spin text-primary"></i>';
             }
 
             return Arr::get($others, $value, $value);
@@ -235,6 +245,7 @@ trait ExtendDisplay
     /**
      * Display column as an font-awesome icon based on it's value.
      *
+     * @param array $setting
      * @param string $default
      *
      * @return $this
@@ -242,15 +253,15 @@ trait ExtendDisplay
     public function icon(array $setting, $default = '')
     {
         return $this->display(function ($value) use ($setting, $default) {
-            $fa = '';
+            $icon = '';
 
             if (isset($setting[$value])) {
-                $fa = $setting[$value];
+                $icon = $setting[$value];
             } elseif ($default) {
-                $fa = $default;
+                $icon = $default;
             }
 
-            return "<i class=\"fa fa-{$fa}\"></i>";
+            return "<i class=\"icon-{$icon}\"></i>";
         });
     }
 
@@ -275,6 +286,7 @@ trait ExtendDisplay
     /**
      * Display column as boolean , `✓` for true, and `✗` for false.
      *
+     * @param array $map
      * @param bool $default
      *
      * @return $this
@@ -284,7 +296,7 @@ trait ExtendDisplay
         return $this->display(function ($value) use ($map, $default) {
             $bool = empty($map) ? boolval($value) : Arr::get($map, $value, $default);
 
-            return $bool ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>';
+            return $bool ? '<i class="icon-check text-success"></i>' : '<i class="icon-times text-danger"></i>';
         });
     }
 
@@ -319,7 +331,7 @@ trait ExtendDisplay
                 $style = Arr::get($options, $original, $default);
             }
 
-            return "<span class=\"label-{$style}\" style='width: 8px;height: 8px;padding: 0;border-radius: 50%;display: inline-block;'></span>";
+            return "<span class=\"bg-{$style}\" style='width: 8px;height: 8px;padding: 0;border-radius: 50%;display: inline-block;'></span>";
         }, '&nbsp;&nbsp;');
     }
 }

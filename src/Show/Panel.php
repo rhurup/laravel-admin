@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Show;
+namespace OpenAdmin\Admin\Show;
 
-use Encore\Admin\Show;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Show;
 
 class Panel implements Renderable
 {
@@ -54,13 +54,15 @@ class Panel implements Renderable
         $this->data = [
             'fields' => new Collection(),
             'tools' => new Tools($this),
-            'style' => 'info',
+            'style' => 'none',
             'title' => trans('admin.detail'),
         ];
     }
 
     /**
      * Set parent container.
+     *
+     * @param Show $show
      *
      * @return $this
      */
@@ -125,6 +127,8 @@ class Panel implements Renderable
 
     /**
      * Build panel tools.
+     *
+     * @param $callable
      */
     public function tools($callable)
     {

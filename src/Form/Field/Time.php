@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
 class Time extends Date
 {
@@ -8,8 +8,9 @@ class Time extends Date
 
     public function render()
     {
-        $this->prepend('<i class="fa fa-clock-o fa-fw"></i>')
-            ->defaultAttribute('style', 'width: 150px');
+        $this->prepend('<i class="icon-clock"></i>');
+        $this->style('max-width', '160px');
+        $this->options['noCalendar'] = true;
 
         return parent::render();
     }

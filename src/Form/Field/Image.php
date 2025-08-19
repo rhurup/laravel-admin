@@ -1,13 +1,18 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field\Traits\ImageField;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Image extends File
 {
     use ImageField;
 
+    /**
+     * @inheritdoc
+     */
     protected $view = 'admin::form.file';
 
     /**
@@ -17,34 +22,50 @@ class Image extends File
      */
     protected $rules = 'image';
 
+    protected function setType($type = 'image')
+    {
+        $this->options['type'] = $type;
+    }
+
     /**
      * @param array|UploadedFile $image
      *
      * @return string
      */
-    public function prepare($image)
+    public function prepare($file)
     {
         if ($this->picker) {
-            return parent::prepare($image);
+            return parent::prepare($file);
         }
 
-        if (request()->has(static::FILE_DELETE_FLAG)) {
-            return $this->destroy();
+        if (request()->has($this->column . Field::FILE_DELETE_FLAG)) {
+            $this->destroy();
+
+            return '';
         }
 
-        $this->name = $this->getStoreName($image);
+        if (!empty($file)) {
+            if ($this->picker) {
+                return parent::prepare($file);
+            }
+            $this->name = $this->getStoreName($file);
 
-        $this->callInterventionMethods($image->getRealPath());
+            $this->callInterventionMethods($file->getRealPath());
 
-        $path = $this->uploadAndDeleteOriginal($image);
+            $path = $this->uploadAndDeleteOriginal($file);
 
-        $this->uploadAndDeleteOriginalThumbnail($image);
+            $this->uploadAndDeleteOriginalThumbnail($file);
 
-        return $path;
+            return $path;
+        }
+
+        return false;
     }
 
     /**
      * force file type to image.
+     *
+     * @param $file
      *
      * @return array|bool|int[]|string[]
      */

@@ -1,19 +1,19 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\EmbeddedForm;
-use Encore\Admin\Form\Field;
-use Encore\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use OpenAdmin\Admin\Form\EmbeddedForm;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Widgets\Form as WidgetForm;
 
 class Embeds extends Field
 {
     /**
      * @var \Closure
      */
-    protected $builder;
+    protected $builder = null;
 
     /**
      * Create a new HasMany field instance.
@@ -25,12 +25,12 @@ class Embeds extends Field
     {
         $this->column = $column;
 
-        if (1 === count($arguments)) {
+        if (count($arguments) == 1) {
             $this->label = $this->formatLabel();
             $this->builder = $arguments[0];
         }
 
-        if (2 === count($arguments)) {
+        if (count($arguments) == 2) {
             list($this->label, $this->builder) = $arguments;
         }
     }
@@ -49,6 +49,9 @@ class Embeds extends Field
         return $form->setOriginal($this->original)->prepare($input);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getValidator(array $input)
     {
         if (!array_key_exists($this->column, $input)) {
@@ -168,9 +171,10 @@ class Embeds extends Field
     /**
      * Reset input key for validation.
      *
+     * @param array $input
      * @param array $column $column is the column name array set
      *
-     * @return void
+     * @return void.
      */
     public function resetInputKey(array &$input, array $column)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Actions;
+namespace OpenAdmin\Admin\Actions;
 
 class SweatAlert2
 {

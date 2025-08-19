@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace OpenAdmin\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
 
@@ -32,6 +32,11 @@ class Box extends Widget implements Renderable
     protected $tools = [];
 
     /**
+     * @var array
+     */
+    protected $styles = [];
+
+    /**
      * @var string
      */
     protected $script;
@@ -56,13 +61,28 @@ class Box extends Widget implements Renderable
             $this->footer($footer);
         }
 
-        $this->class('box');
+        $this->id = uniqid('box-');
+        $this->class('card');
+    }
+
+    /**
+     * Set box id.
+     *
+     * @param string $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
      * Set box content.
      *
-     * @param string|Renderable $content
+     * @param string $content
      *
      * @return $this
      */
@@ -80,7 +100,7 @@ class Box extends Widget implements Renderable
     /**
      * Set box footer.
      *
-     * @param string|Renderable $footer
+     * @param string $footer
      *
      * @return $this
      */
@@ -117,27 +137,7 @@ class Box extends Widget implements Renderable
     public function collapsable()
     {
         $this->tools[] =
-            '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>';
-
-        return $this;
-    }
-
-    /**
-     *  Set box body scrollable.
-     *
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function scrollable($options = [], $nodeSelector = '')
-    {
-        $this->id = uniqid('box-slim-scroll-');
-        $scrollOptions = json_encode($options);
-        $nodeSelector = $nodeSelector ?: '.box-body';
-
-        $this->script = <<<SCRIPT
-$("#{$this->id} {$nodeSelector}").slimScroll({$scrollOptions});
-SCRIPT;
+            '<button class="btn btn-box-tool box-tool-minimize" data-bs-toggle="collapse" data-bs-target="#' . $this->id . '-body"><i class="icon-minus"></i></button>';
 
         return $this;
     }
@@ -150,7 +150,7 @@ SCRIPT;
     public function removable()
     {
         $this->tools[] =
-            '<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>';
+            '<button class="btn btn-box-tool box-tool-remove" onclick="document.getElementById(\'' . $this->id . '\').remove();"><i class="icon-times"></i></button>';
 
         return $this;
     }
@@ -158,33 +158,26 @@ SCRIPT;
     /**
      * Set box style.
      *
-     * @param string $styles
+     * @param array $styles
      *
      * @return $this|Box
      */
-    public function style($styles)
+    public function styles($styles)
     {
-        if (is_string($styles)) {
-            return $this->style([$styles]);
-        }
-
-        $styles = array_map(function ($style) {
-            return 'box-'.$style;
-        }, $styles);
-
-        $this->class = $this->class.' '.implode(' ', $styles);
+        $this->styles = array_merge($this->styles, $styles);
 
         return $this;
     }
 
     /**
-     * Add `box-solid` class to box.
-     *
-     * @return $this
+     * Set styles as attibute.
      */
-    public function solid()
+    public function setStyles()
     {
-        return $this->style('solid');
+        $style = urldecode(http_build_query($this->styles));
+        $style = str_replace('&', ';', $style);
+        $style = str_replace('=', ':', $style);
+        $this->style = $style;
     }
 
     /**
@@ -194,7 +187,10 @@ SCRIPT;
      */
     protected function variables()
     {
+        $this->setStyles();
+
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'content' => $this->content,
             'footer' => $this->footer,

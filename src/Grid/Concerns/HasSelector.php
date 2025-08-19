@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace OpenAdmin\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Tools\Selector;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Grid\Tools\Selector;
 
 /**
  * @mixin Grid
@@ -16,6 +16,8 @@ trait HasSelector
     protected $selector;
 
     /**
+     * @param \Closure $closure
+     *
      * @return $this
      */
     public function selector(\Closure $closure)
@@ -51,7 +53,7 @@ trait HasSelector
 
             $values = $active[$column];
 
-            if ('one' === $selector['type']) {
+            if ($selector['type'] === 'one') {
                 $values = current($values);
             }
 

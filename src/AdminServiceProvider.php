@@ -1,13 +1,12 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
-use Encore\Admin\Layout\Content;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
+use OpenAdmin\Admin\Layout\Content;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -33,6 +32,7 @@ class AdminServiceProvider extends ServiceProvider
         Console\ActionCommand::class,
         Console\GenerateMenuCommand::class,
         Console\ConfigCommand::class,
+        Console\DevLinksCommand::class,
     ];
 
     /**
@@ -42,6 +42,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected $routeMiddleware = [
         'admin.auth' => Middleware\Authenticate::class,
+        'admin.throttle' => Middleware\Throttle::class,
         'admin.pjax' => Middleware\Pjax::class,
         'admin.log' => Middleware\LogOperation::class,
         'admin.permission' => Middleware\Permission::class,
@@ -57,6 +58,7 @@ class AdminServiceProvider extends ServiceProvider
     protected $middlewareGroups = [
         'admin' => [
             'admin.auth',
+            'admin.throttle',
             'admin.pjax',
             'admin.log',
             'admin.bootstrap',
@@ -81,16 +83,8 @@ class AdminServiceProvider extends ServiceProvider
         }
 
         $this->registerPublishing();
-
         $this->compatibleBlade();
-
-        Blade::directive('box', function ($title) {
-            return "<?php \$box = new \Encore\Admin\Widgets\Box({$title}, '";
-        });
-
-        Blade::directive('endbox', function ($expression) {
-            return "'); echo \$box->render(); ?>";
-        });
+        $this->bladeDirectives();
     }
 
     /**
@@ -100,8 +94,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function ensureHttps()
     {
-        $is_admin = Str::startsWith(request()->getRequestUri(), '/'.ltrim(config('admin.route.prefix'), '/'));
-        if ((config('admin.https') || config('admin.secure')) && $is_admin) {
+        if (config('admin.https') || config('admin.secure')) {
             url()->forceScheme('https');
             $this->app['request']->server->set('HTTPS', true);
         }
@@ -115,14 +108,11 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerPublishing()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__.'/../config' => config_path()], 'laravel-admin-config');
-            if (version_compare($this->app->version(), '9.0.0', '>=')) {
-                $this->publishes([__DIR__.'/../resources/lang' => base_path('lang')], 'laravel-admin-lang');
-            } else {
-                $this->publishes([__DIR__.'/../resources/lang' => resource_path('lang')], 'laravel-admin-lang');
-            }
-            $this->publishes([__DIR__.'/../database/migrations' => database_path('migrations')], 'laravel-admin-migrations');
-            $this->publishes([__DIR__.'/../resources/assets' => public_path('vendor/laravel-admin')], 'laravel-admin-assets');
+            $this->publishes([__DIR__ . '/../config' => config_path()], 'open-admin-config');
+            $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang')], 'open-admin-lang');
+            $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'open-admin-migrations');
+            $this->publishes([__DIR__ . '/../resources/assets' => public_path('vendor/open-admin')], 'open-admin-assets');
+            $this->publishes([__DIR__ . '/../resources/assets/test' => public_path('vendor/open-admin-test')], 'open-admin-test');
         }
     }
 
@@ -206,5 +196,21 @@ class AdminServiceProvider extends ServiceProvider
         foreach ($this->middlewareGroups as $key => $middleware) {
             app('router')->middlewareGroup($key, $middleware);
         }
+    }
+
+    /**
+     * Register the blade box directive.
+     *
+     * @return void
+     */
+    public function bladeDirectives()
+    {
+        Blade::directive('box', function ($title) {
+            return "<?php \$box = new \OpenAdmin\Admin\Widgets\Box({$title}, '";
+        });
+
+        Blade::directive('endbox', function ($expression) {
+            return "'); echo \$box->render(); ?>";
+        });
     }
 }

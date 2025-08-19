@@ -1,11 +1,15 @@
 <?php
 
-namespace Encore\Admin\Form\Concerns;
+namespace OpenAdmin\Admin\Form\Concerns;
 
-use Encore\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field;
 
 trait HandleCascadeFields
 {
+    /**
+     * @param array $dependency
+     * @param \Closure $closure
+     */
     public function cascadeGroup(\Closure $closure, array $dependency)
     {
         $this->pushField($group = new Field\CascadeGroup($dependency));

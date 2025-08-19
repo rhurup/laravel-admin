@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
 class Decimal extends Text
 {
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/input-mask/jquery.inputmask.bundle.min.js',
+        '/vendor/open-admin/inputmask/inputmask.min.js',
     ];
 
     /**
@@ -22,8 +22,8 @@ class Decimal extends Text
     {
         $this->inputmask($this->options);
 
-        $this->prepend('<i class="fa '.$this->icon.' fa-fw"></i>')
-            ->defaultAttribute('style', 'width: 130px');
+        $this->prepend('<i class="' . $this->icon . '"></i>');
+        $this->style('max-width', '160px');
 
         return parent::render();
     }

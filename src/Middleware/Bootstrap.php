@@ -1,13 +1,14 @@
 <?php
 
-namespace Encore\Admin\Middleware;
+namespace OpenAdmin\Admin\Middleware;
 
-use Encore\Admin\Facades\Admin;
+use Closure;
 use Illuminate\Http\Request;
+use OpenAdmin\Admin\Facades\Admin;
 
 class Bootstrap
 {
-    public function handle(Request $request, \Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         Admin::bootstrap();
 

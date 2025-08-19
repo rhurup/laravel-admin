@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\Admin\Traits;
+namespace OpenAdmin\Admin\Traits;
 
-use Encore\Admin\Tree;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
+use OpenAdmin\Admin\Tree;
 
 trait ModelTree
 {
@@ -116,9 +116,11 @@ trait ModelTree
     /**
      * Set query callback to model.
      *
+     * @param \Closure|null $query
+     *
      * @return $this
      */
-    public function withQuery(?\Closure $query = null)
+    public function withQuery(\Closure $query = null)
     {
         $this->queryCallback = $query;
 
@@ -138,6 +140,7 @@ trait ModelTree
     /**
      * Build Nested array.
      *
+     * @param array $nodes
      * @param int $parentId
      *
      * @return array
@@ -151,7 +154,7 @@ trait ModelTree
         }
 
         foreach ($nodes as $node) {
-            if ($node[$this->parentColumn] === $parentId) {
+            if ($node[$this->parentColumn] == $parentId) {
                 $children = $this->buildNestedArray($nodes, $node[$this->getKeyName()]);
 
                 if ($children) {
@@ -167,6 +170,8 @@ trait ModelTree
 
     /**
      * Get all elements.
+     *
+     * @return mixed
      */
     public function allNodes()
     {
@@ -184,6 +189,8 @@ trait ModelTree
 
     /**
      * Set the order of branches in the tree.
+     *
+     * @param array $order
      *
      * @return void
      */
@@ -224,11 +231,12 @@ trait ModelTree
     /**
      * Get options for Select field in form.
      *
+     * @param \Closure|null $closure
      * @param string $rootText
      *
      * @return array
      */
-    public static function selectOptions(?\Closure $closure = null, $rootText = 'ROOT')
+    public static function selectOptions(\Closure $closure = null, $rootText = 'ROOT')
     {
         $options = (new static())->withQuery($closure)->buildSelectOptions();
 
@@ -238,6 +246,7 @@ trait ModelTree
     /**
      * Build options of select field in form.
      *
+     * @param array $nodes
      * @param int    $parentId
      * @param string $prefix
      * @param string $space
@@ -255,7 +264,7 @@ trait ModelTree
         }
 
         foreach ($nodes as $index => $node) {
-            if ($node[$this->parentColumn] === $parentId) {
+            if ($node[$this->parentColumn] == $parentId) {
                 $node[$this->titleColumn] = $prefix.$space.$node[$this->titleColumn];
 
                 $childrenPrefix = str_replace('┝', str_repeat($space, 6), $prefix).'┝'.str_replace(['┝', $space], '', $prefix);
@@ -273,6 +282,9 @@ trait ModelTree
         return $options;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function delete()
     {
         $this->where($this->parentColumn, $this->getKey())->delete();
@@ -280,6 +292,9 @@ trait ModelTree
         return parent::delete();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected static function boot()
     {
         parent::boot();
@@ -287,7 +302,7 @@ trait ModelTree
         static::saving(function (Model $branch) {
             $parentColumn = $branch->getParentColumn();
 
-            if (Request::has($parentColumn) && Request::input($parentColumn) === $branch->getKey()) {
+            if (Request::has($parentColumn) && Request::input($parentColumn) == $branch->getKey()) {
                 throw new \Exception(trans('admin.parent_select_error'));
             }
 

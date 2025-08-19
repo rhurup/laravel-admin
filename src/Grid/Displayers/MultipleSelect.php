@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Admin;
 
 class MultipleSelect extends AbstractDisplayer
 {

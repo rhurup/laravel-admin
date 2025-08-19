@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
 use Illuminate\Console\Command;
 
@@ -20,7 +20,7 @@ class ExportSeedCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Export seed a Laravel-admin database tables menu, roles and permissions';
+    protected $description = 'Export seed a Open-admin database tables menu, roles and permissions';
 
     /**
      * Execute the console command.
@@ -99,6 +99,8 @@ class ExportSeedCommand extends Command
     /**
      * Get stub contents.
      *
+     * @param $name
+     *
      * @return string
      */
     protected function getStub($name)
@@ -109,6 +111,7 @@ class ExportSeedCommand extends Command
     /**
      * Custom var_export for correct work with \r\n.
      *
+     * @param $var
      * @param string $indent
      *
      * @return string

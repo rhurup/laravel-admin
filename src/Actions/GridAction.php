@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Actions;
+namespace OpenAdmin\Admin\Actions;
 
-use Encore\Admin\Grid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use OpenAdmin\Admin\Grid;
 
 /**
  * Class GridAction.
@@ -24,11 +24,14 @@ abstract class GridAction extends Action
     public $selectorPrefix = '.grid-action-';
 
     /**
+     * @param Grid $grid
+     *
      * @return $this
      */
     public function setGrid(Grid $grid)
     {
         $this->parent = $grid;
+        $this->resource = $grid->resource();
 
         return $this;
     }
@@ -43,6 +46,9 @@ abstract class GridAction extends Action
         return $this->parent->resource();
     }
 
+    /**
+     * @return mixed
+     */
     protected function getModelClass()
     {
         $model = $this->parent->model()->getOriginalModel();
@@ -60,6 +66,8 @@ abstract class GridAction extends Action
 
     /**
      * Indicates if model uses soft-deletes.
+     *
+     * @param $modelClass
      *
      * @return bool
      */

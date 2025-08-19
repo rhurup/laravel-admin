@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany as Relation;
 use Illuminate\Support\Arr;
@@ -18,8 +18,8 @@ class BelongsToMany extends BelongsTo
      * Get other key for this many-to-many relation.
      *
      * @return string
-     *
      * @throws \Exception
+     *
      */
     protected function getOtherKey()
     {
@@ -29,8 +29,8 @@ class BelongsToMany extends BelongsTo
 
         $model = $this->getGrid()->model()->getOriginalModel();
 
-        if (is_callable([$model, $this->getName()])
-            && ($relation = $model->{$this->getName()}()) instanceof Relation
+        if (is_callable([$model, $this->getName()]) &&
+            ($relation = $model->{$this->getName()}()) instanceof Relation
         ) {
             /* @var Relation $relation */
             $fullKey = $relation->getQualifiedRelatedPivotKeyName();
@@ -44,8 +44,8 @@ class BelongsToMany extends BelongsTo
 
     /**
      * @return false|string|void
-     *
      * @throws \Exception
+     *
      */
     protected function getOriginalData()
     {

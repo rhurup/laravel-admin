@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid\Exporters;
+namespace OpenAdmin\Admin\Grid\Exporters;
 
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -26,6 +26,9 @@ abstract class ExcelExporter extends AbstractExporter implements FromQuery, With
      */
     protected $columns = [];
 
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         if (!empty($this->columns)) {
@@ -55,6 +58,9 @@ abstract class ExcelExporter extends AbstractExporter implements FromQuery, With
         return $this->getQuery();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function export()
     {
         $this->download($this->fileName)->prepare(request())->send();

@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter\Presenter;
+namespace OpenAdmin\Admin\Grid\Filter\Presenter;
 
-use Encore\Admin\Admin;
+use OpenAdmin\Admin\Admin;
 
 class Text extends Presenter
 {
@@ -14,7 +14,7 @@ class Text extends Presenter
     /**
      * @var string
      */
-    protected $icon = 'pencil';
+    protected $icon = 'pencil-alt';
 
     /**
      * @var string
@@ -33,6 +33,8 @@ class Text extends Presenter
 
     /**
      * Get variables for field template.
+     *
+     * @return array
      */
     public function variables(): array
     {
@@ -58,16 +60,25 @@ class Text extends Presenter
         return $this;
     }
 
+    /**
+     * @return Text
+     */
     public function url(): self
     {
-        return $this->inputmask(['alias' => 'url'], 'internet-explorer');
+        return $this->inputmask(['alias' => 'url'], 'link');
     }
 
+    /**
+     * @return Text
+     */
     public function email(): self
     {
         return $this->inputmask(['alias' => 'email'], 'envelope');
     }
 
+    /**
+     * @return Text
+     */
     public function integer(): self
     {
         return $this->inputmask(['alias' => 'integer']);
@@ -76,7 +87,9 @@ class Text extends Presenter
     /**
      * @param array $options
      *
+     * @return Text
      * @see https://github.com/RobinHerbots/Inputmask/blob/4.x/README_numeric.md
+     *
      */
     public function decimal($options = []): self
     {
@@ -86,7 +99,9 @@ class Text extends Presenter
     /**
      * @param array $options
      *
+     * @return Text
      * @see https://github.com/RobinHerbots/Inputmask/blob/4.x/README_numeric.md
+     *
      */
     public function currency($options = []): self
     {
@@ -111,11 +126,17 @@ class Text extends Presenter
         return $this->inputmask($options);
     }
 
+    /**
+     * @return Text
+     */
     public function ip(): self
     {
         return $this->inputmask(['alias' => 'ip'], 'laptop');
     }
 
+    /**
+     * @return Text
+     */
     public function mac(): self
     {
         return $this->inputmask(['alias' => 'mac'], 'laptop');
@@ -123,8 +144,10 @@ class Text extends Presenter
 
     /**
      * @param string $mask
+     *
+     * @return Text
      */
-    public function mobile($mask = '19999999999'): self
+    public function phonenumber($mask = '19999999999'): self
     {
         return $this->inputmask(compact('mask'), 'phone');
     }
@@ -135,15 +158,11 @@ class Text extends Presenter
      *
      * @return $this
      */
-    public function inputmask($options = [], $icon = 'pencil'): self
+    public function inputmask($options = [], $icon = 'pencil-alt'): self
     {
         $options = json_encode($options);
 
-        $ids = (array) $this->filter->getId();
-
-        foreach ($ids as $id) {
-            Admin::script("$('#{$this->filter->getFilterBoxId()} input.{$id}').inputmask($options);");
-        }
+        Admin::script("Inputmask({$options}).mask(document.querySelector(\"#{$this->filter->getFilterBoxId()} input.{$this->filter->getId()}\"));");
 
         $this->icon = $icon;
 

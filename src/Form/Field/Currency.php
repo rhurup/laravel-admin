@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
 class Currency extends Text
 {
@@ -13,7 +13,7 @@ class Currency extends Text
      * @var array
      */
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/input-mask/jquery.inputmask.bundle.min.js',
+        '/vendor/open-admin/inputmask/inputmask.min.js',
     ];
 
     /**
@@ -54,17 +54,25 @@ class Currency extends Text
         return $this->options(compact('digits'));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function prepare($value)
     {
+        $value = parent::prepare($value);
+
         return (float) $value;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
         $this->inputmask($this->options);
 
-        $this->prepend($this->symbol)
-            ->defaultAttribute('style', 'width: 120px');
+        $this->prepend($this->symbol);
+        $this->style('max-width', '160px');
 
         return parent::render();
     }

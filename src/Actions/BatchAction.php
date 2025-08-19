@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Actions;
+namespace OpenAdmin\Admin\Actions;
 
 use Illuminate\Http\Request;
 
@@ -12,72 +12,46 @@ abstract class BatchAction extends GridAction
     public $selectorPrefix = '.grid-batch-action-';
 
     /**
-     * variable holding additional CSS classes for the button.
-     *
-     * @var array
+     * @var int
      */
-    private $cssClasses = [];
+    protected $id;
 
     /**
-     * add a single CSS class string to the CSS-Classes array.
-     *
-     * @return $this
+     * @var string
      */
-    public function addCssClass(string $cssClass)
-    {
-        if (empty($cssClass)) {
-            return $this;
-        }
-        if (!is_string($cssClass)) {
-            throw new \Exception(__METHOD__.': item is not a valid string');
-        }
-        $this->cssClasses[] = $cssClass;
+    protected $resource;
 
-        return $this;
+    /**
+     * @var Grid
+     */
+    protected $grid;
+
+    public $icon = 'icon-file';
+
+    /**
+     * @param $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
-     * add multiple CSS class strings to the CSS-Classes array.
-     *
-     * @return $this
+     * @return string
      */
-    public function addCssClasses(array $cssClasses)
+    public function getToken()
     {
-        if (empty($cssClasses)) {
-            return $this;
-        }
-        if (!is_array($cssClasses)) {
-            throw new \Exception(__METHOD__.': parameter is not a valid array');
-        }
-        foreach ($cssClasses as $item) {
-            if (!is_string($item)) {
-                throw new \Exception(__METHOD__.': item is not a valid string');
-            }
-            $this->cssClasses[] = $item;
-        }
-
-        return $this;
+        return csrf_token();
     }
 
-    public function actionScript()
-    {
-        $warning = __('No data selected!');
-
-        return <<<SCRIPT
-        var key = $.admin.grid.selected();
-
-        if (key.length === 0) {
-            $.admin.toastr.warning('{$warning}', '', {positionClass: 'toast-top-center'});
-            return ;
-        }
-
-        Object.assign(data, {_key:key});
-SCRIPT;
-    }
-
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function retrieveModel(Request $request)
     {
-        if (!$key = $request->get('_key')) {
+        if (!$key = $request->input('_key')) {
             return false;
         }
 
@@ -102,7 +76,6 @@ SCRIPT;
         $this->addScript();
 
         $modalId = '';
-
         if ($this->interactor instanceof Interactor\Form) {
             $modalId = $this->interactor->getModalId();
 
@@ -111,12 +84,12 @@ SCRIPT;
             }
         }
 
-        return sprintf(
-            "<a href='javascript:void(0);' class='%s %s' %s>%s</a>",
-            $this->getElementClass(),
-            (!empty($this->cssClasses)) ? implode(' ', $this->cssClasses) : '',
-            $modalId ? "modal='{$modalId}'" : '',
-            $this->name()
-        );
+        $icon = $this->getIcon();
+        $shortClassName = (new \ReflectionClass($this))->getShortName();
+        $modalId = $modalId ? "modal='{$modalId}'" : '';
+
+        return "<a href='javascript:void(0);' class='{$this->getElementClass(false)} dropdown-item batch-action {$shortClassName}' {$modalId}>
+            {$icon}{$this->name()}
+            </a>";
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Traits;
+namespace OpenAdmin\Admin\Traits;
 
 trait HasAssets
 {
@@ -42,7 +42,7 @@ trait HasAssets
     /**
      * @var string
      */
-    public static $manifest = 'vendor/laravel-admin/minify-manifest.json';
+    public static $manifest = 'vendor/open-admin/minify-manifest.json';
 
     /**
      * @var array
@@ -53,51 +53,59 @@ trait HasAssets
      * @var array
      */
     public static $min = [
-        'js' => 'vendor/laravel-admin/laravel-admin.min.js',
-        'css' => 'vendor/laravel-admin/laravel-admin.min.css',
+        'js' => 'vendor/open-admin/open-admin.min.js',
+        'css' => 'vendor/open-admin/open-admin.min.css',
     ];
 
     /**
      * @var array
      */
     public static $baseCss = [
-        'vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css',
-        'vendor/laravel-admin/font-awesome/css/font-awesome.min.css',
-        'vendor/laravel-admin/laravel-admin/laravel-admin.css',
-        'vendor/laravel-admin/nprogress/nprogress.css',
-        'vendor/laravel-admin/sweetalert2/dist/sweetalert2.css',
-        'vendor/laravel-admin/nestable/nestable.css',
-        'vendor/laravel-admin/toastr/build/toastr.min.css',
-        'vendor/laravel-admin/bootstrap3-editable/css/bootstrap-editable.css',
-        'vendor/laravel-admin/google-fonts/fonts.css',
-        'vendor/laravel-admin/AdminLTE/dist/css/AdminLTE.min.css',
+        // first libraries
+        'vendor/open-admin/nprogress/nprogress.css',
+        'vendor/open-admin/sweetalert2/sweetalert2.min.css',
+        'vendor/open-admin/toastify-js/toastify.css',
+        'vendor/open-admin/flatpickr/flatpicker-custom.css',
+        'vendor/open-admin/choicesjs/styles/choices.min.css',
+        'vendor/open-admin/sortablejs/nestable.css',
+
+        // custom open admin stuff
+        // generated through sass
+        'vendor/open-admin/open-admin/css/styles.css',
     ];
 
     /**
      * @var array
      */
     public static $baseJs = [
-        'vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js',
-        'vendor/laravel-admin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js',
-        'vendor/laravel-admin/AdminLTE/dist/js/app.min.js',
-        'vendor/laravel-admin/jquery-pjax/jquery.pjax.js',
-        'vendor/laravel-admin/nprogress/nprogress.js',
-        'vendor/laravel-admin/nestable/jquery.nestable.js',
-        'vendor/laravel-admin/toastr/build/toastr.min.js',
-        'vendor/laravel-admin/bootstrap3-editable/js/bootstrap-editable.min.js',
-        'vendor/laravel-admin/sweetalert2/dist/sweetalert2.min.js',
-        'vendor/laravel-admin/laravel-admin/laravel-admin.js',
-    ];
+        'vendor/open-admin/bootstrap5/bootstrap.bundle.min.js',
+        'vendor/open-admin/nprogress/nprogress.js',
+        'vendor/open-admin/axios/axios.min.js',
+        'vendor/open-admin/sweetalert2/sweetalert2.min.js',
+        'vendor/open-admin/toastify-js/toastify.js',
+        'vendor/open-admin/flatpickr/flatpickr.min.js',
+        'vendor/open-admin/choicesjs/scripts/choices.min.js',
+        'vendor/open-admin/sortablejs/Sortable.min.js',
 
-    /**
-     * @var string
-     */
-    public static $jQuery = 'vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js';
+        'vendor/open-admin/open-admin/js/polyfills.js',
+        'vendor/open-admin/open-admin/js/helpers.js',
+        'vendor/open-admin/open-admin/js/open-admin.js',
+        'vendor/open-admin/open-admin/js/open-admin-actions.js',
+        'vendor/open-admin/open-admin/js/open-admin-grid.js',
+        'vendor/open-admin/open-admin/js/open-admin-grid-inline-edit.js',
+        'vendor/open-admin/open-admin/js/open-admin-form.js',
+        'vendor/open-admin/open-admin/js/open-admin-toastr.js',
+        'vendor/open-admin/open-admin/js/open-admin-resource.js',
+        'vendor/open-admin/open-admin/js/open-admin-tree.js',
+        'vendor/open-admin/open-admin/js/open-admin-selectable.js',
+
+    ];
 
     /**
      * @var array
      */
-    public static $minifyIgnores = [];
+    public static $minifyIgnoresCss = [];
+    public static $minifyIgnoresJs = [];
 
     /**
      * Add css or get all css.
@@ -109,7 +117,7 @@ trait HasAssets
      */
     public static function css($css = null, $minify = true)
     {
-        static::ignoreMinify($css, $minify);
+        static::ignoreMinify('css', $css, $minify);
 
         if (!is_null($css)) {
             return self::$css = array_merge(self::$css, (array) $css);
@@ -119,6 +127,7 @@ trait HasAssets
             $css = array_merge(static::$css, static::baseCss());
         }
 
+        $css = array_merge($css, static::$minifyIgnoresCss); // add minified ignored files
         $css = array_filter(array_unique($css));
 
         return view('admin::partials.css', compact('css'));
@@ -132,15 +141,14 @@ trait HasAssets
      */
     public static function baseCss($css = null, $minify = true)
     {
-        static::ignoreMinify($css, $minify);
+        static::ignoreMinify('css', $css, $minify);
 
         if (!is_null($css)) {
             return static::$baseCss = $css;
         }
 
         $skin = config('admin.skin', 'skin-blue-light');
-
-        array_unshift(static::$baseCss, "vendor/laravel-admin/AdminLTE/dist/css/skins/{$skin}.min.css");
+        //array_unshift(static::$baseCss, "vendor/open-admin/AdminLTE/dist/css/skins/{$skin}.min.css");
 
         return static::$baseCss;
     }
@@ -155,7 +163,7 @@ trait HasAssets
      */
     public static function js($js = null, $minify = true)
     {
-        static::ignoreMinify($js, $minify);
+        static::ignoreMinify('js', $js, $minify);
 
         if (!is_null($js)) {
             return self::$js = array_merge(self::$js, (array) $js);
@@ -165,6 +173,7 @@ trait HasAssets
             $js = array_merge(static::baseJs(), static::$js);
         }
 
+        $js = array_merge($js, static::$minifyIgnoresJs); // add minified ignored files
         $js = array_filter(array_unique($js));
 
         return view('admin::partials.js', compact('js'));
@@ -194,7 +203,7 @@ trait HasAssets
      */
     public static function baseJs($js = null, $minify = true)
     {
-        static::ignoreMinify($js, $minify);
+        static::ignoreMinify('js', $js, $minify);
 
         if (!is_null($js)) {
             return static::$baseJs = $js;
@@ -207,10 +216,14 @@ trait HasAssets
      * @param string $assets
      * @param bool   $ignore
      */
-    public static function ignoreMinify($assets, $ignore = true)
+    public static function ignoreMinify($type, $assets, $ignore = true)
     {
         if (!$ignore) {
-            static::$minifyIgnores[] = $assets;
+            if ($type == 'css') {
+                static::$minifyIgnoresCss[] = $assets;
+            } else {
+                static::$minifyIgnoresJs[] = $assets;
+            }
         }
     }
 
@@ -235,7 +248,7 @@ trait HasAssets
             ->unique()
             ->map(function ($line) {
                 return $line;
-                // @see https://stackoverflow.com/questions/19509863/how-to-remove-js-comments-using-php
+                //@see https://stackoverflow.com/questions/19509863/how-to-remove-js-comments-using-php
                 $pattern = '/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/';
                 $line = preg_replace($pattern, '', $line);
 
@@ -281,6 +294,8 @@ trait HasAssets
 
     /**
      * @param string $key
+     *
+     * @return mixed
      */
     protected static function getManifestData($key)
     {
@@ -321,13 +336,8 @@ trait HasAssets
     }
 
     /**
-     * @return string
+     * @param $component
      */
-    public function jQuery()
-    {
-        return admin_asset(static::$jQuery);
-    }
-
     public static function component($component, $data = [])
     {
         $string = view($component, $data)->render();
@@ -341,16 +351,16 @@ trait HasAssets
         if ($head = $dom->getElementsByTagName('head')->item(0)) {
             foreach ($head->childNodes as $child) {
                 if ($child instanceof \DOMElement) {
-                    if ('style' === $child->tagName && !empty($child->nodeValue)) {
+                    if ($child->tagName == 'style' && !empty($child->nodeValue)) {
                         static::style($child->nodeValue);
                         continue;
                     }
 
-                    if ('link' === $child->tagName && $child->hasAttribute('href')) {
+                    if ($child->tagName == 'link' && $child->hasAttribute('href')) {
                         static::css($child->getAttribute('href'));
                     }
 
-                    if ('script' === $child->tagName) {
+                    if ($child->tagName == 'script') {
                         if ($child->hasAttribute('src')) {
                             static::js($child->getAttribute('src'));
                         } else {
@@ -368,22 +378,31 @@ trait HasAssets
         if ($body = $dom->getElementsByTagName('body')->item(0)) {
             foreach ($body->childNodes as $child) {
                 if ($child instanceof \DOMElement) {
-                    if ('style' === $child->tagName && !empty($child->nodeValue)) {
+                    if ($child->tagName == 'style' && !empty($child->nodeValue)) {
                         static::style($child->nodeValue);
                         continue;
                     }
 
-                    if ('script' === $child->tagName && !empty($child->nodeValue)) {
+                    if ($child->tagName == 'script' && !empty($child->nodeValue)) {
                         static::script(';(function () {'.$child->nodeValue.'})();');
                         continue;
                     }
 
-                    if ('template' === $child->tagName) {
-                        $html = '';
-                        foreach ($child->childNodes as $childNode) {
-                            $html .= $child->ownerDocument->saveHTML($childNode);
+                    if ($child->tagName == 'template') {
+                        if ($child->getAttribute('render') == 'true') {
+                            // this will render the template tags right into the dom. Don't think we want this
+                            $html = '';
+                            foreach ($child->childNodes as $childNode) {
+                                $html .= $child->ownerDocument->saveHTML($childNode);
+                            }
+                        } else {
+                            // this leaves the template tags in place, so they won't get rendered right away
+                            $sub_doc = new \DOMDocument();
+                            $sub_doc->appendChild($sub_doc->importNode($child, true));
+                            $html = $sub_doc->saveHTML();
                         }
                         $html && static::html($html);
+
                         continue;
                     }
                 }

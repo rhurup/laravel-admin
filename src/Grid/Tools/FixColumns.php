@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace OpenAdmin\Admin\Grid\Tools;
 
-use Encore\Admin\Grid;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Grid;
 
 class FixColumns
 {
@@ -40,6 +40,7 @@ class FixColumns
     /**
      * FixColumns constructor.
      *
+     * @param Grid $grid
      * @param int $head
      * @param int $tail
      */

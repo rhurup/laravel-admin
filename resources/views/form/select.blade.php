@@ -1,14 +1,11 @@
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+@include("admin::form._header")
 
-<label for="{{$id}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
+@if (!empty($attributes_obj['readonly']))
+    <input type="hidden" name="{{$name}}" value="{{$value}}"/>
+@endif
 
-    <div class="{{$viewClass['field']}}">
-
-        @include('admin::form.error')
-
-        <input type="hidden" name="{{$name}}"/>
-
-        <select class="form-control {{$class}}" style="width: 100%;" name="{{$name}}" {!! $attributes !!} >
+<select class="form-select {{$class}}" style="width: 100%;"
+        name="{{$name}}@if (!empty($attributes_obj['readonly']))-disabled @endif" {!! $attributes !!} >
             @if($groups)
                 @foreach($groups as $group)
                     <optgroup label="{{ $group['label'] }}">
@@ -25,7 +22,4 @@
             @endif
         </select>
 
-        @include('admin::form.help-block')
-
-    </div>
-</div>
+@include("admin::form._footer")

@@ -1,6 +1,6 @@
 <?php
 
-use Encore\Admin\Auth\Database\Administrator;
+use OpenAdmin\Admin\Auth\Database\Administrator;
 use Tests\Models\Profile as ProfileModel;
 use Tests\Models\User as UserModel;
 
@@ -51,11 +51,11 @@ class UserGridTest extends TestCase
 
     protected function seedsTable($count = 100)
     {
-        factory(UserModel::class, $count)
+        factory(\Tests\Models\User::class, $count)
             ->create()
             ->each(function ($u) {
-                $u->profile()->save(factory(ProfileModel::class)->make());
-                $u->tags()->saveMany(factory(Tests\Models\Tag::class, 5)->make());
+                $u->profile()->save(factory(\Tests\Models\Profile::class)->make());
+                $u->tags()->saveMany(factory(\Tests\Models\Tag::class, 5)->make());
                 $u->data = ['json' => ['field' => random_int(0, 50)]];
                 $u->save();
             });
@@ -193,11 +193,11 @@ class UserGridTest extends TestCase
 
     public function testHasManyRelation()
     {
-        factory(UserModel::class, 10)
+        factory(\Tests\Models\User::class, 10)
             ->create()
             ->each(function ($u) {
-                $u->profile()->save(factory(ProfileModel::class)->make());
-                $u->tags()->saveMany(factory(Tests\Models\Tag::class, 5)->make());
+                $u->profile()->save(factory(\Tests\Models\Profile::class)->make());
+                $u->tags()->saveMany(factory(\Tests\Models\Tag::class, 5)->make());
             });
 
         $this->visit('admin/users')

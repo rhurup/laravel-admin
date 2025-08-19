@@ -1,15 +1,17 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace OpenAdmin\Admin\Grid;
 
-use Encore\Admin\Actions\GridAction;
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Tools\AbstractTool;
-use Encore\Admin\Grid\Tools\BatchActions;
-use Encore\Admin\Grid\Tools\FilterButton;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Actions\Action;
+use OpenAdmin\Admin\Actions\BatchAction;
+use OpenAdmin\Admin\Actions\GridAction;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Grid\Tools\AbstractTool;
+use OpenAdmin\Admin\Grid\Tools\BatchActions;
+use OpenAdmin\Admin\Grid\Tools\FilterButton;
 
 class Tools implements Renderable
 {
@@ -29,6 +31,8 @@ class Tools implements Renderable
 
     /**
      * Create a new Tools instance.
+     *
+     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -57,8 +61,14 @@ class Tools implements Renderable
      */
     public function append($tool)
     {
-        if ($tool instanceof GridAction) {
+        if ($tool instanceof GridAction || $tool instanceof BatchAction) {
             $tool->setGrid($this->grid);
+        }
+
+        if ($tool instanceof Action) {
+            $model = $this->grid->model()->getOriginalModel();
+            $model_str = str_replace('\\', '_', get_class($model));
+            $tool->parameter('_model', $model_str);
         }
 
         $this->tools->push($tool);
@@ -105,6 +115,7 @@ class Tools implements Renderable
      */
     public function disableRefreshButton(bool $disable = true)
     {
+        //
     }
 
     /**
@@ -123,6 +134,9 @@ class Tools implements Renderable
         });
     }
 
+    /**
+     * @param \Closure $closure
+     */
     public function batch(\Closure $closure)
     {
         call_user_func($closure, $this->tools->first(function ($tool) {

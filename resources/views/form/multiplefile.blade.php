@@ -1,17 +1,15 @@
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+@include("admin::form._header")
 
-    <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
-
-    <div class="{{$viewClass['field']}}">
-
-        @include('admin::form.error')
-
-        <input type="file" class="{{$class}}" name="{{$name}}[]" {!! $attributes !!} />
-        @isset($sortable)
-        <input type="hidden" class="{{$class}}_sort" name="{{ $sort_flag."[$name]" }}"/>
+<div class="input-group">
+    <input type="file" class="form-control {{$class}}" name="{{$name}}[]" {!! $attributes !!} />
+    <span class="input-group-btn">
+                @isset($btn)
+            {!! $btn !!}
         @endisset
-
-        @include('admin::form.help-block')
-
-    </div>
+                </span>
 </div>
+@isset($sortable)
+    <input type="hidden" class="form-control {{$class}}_sort" name="{{ $sort_flag."[$name]" }}"/>
+@endisset
+
+@include("admin::form._footer")

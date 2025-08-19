@@ -80,8 +80,8 @@ return [
     'confirm' => '确认',
     'cancel' => '取消',
     'http' => [
-        'method' => 'HTTP方法',
-        'path' => 'HTTP路径',
+        'method' => 'HTTP 方法',
+        'path' => 'HTTP 路径',
     ],
     'all_methods_if_empty' => '为空默认为所有方法',
     'all' => '全部',
@@ -92,6 +92,8 @@ return [
     'time' => '时间',
     'size' => '大小',
     'listbox' => [
+        'title_available' => '可选择',
+        'title_selected' => '已选择',
         'text_total' => '总共 {0} 项',
         'text_empty' => '空列表',
         'filtered' => '{0} / {1}',
@@ -103,4 +105,9 @@ return [
     'prev' => '上一步',
     'next' => '下一步',
     'quick_create' => '快速创建',
+
+    'batch_edit' => '批量编辑',
+    'delete_file_on_save' => '确定要在保存后删除这个文件吗?',
+    'select' => '选择',
+    'no_rows_selected' => '未选择行',
 ];

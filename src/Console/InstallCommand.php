@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
 use Illuminate\Console\Command;
 
@@ -50,8 +50,8 @@ class InstallCommand extends Command
 
         $userModel = config('admin.database.users_model');
 
-        if (0 === $userModel::count()) {
-            $this->call('db:seed', ['--class' => \Encore\Admin\Auth\Database\AdminTablesSeeder::class]);
+        if ($userModel::count() == 0) {
+            $this->call('db:seed', ['--class' => \OpenAdmin\Admin\Auth\Database\AdminTablesSeeder::class]);
         }
     }
 
@@ -164,6 +164,8 @@ class InstallCommand extends Command
 
     /**
      * Get stub contents.
+     *
+     * @param $name
      *
      * @return string
      */

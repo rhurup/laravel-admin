@@ -1,23 +1,51 @@
 <?php
 
-namespace Encore\Admin\Grid\Actions;
+namespace OpenAdmin\Admin\Grid\Actions;
 
-use Encore\Admin\Actions\Response;
-use Encore\Admin\Actions\RowAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use OpenAdmin\Admin\Actions\Response;
+use OpenAdmin\Admin\Actions\RowAction;
 
 class Delete extends RowAction
 {
+    public $icon = 'icon-trash';
+
     /**
-     * @return array|string|null
+     * @return array|null|string
      */
     public function name()
     {
         return __('admin.delete');
     }
 
+    public function addScript()
+    {
+        $this->attributes = [
+            'onclick' => 'admin.resource.delete(event,this)',
+            'data-url' => "{$this->getResource()}/{$this->getKey()}",
+        ];
+    }
+
+    /*
+    // could use dialog as well instead of addScript
+    public function dialog()
+    {
+        $options  = [
+            "type" => "warning",
+            "showCancelButton"=> true,
+            "confirmButtonColor"=> "#DD6B55",
+            "confirmButtonText"=> __('confirm'),
+            "showLoaderOnConfirm"=> true,
+            "cancelButtonText"=>  __('cancel'),
+        ];
+        $this->confirm('Are you sure delete?', '', $options);
+    }
+    */
+
     /**
+     * @param Model $model
+     *
      * @return Response
      */
     public function handle(Model $model)
@@ -36,13 +64,5 @@ class Delete extends RowAction
         }
 
         return $this->response()->success($trans['succeeded'])->refresh();
-    }
-
-    /**
-     * @return void
-     */
-    public function dialog()
-    {
-        $this->question(trans('admin.delete_confirm'), '', ['confirmButtonColor' => '#d33']);
     }
 }

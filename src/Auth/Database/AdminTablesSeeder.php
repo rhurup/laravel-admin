@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Auth\Database;
+namespace OpenAdmin\Admin\Auth\Database;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -32,7 +32,7 @@ class AdminTablesSeeder extends Seeder
         // add role to user.
         Administrator::first()->roles()->save(Role::first());
 
-        // create a permission
+        //create a permission
         Permission::truncate();
         Permission::insert([
             [
@@ -76,49 +76,49 @@ class AdminTablesSeeder extends Seeder
                 'parent_id' => 0,
                 'order' => 1,
                 'title' => 'Dashboard',
-                'icon' => 'fa-bar-chart',
+                'icon' => 'icon-chart-bar',
                 'uri' => '/',
             ],
             [
                 'parent_id' => 0,
                 'order' => 2,
                 'title' => 'Admin',
-                'icon' => 'fa-tasks',
+                'icon' => 'icon-server',
                 'uri' => '',
             ],
             [
                 'parent_id' => 2,
                 'order' => 3,
                 'title' => 'Users',
-                'icon' => 'fa-users',
+                'icon' => 'icon-users',
                 'uri' => 'auth/users',
             ],
             [
                 'parent_id' => 2,
                 'order' => 4,
                 'title' => 'Roles',
-                'icon' => 'fa-user',
+                'icon' => 'icon-user',
                 'uri' => 'auth/roles',
             ],
             [
                 'parent_id' => 2,
                 'order' => 5,
                 'title' => 'Permission',
-                'icon' => 'fa-ban',
+                'icon' => 'icon-ban',
                 'uri' => 'auth/permissions',
             ],
             [
                 'parent_id' => 2,
                 'order' => 6,
                 'title' => 'Menu',
-                'icon' => 'fa-bars',
+                'icon' => 'icon-bars',
                 'uri' => 'auth/menu',
             ],
             [
                 'parent_id' => 2,
                 'order' => 7,
                 'title' => 'Operation log',
-                'icon' => 'fa-history',
+                'icon' => 'icon-history',
                 'uri' => 'auth/logs',
             ],
         ]);

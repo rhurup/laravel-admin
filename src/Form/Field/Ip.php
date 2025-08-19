@@ -1,13 +1,13 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
 class Ip extends Text
 {
     protected $rules = 'nullable|ip';
 
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/input-mask/jquery.inputmask.bundle.min.js',
+        '/vendor/open-admin/inputmask/inputmask.min.js',
     ];
 
     /**
@@ -23,8 +23,8 @@ class Ip extends Text
     {
         $this->inputmask($this->options);
 
-        $this->prepend('<i class="fa fa-laptop fa-fw"></i>')
-            ->defaultAttribute('style', 'width: 130px');
+        $this->prepend('<i class="icon-laptop fa-fw"></i>');
+        $this->style('max-width', '160px');
 
         return parent::render();
     }

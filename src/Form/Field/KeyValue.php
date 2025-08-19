@@ -1,13 +1,15 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form\Field;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field\Traits\Sortable;
 
 class KeyValue extends Field
 {
+    use Sortable;
+
     /**
      * @var array
      */
@@ -29,6 +31,9 @@ class KeyValue extends Field
         $this->formatValue();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getValidator(array $input)
     {
         if ($this->validator) {
@@ -59,30 +64,48 @@ class KeyValue extends Field
 
     protected function setupScript()
     {
-        $this->script = <<<SCRIPT
+        $this->script = <<<JS
 
-$('.{$this->column}-add').on('click', function () {
-    var tpl = $('template.{$this->column}-tpl').html();
-    $('tbody.kv-{$this->column}-table').append(tpl);
+document.querySelector('.{$this->column}-add').addEventListener('click', function () {
+    var tpl = document.querySelector('template.{$this->column}-tpl').innerHTML;
+    var clone = htmlToElement(tpl);
+    document.querySelector('tbody.kv-{$this->column}-table').appendChild(clone);
 });
 
-$('tbody').on('click', '.{$this->column}-remove', function () {
-    $(this).closest('tr').remove();
+document.querySelector('tbody.kv-{$this->column}-table').addEventListener('click', function (event) {
+    if (event.target.classList.contains('{$this->column}-remove')){
+        event.target.closest('tr').remove();
+    }
 });
 
-SCRIPT;
+JS;
     }
 
     public function prepare($value)
     {
+        $value = parent::prepare($value);
+        if (empty($value)) {
+            return [];
+        }
+
         return array_combine($value['keys'], $value['values']);
     }
 
+    /*
+    public function beforeRender()
+    {
+        if (!in_array(Arr::get($this->form->model->getCasts(),$this->column),["json","array"]) && ){
+            throw new \Exception("The column ($this->column) of this Model has no casts defined as: Json or Array");
+        };
+    }
+    */
+
     public function render()
     {
-        $this->setupScript();
+        $this->addSortable('.kv-', '-table');
+        view()->share('options', $this->options);
 
-        Admin::style('td .form-group {margin-bottom: 0 !important;}');
+        $this->setupScript();
 
         return parent::render();
     }

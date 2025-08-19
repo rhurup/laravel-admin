@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Widgets\Carousel as CarouselWidget;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\Storage;
+use OpenAdmin\Admin\Widgets\Carousel as CarouselWidget;
 
 class Carousel extends AbstractDisplayer
 {
@@ -13,15 +13,13 @@ class Carousel extends AbstractDisplayer
         if ($this->value instanceof Arrayable) {
             $this->value = $this->value->toArray();
         }
-
-        $this->value = array_values($this->value);
-
         if (empty($this->value)) {
             return '';
         }
+        $this->value = array_values($this->value);
 
         $images = collect((array) $this->value)->filter()->map(function ($path) use ($server) {
-            if (url()->isValidUrl($path) || 0 === strpos($path, 'data:image')) {
+            if (url()->isValidUrl($path) || strpos($path, 'data:image') === 0) {
                 $image = $path;
             } elseif ($server) {
                 $image = rtrim($server, '/').'/'.ltrim($path, '/');

@@ -1,12 +1,16 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace OpenAdmin\Admin\Grid\Tools;
+
+use OpenAdmin\Admin\Actions\BatchAction;
 
 class BatchDelete extends BatchAction
 {
-    public function __construct($title)
+    public $icon = 'icon-trash';
+
+    public function __construct()
     {
-        $this->title = $title;
+        $this->name = trans('admin.batch_delete');
     }
 
     /**
@@ -14,53 +18,11 @@ class BatchDelete extends BatchAction
      */
     public function script()
     {
-        $trans = [
-            'delete_confirm' => trans('admin.delete_confirm'),
-            'confirm' => trans('admin.confirm'),
-            'cancel' => trans('admin.cancel'),
-        ];
-
-        return <<<EOT
-
-$('{$this->getElementClass()}').on('click', function() {
-
-    swal({
-        title: "{$trans['delete_confirm']}",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "{$trans['confirm']}",
-        showLoaderOnConfirm: true,
-        cancelButtonText: "{$trans['cancel']}",
-        preConfirm: function() {
-            return new Promise(function(resolve) {
-                $.ajax({
-                    method: 'post',
-                    url: '{$this->resource}/' + $.admin.grid.selected().join(),
-                    data: {
-                        _method:'delete',
-                        _token:'{$this->getToken()}'
-                    },
-                    success: function (data) {
-                        $.pjax.reload('#pjax-container');
-
-                        resolve(data);
-                    }
-                });
-            });
-        }
-    }).then(function(result) {
-        var data = result.value;
-        if (typeof data === 'object') {
-            if (data.status) {
-                swal(data.message, '', 'success');
-            } else {
-                swal(data.message, '', 'error');
-            }
-        }
-    });
-});
-
-EOT;
+        return <<<JS
+        document.querySelector('{$this->getSelector()}').addEventListener("click",function(){
+            let resource_url = '{$this->resource}/' + admin.grid.selected.join();
+            admin.resource.batch_delete(resource_url);
+        });
+JS;
     }
 }

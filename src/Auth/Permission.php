@@ -1,14 +1,16 @@
 <?php
 
-namespace Encore\Admin\Auth;
+namespace OpenAdmin\Admin\Auth;
 
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Middleware\Pjax;
+use OpenAdmin\Admin\Facades\Admin;
+use OpenAdmin\Admin\Middleware\Pjax;
 
 class Permission
 {
     /**
      * Check permission.
+     *
+     * @param $permission
      *
      * @return true
      */
@@ -33,6 +35,8 @@ class Permission
 
     /**
      * Roles allowed to access.
+     *
+     * @param $roles
      *
      * @return true
      */
@@ -59,6 +63,8 @@ class Permission
 
     /**
      * Roles denied to access.
+     *
+     * @param $roles
      *
      * @return true
      */
@@ -89,6 +95,8 @@ class Permission
 
     /**
      * If current user is administrator.
+     *
+     * @return mixed
      */
     public static function isAdministrator()
     {

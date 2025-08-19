@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace OpenAdmin\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
 
@@ -34,6 +34,7 @@ class Alert extends Widget implements Renderable
     /**
      * Alert constructor.
      *
+     * @param mixed $content
      * @param string $title
      * @param string $style
      */

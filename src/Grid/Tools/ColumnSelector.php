@@ -1,14 +1,14 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace OpenAdmin\Admin\Grid\Tools;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Grid;
 use Illuminate\Support\Collection;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Grid;
 
 class ColumnSelector extends AbstractTool
 {
-    public const SELECT_COLUMN_NAME = '_columns_';
+    const SELECT_COLUMN_NAME = '_columns_';
 
     /**
      * @var array
@@ -20,6 +20,8 @@ class ColumnSelector extends AbstractTool
 
     /**
      * Create a new Export button instance.
+     *
+     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -49,6 +51,8 @@ class ColumnSelector extends AbstractTool
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return string
      */
     public function render()
@@ -57,7 +61,7 @@ class ColumnSelector extends AbstractTool
             return '';
         }
 
-        return Admin::component('admin::components.grid-column-selector', [
+        return Admin::component('admin::components.column-selector', [
             'columns' => $this->getGridColumns(),
             'visible' => $this->grid->visibleColumnNames(),
             'defaults' => $this->grid->getDefaultVisibleColumnNames(),

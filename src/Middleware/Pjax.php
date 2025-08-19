@@ -1,10 +1,12 @@
 <?php
 
-namespace Encore\Admin\Middleware;
+namespace OpenAdmin\Admin\Middleware;
 
-use Encore\Admin\Facades\Admin;
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Str;
+use OpenAdmin\Admin\Facades\Admin;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,10 +16,11 @@ class Pjax
      * Handle an incoming request.
      *
      * @param Request $request
+     * @param Closure $next
      *
      * @return Response
      */
-    public function handle($request, \Closure $next)
+    public function handle($request, Closure $next)
     {
         $response = $next($request);
 
@@ -40,6 +43,8 @@ class Pjax
 
     /**
      * Send a response through this middleware.
+     *
+     * @param Response $response
      */
     public static function respond(Response $response)
     {
@@ -54,6 +59,8 @@ class Pjax
 
     /**
      * Handle Response with exceptions.
+     *
+     * @param Response $response
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -74,17 +81,37 @@ class Pjax
     /**
      * Prepare the PJAX-specific response content.
      *
+     * @param Response $response
      * @param string $container
      *
      * @return $this
      */
     protected function filterResponse(Response $response, $container)
     {
-        $crawler = new Crawler($response->getContent());
+        $input = $response->getContent();
+
+        $title = $this->makeFromBetween($input, '<title>', '</title>');
+        $title = !empty($title) ? '<title>' . $title . '</title>' : '';
+
+        $content = $this->makeFromBetween($input, '<!--start-pjax-container-->', '<!--end-pjax-container-->');
+        $content = $this->decodeUtf8HtmlEntities($content);
+
+        /*
+        if (empty($content)) {
+            // try dom-crwawler
+            // this is much slower though
+            $crawler = new Crawler($input);
+            $title = $this->makeTitle($crawler);
+            $content = $this->fetchContents($crawler, $container);
+        }
+        */
+
+        if (empty($content)) {
+            abort(422);
+        }
 
         $response->setContent(
-            $this->makeTitle($crawler).
-            $this->fetchContents($crawler, $container)
+            $title . $content
         );
 
         return $this;
@@ -102,6 +129,23 @@ class Pjax
         $pageTitle = $crawler->filter('head > title')->html();
 
         return "<title>{$pageTitle}</title>";
+    }
+
+    /**
+     * Prepare an HTML title tag.
+     *
+     * @param string $input
+     *
+     * @return string
+     */
+    protected function makeFromBetween($input, $start, $end)
+    {
+        $str = '';
+        if (Str::contains($input, $start)) {
+            $str = Str::between($input, $start, $end);
+        }
+
+        return $str;
     }
 
     /**
@@ -139,6 +183,9 @@ class Pjax
 
     /**
      * Set the PJAX-URL header to the current uri.
+     *
+     * @param Response $response
+     * @param Request $request
      */
     protected function setUriHeader(Response $response, Request $request)
     {

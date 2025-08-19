@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Actions;
+namespace OpenAdmin\Admin\Actions;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form\Field;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Form\Field;
 
 /**
  * @method $this                success($title, $text = '', $options = [])
@@ -20,7 +20,7 @@ use Illuminate\Http\Request;
  * @method Field\Ip             ip($column, $label = '')
  * @method Field\Url            url($column, $label = '')
  * @method Field\Password       password($column, $label = '')
- * @method Field\Mobile         mobile($column, $label = '')
+ * @method Field\PhoneNumber    phonenumber($column, $label = '')
  * @method Field\Textarea       textarea($column, $label = '')
  * @method Field\Select         select($column, $label = '')
  * @method Field\MultipleSelect multipleSelect($column, $label = '')
@@ -67,6 +67,11 @@ abstract class Action implements Renderable
     protected $attributes = [];
 
     /**
+     * @var array
+     */
+    protected $parameters = [];
+
+    /**
      * @var string
      */
     public $selectorPrefix = '.action-';
@@ -85,6 +90,16 @@ abstract class Action implements Renderable
      * @var string
      */
     public $name;
+
+    /**
+     * @var string
+     */
+    public $preScriptStr = false;
+
+    /**
+     * @var string
+     */
+    public $icon = 'icon-file';
 
     /**
      * Action constructor.
@@ -120,6 +135,32 @@ abstract class Action implements Renderable
     public function name()
     {
         return $this->name;
+    }
+
+    /**
+     * Get batch action title.
+     *
+     * @return string
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get batch icon.
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        if (empty($this->icon)) {
+            return '';
+        }
+
+        return "<i class='{$this->icon}'></i>";
     }
 
     /**
@@ -189,6 +230,14 @@ abstract class Action implements Renderable
     }
 
     /**
+     * @return string
+     */
+    protected function getSelector()
+    {
+        return $this->selector($this->selectorPrefix);
+    }
+
+    /**
      * @return Response
      */
     public function response()
@@ -214,6 +263,9 @@ abstract class Action implements Renderable
         return $this->method;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCalledClass()
     {
         return str_replace('\\', '_', get_called_class());
@@ -236,14 +288,29 @@ abstract class Action implements Renderable
     }
 
     /**
+     * @param string $name
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function parameter($name, $value)
+    {
+        $this->parameters[$name] = $value;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function parameters()
     {
-        return [];
+        return $this->parameters;
     }
 
     /**
+     * @param Request $request
+     *
      * @return $this
      */
     public function validate(Request $request)
@@ -255,142 +322,63 @@ abstract class Action implements Renderable
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function preScript()
+    {
+        if (!empty($this->preScriptStr)) {
+            return <<<SCRIPT
+                function (resolve,reject){
+                    {$this->preScriptStr}
+                }
+            SCRIPT;
+        } else {
+            return 'function (resolve){
+                resolve();
+            }';
+        }
+    }
+
+    /**
+     * @return mixed
+     */
     protected function addScript()
     {
         if (!is_null($this->interactor)) {
-            return $this->interactor->addScript();
+            $this->preScriptStr = $this->interactor->preScript();
+
+            $script = $this->interactor->addScript();
+            if (!empty($script)) {
+                return;
+            }
         }
 
         $parameters = json_encode($this->parameters());
+        $ajaxMethod = strtolower($this->method);
 
         $script = <<<SCRIPT
-
-(function ($) {
-    $('{$this->selector($this->selectorPrefix)}').off('{$this->event}').on('{$this->event}', function() {
-        var data = $(this).data();
-        var target = $(this);
-        Object.assign(data, {$parameters});
-        {$this->actionScript()}
-        {$this->buildActionPromise()}
-        {$this->handleActionPromise()}
-    });
-})(jQuery);
-
-SCRIPT;
+            admin.actions.add({
+                selector : '{$this->selector($this->selectorPrefix)}',
+                event :'{$this->event}',
+                parameters : {$parameters},
+                _action: '{$this->getCalledClass()}',
+                url : '{$this->getHandleRoute()}',
+                method : '{$ajaxMethod}',
+                pre : {$this->preScript()}
+            });
+        SCRIPT;
 
         Admin::script($script);
-    }
-
-    /**
-     * @return string
-     */
-    public function actionScript()
-    {
-        return '';
-    }
-
-    /**
-     * @return string
-     */
-    protected function buildActionPromise()
-    {
-        return <<<SCRIPT
-        var process = new Promise(function (resolve,reject) {
-
-            Object.assign(data, {
-                _token: $.admin.token,
-                _action: '{$this->getCalledClass()}',
-            });
-
-            $.ajax({
-                method: '{$this->method}',
-                url: '{$this->getHandleRoute()}',
-                data: data,
-                success: function (data) {
-                    resolve([data, target]);
-                },
-                error:function(request){
-                    reject(request);
-                }
-            });
-        });
-
-SCRIPT;
-    }
-
-    /**
-     * @return string
-     */
-    public function handleActionPromise()
-    {
-        $resolve = <<<'SCRIPT'
-var actionResolver = function (data) {
-
-            var response = data[0];
-            var target   = data[1];
-
-            if (typeof response !== 'object') {
-                return $.admin.swal({type: 'error', title: 'Oops!'});
-            }
-
-            var then = function (then) {
-                if (then.action == 'refresh') {
-                    $.admin.reload();
-                }
-
-                if (then.action == 'download') {
-                    window.open(then.value, '_blank');
-                }
-
-                if (then.action == 'redirect') {
-                    $.admin.redirect(then.value);
-                }
-
-                if (then.action == 'location') {
-                    window.location = then.value;
-                }
-
-                if (then.action == 'open') {
-                    window.open(then.value, '_blank');
-                }
-            };
-
-            if (typeof response.html === 'string') {
-                target.html(response.html);
-            }
-
-            if (typeof response.swal === 'object') {
-                $.admin.swal(response.swal);
-            }
-
-            if (typeof response.toastr === 'object' && response.toastr.type) {
-                $.admin.toastr[response.toastr.type](response.toastr.content, '', response.toastr.options);
-            }
-
-            if (response.then) {
-              then(response.then);
-            }
-        };
-
-        var actionCatcher = function (request) {
-            if (request && typeof request.responseJSON === 'object') {
-                $.admin.toastr.error(request.responseJSON.message, '', {positionClass:"toast-bottom-center", timeOut: 10000}).css("width","500px")
-            }
-        };
-SCRIPT;
-
-        Admin::script($resolve);
-
-        return <<<'SCRIPT'
-process.then(actionResolver).catch(actionCatcher);
-SCRIPT;
     }
 
     /**
      * @param string $method
      * @param array  $arguments
      *
+     * @return mixed
      * @throws \Exception
+     *
      */
     public function __call($method, $arguments = [])
     {
@@ -408,6 +396,9 @@ SCRIPT;
     {
     }
 
+    /**
+     * @return mixed
+     */
     public function render()
     {
         $this->addScript();

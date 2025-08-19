@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace OpenAdmin\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
 
@@ -32,7 +32,7 @@ class Carousel extends Widget implements Renderable
 
         $this->id('carousel-'.uniqid());
         $this->class('carousel slide');
-        $this->offsetSet('data-ride', 'carousel');
+        $this->offsetSet('data-bs-ride', 'carousel');
     }
 
     /**

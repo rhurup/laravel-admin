@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +30,7 @@ class Downloadable extends AbstractDisplayer
 
             return <<<HTML
 <a href='$src' download='{$name}' target='_blank' class='text-muted'>
-    <i class="fa fa-download"></i> {$name}
+    <i class="icon-download"></i> {$name}
 </a>
 HTML;
         })->implode('<br>');

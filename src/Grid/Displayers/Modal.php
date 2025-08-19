@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Grid\Simple;
 use Illuminate\Contracts\Support\Renderable;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Grid\Simple;
 
 class Modal extends AbstractDisplayer
 {
@@ -14,13 +14,15 @@ class Modal extends AbstractDisplayer
     protected $renderable;
 
     /**
+     * @param int $multiple
+     *
      * @return string
      */
     protected function getLoadUrl()
     {
         $renderable = str_replace('\\', '_', $this->renderable);
 
-        return route(admin_get_route('handle-renderable'), compact('renderable'));
+        return route('admin.handle-renderable', compact('renderable'));
     }
 
     /**
@@ -30,9 +32,9 @@ class Modal extends AbstractDisplayer
      */
     public function display($callback = null)
     {
-        if (2 === func_num_args()) {
+        if (func_num_args() == 2) {
             list($title, $callback) = func_get_args();
-        } elseif (1 === func_num_args()) {
+        } elseif (func_num_args() == 1) {
             $title = $this->trans('title');
         }
 
@@ -52,7 +54,7 @@ class Modal extends AbstractDisplayer
             'html' => $html,
             'key' => $this->getKey(),
             'value' => $this->value,
-            'name' => $this->getKey().'-'.str_replace('.', '_', $this->getColumn()->getName()),
+            'name' => $this->getKey() . '-' . str_replace('.', '_', $this->getColumn()->getName()),
         ]);
     }
 }

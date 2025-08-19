@@ -1,22 +1,25 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace OpenAdmin\Admin\Grid\Concerns;
 
-use Encore\Admin\Grid\Tools\Header;
+use Closure;
+use OpenAdmin\Admin\Grid\Tools\Header;
 
 trait HasHeader
 {
     /**
-     * @var \Closure
+     * @var Closure
      */
     protected $header;
 
     /**
      * Set grid header.
      *
-     * @return $this|\Closure
+     * @param Closure|null $closure
+     *
+     * @return $this|Closure
      */
-    public function header(?\Closure $closure = null)
+    public function header(Closure $closure = null)
     {
         if (!$closure) {
             return $this->header;

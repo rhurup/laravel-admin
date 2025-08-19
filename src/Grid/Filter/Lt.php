@@ -1,11 +1,14 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
 use Illuminate\Support\Arr;
 
 class Lt extends AbstractFilter
 {
+    /**
+     * {@inheritdoc}
+     */
     protected $view = 'admin::filter.lt';
 
     /**

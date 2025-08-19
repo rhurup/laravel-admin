@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Actions;
+namespace OpenAdmin\Admin\Actions;
 
-use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use OpenAdmin\Admin\Facades\Admin;
 
 /**
  * @mixin Action
@@ -19,7 +19,7 @@ trait Authorizable
     public function passesAuthorization($model = null)
     {
         if (method_exists($this, 'authorize')) {
-            return true === $this->authorize(Admin::user(), $model);
+            return $this->authorize(Admin::user(), $model) == true;
         }
 
         if ($model instanceof Collection) {
@@ -27,12 +27,15 @@ trait Authorizable
         }
 
         if ($model && method_exists($model, 'actionAuthorize')) {
-            return true === $model->actionAuthorize(Admin::user(), get_called_class());
+            return $model->actionAuthorize(Admin::user(), get_called_class()) == true;
         }
 
         return true;
     }
 
+    /**
+     * @return mixed
+     */
     public function failedAuthorization()
     {
         return $this->response()->error(__('admin.deny'))->send();

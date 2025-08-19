@@ -1,8 +1,7 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace OpenAdmin\Admin\Form;
 
-use Encore\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
 
 class Footer implements Renderable
@@ -41,7 +40,14 @@ class Footer implements Renderable
     protected $defaultCheck;
 
     /**
+     * @var string
+     */
+    public $fixedFooter = true;
+
+    /**
      * Footer constructor.
+     *
+     * @param Builder $builder
      */
     public function __construct(Builder $builder)
     {
@@ -165,18 +171,15 @@ class Footer implements Renderable
     }
 
     /**
-     * Setup scripts.
+     * Set `continue_editing` as default check.
+     *
+     * @return $this
      */
-    protected function setupScript()
+    public function fixedFooter($set = true)
     {
-        $script = <<<'EOT'
-        
-$('.after-submit').iCheck({checkboxClass:'icheckbox_minimal-blue'}).on('ifChecked', function () {
-    $('.after-submit').not(this).iCheck('uncheck');
-});
-EOT;
+        $this->fixedFooter = $set;
 
-        Admin::script($script);
+        return $this;
     }
 
     /**
@@ -186,12 +189,11 @@ EOT;
      */
     public function render()
     {
-        $this->setupScript();
-
         $submitRedirects = [
-            1 => 'continue_editing',
-            2 => 'continue_creating',
-            3 => 'view',
+            'continue_editing' => 'continue_editing',
+            'continue_creating' => 'continue_creating',
+            'view' => 'view',
+            //'exit' => 'exit', // can be exit as well when doing ajax request
         ];
 
         $data = [
@@ -200,6 +202,7 @@ EOT;
             'checkboxes' => $this->checkboxes,
             'submit_redirects' => $submitRedirects,
             'default_check' => $this->defaultCheck,
+            'fixedFooter' => $this->fixedFooter,
         ];
 
         return view($this->view, $data)->render();

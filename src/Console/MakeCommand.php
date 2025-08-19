@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Database\Eloquent\Model;
@@ -13,9 +13,9 @@ class MakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'admin:make {name}
-        {--model=}
+    protected $signature = 'admin:make {model}
         {--title=}
+        {--name=}
         {--stub= : Path to the custom stub file. }
         {--namespace=}
         {--O|output}';
@@ -50,14 +50,14 @@ class MakeCommand extends GeneratorCommand
     public function handle()
     {
         $this->modelName = $this->getModelName();
-        $this->controllerName = $this->getControllerName();
 
         if (!$this->modelExists()) {
-            $this->error('Model does not exists !');
+            $this->error('Model does not found! use, command like: artisan admin:controller \\\\App\\\\Models\\\\ModelName');
 
             return false;
         }
 
+        $this->controllerName = $this->getControllerName();
         $stub = $this->option('stub');
 
         if ($stub and !is_file($stub)) {
@@ -72,7 +72,7 @@ class MakeCommand extends GeneratorCommand
             return $this->output($this->modelName);
         }
 
-        if (false !== parent::handle()) {
+        if (parent::handle() !== false) {
             $path = Str::plural(Str::kebab(class_basename($this->modelName)));
 
             $this->line('');
@@ -84,11 +84,18 @@ class MakeCommand extends GeneratorCommand
     }
 
     /**
-     * @return array|string|null
+     * @return string
+     * @throws \ReflectionException
+     *
      */
     protected function getControllerName()
     {
-        return $this->argument('name');
+        if (!empty($this->option('name'))) {
+            return $this->option('name');
+        }
+        $name = (new \ReflectionClass($this->modelName))->getShortName();
+
+        return $name . 'Controller';
     }
 
     /**
@@ -96,13 +103,13 @@ class MakeCommand extends GeneratorCommand
      */
     protected function getModelName()
     {
-        return $this->option('model');
+        return $this->argument('model');
     }
 
     /**
      * @return array|bool|string|null
-     *
      * @throws \ReflectionException
+     *
      */
     protected function getTitle()
     {
@@ -118,7 +125,7 @@ class MakeCommand extends GeneratorCommand
      */
     protected function output($modelName)
     {
-        $this->alert("laravel-admin controller code for model [{$modelName}]");
+        $this->alert("open-admin controller code for model [{$modelName}]");
 
         $this->info($this->generator->generateGrid());
         $this->info($this->generator->generateShow());

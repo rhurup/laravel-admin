@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace OpenAdmin\Admin\Grid\Tools;
 
-use Encore\Admin\Grid;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Query\Builder;
+use OpenAdmin\Admin\Grid;
 
 class Header extends AbstractTool
 {
@@ -16,6 +16,8 @@ class Header extends AbstractTool
 
     /**
      * Header constructor.
+     *
+     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -36,6 +38,9 @@ class Header extends AbstractTool
         return $this->queryBuilder;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render()
     {
         $content = call_user_func($this->grid->header(), $this->queryBuilder());
@@ -53,7 +58,7 @@ class Header extends AbstractTool
         }
 
         return <<<HTML
-    <div class="box-header with-border clearfix">
+    <div class="with-border clearfix">
         {$content}
     </div>
 HTML;

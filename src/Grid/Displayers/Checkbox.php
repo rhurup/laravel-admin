@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Admin;
 
 class Checkbox extends AbstractDisplayer
 {
@@ -13,10 +13,10 @@ class Checkbox extends AbstractDisplayer
             'key' => $this->getKey(),
             'name' => $this->getPayloadName(),
             'resource' => $this->getResource(),
-            'trigger' => "ie-trigger-{$this->getClassName()}",
+            'trigger' => "ie-trigger-{$this->getClassName()}-{$this->getKey()}",
             'target' => "ie-content-{$this->getClassName()}-{$this->getKey()}",
-            'value' => json_encode($this->getValue()),
-            'display' => implode(';', Arr::only($options, $this->getValue())),
+            'value' => $this->getValue(),
+            'display' => implode(',', Arr::only($options, json_decode($this->getValue()))),
             'options' => $options,
         ]);
     }
