@@ -1,6 +1,6 @@
 {
   "name": "rhurup/laravel-admin",
-  "description": "open-admin. Open-source Laravel Admin panel. No pro or paid package, free & open. Based on laravel-admin, with special thanks to z-song",
+  "description": "open-admin fork. Open-source Laravel Admin panel. No pro or paid package, free & open. Based on laravel-admin, with special thanks to z-song",
     "type": "library",
   "keywords": [
     "laravel",
